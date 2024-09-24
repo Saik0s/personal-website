@@ -69,11 +69,6 @@ defaultContentLanguage = "en"
     [params.home.profile]
       enable = true
       avatarURL = ""
-      title = "Hey, I'm Jackson."
-      subtitle = "I design <span class='highlight'>software</span>."
-      description = "The Original Dashboard-Styled Personal Website Template for Framer just got a revamp – with Dashfolio NEO."
-      aboutLink = "/about"
-      emailLink = "mailto:jackson@example.com"
       social = true
     [params.home.posts]
       enable = false
@@ -145,27 +140,6 @@ defaultContentLanguage = "en"
   changefreq = "weekly"
   filename = "sitemap.xml"
   priority = 0.5
-
-[Permalinks]
-  posts = ":filename"
-
-[privacy]
-  [privacy.twitter]
-    enableDNT = true
-  [privacy.youtube]
-    privacyEnhanced = true
-
-[outputs]
-  home = ["HTML", "RSS", "JSON"]
-  page = ["HTML", "MarkDown"]
-  section = ["HTML", "RSS"]
-  taxonomy = ["HTML", "RSS"]
-
-[taxonomies]
-  author = "authors"
-  category = "categories"
-  tag = "tags"
-  series = "series"
 
 [menu]
   # [[menu.main]]
