@@ -97,9 +97,9 @@ defaultContentLanguage = "en"
       copyTex = true
       mhchem = true
     [params.page.comment]
-      enable = true
+      enable = false
       [params.page.comment.disqus]
-        enable = true
+        enable = false
         shortname = "igortarasenko"
 
   [params.analytics]
