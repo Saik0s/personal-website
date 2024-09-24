@@ -1,0 +1,180 @@
+baseURL = 'https://tarasenko.dev/'
+languageCode = 'en-us'
+title = "Igor Tarasenko - iOS Developer & Tech Mentor"
+theme = "DoIt"
+defaultContentLanguage = "en"
+
+[params]
+  version = "0.4.X"
+  title = "Igor Tarasenko - iOS Developer & Tech Mentor"
+  description = "Experienced iOS developer, tech mentor, and productivity enthusiast. Sharing insights on software development, AI, and personal growth."
+  keywords = ["iOS", "Swift", "Tech Mentor", "Productivity"]
+  defaultTheme = "black"
+  dateFormat = "2006-01-02"
+  images = ["/images/profile.jpg"]
+  enablePWA = false
+  cacheRemoteImages = true
+  optimizeImages = true
+  license = '<a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a>'
+
+  [params.app]
+    title = ""
+    noFavicon = false
+    iconColor = "#5bbad5"
+    tileColor = "#da532c"
+
+  [params.search]
+    enable = false
+    type = "fuse"
+    contentLength = 4000
+    maxResultLength = 10
+    snippetLength = 30
+    highlightTag = "em"
+    absoluteURL = false
+    [params.search.fuse]
+      isCaseSensitive = false
+      minMatchCharLength = 2
+      threshold = 0.3
+      distance = 100
+
+  [params.header]
+    themeChangeMode = "switch"
+    [params.header.title]
+      logo = "/images/3d_apple_style_logo_no_bg.png"
+      name = "Igor Tarasenko"
+      typeit = false
+
+  [params.footer]
+    enable = true
+    # {{< version 0.2.0 >}} Custom content (HTML format is supported)
+    custom = ''
+    # {{< version 0.2.0 >}} whether to show Hugo and theme info
+    hugo = false
+    # {{< version 0.2.14 >}} Hosted on (HTML format is supported)
+    # <a title="Github Pages" href="https://docs.github.com/en/pages/" target="_blank" rel="noopener noreffer">GitHub Pages</a>
+    hostedOn = ''
+    # {{< version 0.2.0 >}} whether to show copyright info
+    copyright = true
+    # {{< version 0.2.0 >}} whether to show the author
+    author = true
+    # Site creation time
+    since = 2024
+    # ICP info only in China (HTML format is supported)
+    icp = ""
+    # license info (HTML format is supported)
+    license = '<a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a>'
+
+  [params.home]
+    rss = 10
+    [params.home.profile]
+      enable = true
+      avatarURL = ""
+      title = "Hey, I'm Jackson."
+      subtitle = "I design <span class='highlight'>software</span>."
+      description = "The Original Dashboard-Styled Personal Website Template for Framer just got a revamp – with Dashfolio NEO."
+      aboutLink = "/about"
+      emailLink = "mailto:jackson@example.com"
+      social = true
+    [params.home.posts]
+      enable = false
+      paginate = 6
+
+  [params.social]
+    GitHub = "Saik0s"
+    Twitter = "sa1k0s"
+    BuyMeACoffee = "saik0s"
+
+  [params.page]
+    hiddenFromHomePage = false
+    hiddenFromSearch = false
+    linkToMarkdown = true
+    rssFullText = false
+    seriesNavigation = true
+    enableLastMod = true
+    enableWordCount = true
+    enableReadingTime = true
+    [params.page.toc]
+      enable = true
+      keepStatic = true
+      auto = true
+    [params.page.math]
+      enable = true
+      copyTex = true
+      mhchem = true
+    [params.page.comment]
+      enable = true
+      [params.page.comment.disqus]
+        enable = true
+        shortname = "igortarasenko"
+
+  [params.analytics]
+    enable = true
+    [params.analytics.plausible]
+      data_domain = "tarasenko.dev"
+      src = "https://plausible.z3n.sh/js/script.js"
+
+[markup]
+  [markup.highlight]
+    codeFences = true
+    guessSyntax = true
+    lineNos = true
+    lineNumbersInTable = true
+    noClasses = false
+  [markup.goldmark]
+    [markup.goldmark.extensions]
+      definitionList = true
+      footnote = true
+      linkify = true
+      strikethrough = true
+      table = true
+      taskList = true
+      typographer = true
+    [markup.goldmark.renderer]
+      unsafe = true
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel = 6
+
+[author]
+  name = "Igor Tarasenko"
+  email = "igor@tarasenko.dev"
+  link = "https://tarasenko.dev"
+  avatar = "/images/igor-headshot.jpg"
+
+[sitemap]
+  changefreq = "weekly"
+  filename = "sitemap.xml"
+  priority = 0.5
+
+[Permalinks]
+  posts = ":filename"
+
+[privacy]
+  [privacy.twitter]
+    enableDNT = true
+  [privacy.youtube]
+    privacyEnhanced = true
+
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+  page = ["HTML", "MarkDown"]
+  section = ["HTML", "RSS"]
+  taxonomy = ["HTML", "RSS"]
+
+[taxonomies]
+  author = "authors"
+  category = "categories"
+  tag = "tags"
+  series = "series"
+
+[menu]
+  # [[menu.main]]
+  #   identifier = "blog"
+  #   name = "Blog"
+  #   url = "/blog"
+  #   weight = 1
+  [[menu.main]]
+    identifier = "about"
+    name = "About"
+    url = "/about"
+    weight = 5
