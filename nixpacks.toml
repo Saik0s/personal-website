@@ -1,0 +1,11 @@
+[phases.setup]
+aptPkgs = ["hugo"]
+
+[phases.build]
+cmds = ["hugo --minify --config ./hugo.toml"]
+
+[environment]
+HUGO_VERSION = "0.134.3"
+
+[[nixpacks.included_files]]
+paths = ["/public"]
