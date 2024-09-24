@@ -1,5 +1,5 @@
 [phases.setup]
-aptPkgs = ["hugo"]
+nixPkgs = ["hugo"]
 
 [phases.build]
 cmds = ["hugo --minify --config ./hugo.toml"]
