@@ -62,21 +62,3 @@
         {{- end -}}
     </div>
 </div>
-
-<script>
-document.addEventListener('DOMContentLoaded', (event) => {
-    const btn = document.getElementById('pickMyBrainBtn');
-
-    btn.addEventListener('mousedown', () => {
-        btn.style.transform = 'translateY(1px)';
-    });
-
-    btn.addEventListener('mouseup', () => {
-        btn.style.transform = 'translateY(-2px)';
-    });
-
-    btn.addEventListener('mouseleave', () => {
-        btn.style.transform = 'translateY(0)';
-    });
-});
-</script>

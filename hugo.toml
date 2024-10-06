@@ -130,12 +130,6 @@ defaultContentLanguage = "en"
     startLevel = 2
     endLevel = 6
 
-[author]
-  name = "Igor Tarasenko"
-  email = "igor@tarasenko.dev"
-  link = "https://tarasenko.dev"
-  avatar = "/images/igor-headshot.jpg"
-
 [sitemap]
   changefreq = "weekly"
   filename = "sitemap.xml"

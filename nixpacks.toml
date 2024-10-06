@@ -3,7 +3,7 @@ nixpkgsArchive = "eb28b94bd14835836b539bc3854a6abf929876d4"
 nixPkgs = ["hugo"]
 
 [phases.build]
-cmds = ["hugo --minify --config ./hugo.toml"]
+cmds = ["hugo"]
 
 [environment]
 HUGO_VERSION = "0.134.3"
