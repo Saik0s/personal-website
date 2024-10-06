@@ -25,7 +25,12 @@ Off the clock? **Dad. Husband. Learning junkie.** I eat challenges for breakfast
 
 Want to build cool stuff or level up iOS skills? **Hit me up.**
 
-<a href="https://www.codementor.io/@saik0s?refer=badge"><img src="https://www.codementor.io/m-badges/saik0s/book-session.svg" alt="Book a session with Igor"></a>
+
+- <a href="https://cal.com/tarasenko/30min" target="_blank" class="about-button pick-my-brain-button">Pick My Brain 30 min</a>
+
+- <a href="https://cal.com/tarasenko/60min" target="_blank" class="about-button pick-my-brain-button">Pick My Brain 60 min</a>
+
+- <a href="https://www.codementor.io/@saik0s?refer=badge"><img src="https://www.codementor.io/m-badges/saik0s/book-session.svg" alt="Book a session with Igor"></a>
 
 Or follow my adventures:
 

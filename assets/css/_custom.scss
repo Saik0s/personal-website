@@ -20,11 +20,18 @@
   line-height: 1.2em !important;
 }
 
+@media screen and (max-width: 420px) {
+  .home-profile-heading,
+  .home-profile-subheading {
+    font-size: 33px;
+  }
+}
+
 .home-profile-description {
   font-size: 18px;
   font-weight: 500;
   color: #858585;
-  margin: 20px 0;
+  margin: 15px 0;
   font-family: 'Inter-Medium', 'Inter', sans-serif;
 }
 
@@ -35,13 +42,119 @@
 
 .home-profile-button {
   background-color: #333333;
-  color: #e6edf3;
-  color: $global-font-color;
-  padding: 10px 20px;
+  color: #e6edf3 !important;
   text-decoration: none;
   border-radius: 5px;
   margin-right: 10px;
   font-size: 18px;
+  transition: all 0.3s ease;
+  padding: 8px 16px;
+}
+
+.about-button {
+  background-color: #333333;
+  color: #e6edf3 !important;
+  padding: 3px 8px;
+  text-decoration: none;
+  border-radius: 5px;
+  margin-right: 10px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.pick-my-brain-button {
+  background-color: #1a8d4c;
+  color: #ffffff !important;
+  font-weight: 700;
+  font-size: 14px; // Reduced from 16px
+  padding: 3px 6px; // Reduced from 12px 24px
+  border-radius: 4px;
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+  transform: translateY(0);
+}
+
+.pushable {
+  position: relative;
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  outline-offset: 4px;
+  transition: filter 250ms;
+}
+
+.shadow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  background: #{'hsl(0deg 0% 0% / 0.25)'};
+  will-change: transform;
+  transform: translateY(2px);
+  transition: transform 600ms cubic-bezier(.3, .7, .4, 1);
+}
+
+.edge {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  background: linear-gradient(
+    to left,
+    #{'hsl(340deg 100% 16%) 0%'},
+    #{'hsl(340deg 100% 32%) 8%'},
+    #{'hsl(340deg 100% 32%) 92%'},
+    #{'hsl(340deg 100% 16%) 100%'}
+  );
+}
+
+.front {
+  display: block;
+  position: relative;
+  padding: 12px 42px;
+  border-radius: 12px;
+  font-size: 1.25rem;
+  color: white;
+  background: #{'hsl(345deg 100% 47%)'};
+  will-change: transform;
+  transform: translateY(-4px);
+  transition: transform 600ms cubic-bezier(.3, .7, .4, 1);
+}
+
+.pushable:hover {
+  filter: brightness(110%);
+}
+
+.pushable:hover .front {
+  transform: translateY(-6px);
+  transition: transform 250ms cubic-bezier(.3, .7, .4, 1.5);
+}
+
+.pushable:active .front {
+  transform: translateY(-2px);
+  transition: transform 34ms;
+}
+
+.pushable:hover .shadow {
+  transform: translateY(4px);
+  transition: transform 250ms cubic-bezier(.3, .7, .4, 1.5);
+}
+
+.pushable:active .shadow {
+  transform: translateY(1px);
+  transition: transform 34ms;
+}
+
+.pushable:focus:not(:focus-visible) {
+  outline: none;
 }
 
 @keyframes fadeInUp {
@@ -98,6 +211,10 @@
   background-color: #f9f9f9;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  .pick-my-brain-button {
+    display: inline-block;
+    margin: 10px 5px;
+  }
 }
 
 .about-header h1 {
