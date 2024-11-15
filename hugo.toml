@@ -61,8 +61,6 @@ defaultContentLanguage = "en"
     since = 2024
     # ICP info only in China (HTML format is supported)
     icp = ""
-    # license info (HTML format is supported)
-    license = '<a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a>'
 
   [params.home]
     rss = 10
@@ -71,7 +69,7 @@ defaultContentLanguage = "en"
       avatarURL = ""
       social = true
     [params.home.posts]
-      enable = false
+      enable = true
       paginate = 6
 
   [params.social]
@@ -135,14 +133,13 @@ defaultContentLanguage = "en"
   filename = "sitemap.xml"
   priority = 0.5
 
-[menu]
-  # [[menu.main]]
-  #   identifier = "blog"
-  #   name = "Blog"
-  #   url = "/blog"
-  #   weight = 1
-  [[menu.main]]
-    identifier = "about"
-    name = "About"
-    url = "/about"
-    weight = 5
+[[menu.main]]
+  identifier = "posts"
+  name = "Posts"
+  url = "/posts"
+  weight = 1
+[[menu.main]]
+  identifier = "about"
+  name = "About"
+  url = "/about"
+  weight = 2
