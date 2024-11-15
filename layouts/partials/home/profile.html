@@ -3,19 +3,23 @@
     <h1 class="home-profile-heading  fadeInUp-animation-1">
         Hey, I'm Igor.
     </h1>
-    <h1 class="home-profile-heading fadeInUp-animation-2">I build <span class="home-profile-subheading">apps</span> + <span class="home-profile-subheading">AI</span>.</h2>
-    <p class="home-profile-description fadeInUp-animation-3">
-        From Uber to <a href="https://apps.apple.com/us/app/whisperboard-voice-to-text/id1661442906" target="_blank">WhisperBoard</a>, I create tech that delivers. Need tips on iOS, AI, or automation? Let's chat.
-    </p>
-    <div class="links home-profile-buttons fadeInUp-animation-4">
-        <button class="pushable" style="margin-right: 20px; margin-bottom: 20px;">
-            <span class="shadow"></span>
-            <span class="edge"></span>
-            <span class="front">
-                <a href="https://cal.com/tarasenko/60min" target="_blank" style="color: inherit; text-decoration: none;">Pick My Brain</a>
-            </span>
-        </button>
-        {{- if $profile.social -}}
+    <h1 class="home-profile-heading fadeInUp-animation-2">I build <span class="home-profile-subheading">apps</span> + <span
+            class="home-profile-subheading">AI</span>.</h2>
+        <p class="home-profile-description fadeInUp-animation-3">
+            From Uber to <a href="https://apps.apple.com/us/app/whisperboard-voice-to-text/id1661442906" target="_blank">WhisperBoard</a>, I create
+            tech that delivers. Need tips on iOS, AI, or automation? Let's chat.
+        </p>
+        <div class="links home-profile-buttons fadeInUp-animation-4">
+            <button class="pushable" style="margin-right: 20px; margin-bottom: 20px;">
+                <a href="https://cal.com/tarasenko/60min" target="_blank" style="color: inherit; text-decoration: none;">
+                    <span class="shadow"></span>
+                    <span class="edge"></span>
+                    <span class="front">
+                        Pick My Brain
+                    </span>
+                </a>
+            </button>
+            {{- if $profile.social -}}
             {{- $socialMap := resources.Get "data/social.yml" | transform.Unmarshal -}}
             {{- $socialArr := slice -}}
             {{- range $key, $value := .Site.Params.social -}}
@@ -59,6 +63,6 @@
             {{- range sort $socialArr "Weight" -}}
             {{- partial "plugin/social.html" . -}}
             {{- end -}}
-        {{- end -}}
-    </div>
+            {{- end -}}
+        </div>
 </div>
