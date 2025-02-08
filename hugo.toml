@@ -56,7 +56,7 @@ defaultContentLanguage = "en"
     # {{< version 0.2.0 >}} whether to show copyright info
     copyright = true
     # {{< version 0.2.0 >}} whether to show the author
-    author = true
+    author = false
     # Site creation time
     since = 2024
     # ICP info only in China (HTML format is supported)
@@ -81,11 +81,18 @@ defaultContentLanguage = "en"
     hiddenFromHomePage = false
     hiddenFromSearch = false
     linkToMarkdown = true
+    [params.page.meta]
+      author = false
+      authorAvatar = false
+      date = false
+      lastUpdated = false
+      readingTime = false
+      wordCount = false
     rssFullText = false
     seriesNavigation = true
-    enableLastMod = true
-    enableWordCount = true
-    enableReadingTime = true
+    enableLastMod = false
+    enableWordCount = false
+    enableReadingTime = false
     [params.page.toc]
       enable = true
       keepStatic = true

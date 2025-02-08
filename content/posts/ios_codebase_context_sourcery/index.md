@@ -15,12 +15,12 @@ hiddenFromHomePage: false
 hiddenFromSearch: false
 
 featuredImage: "header.webp"
-featuredImagePreview: "header.webp"
+featuredImagePreview: "header_preview.png"
 
 math:
   enable: false
 toc:
-  enable: true
+  enable: false
   auto: true
 code:
   copy: true
@@ -28,11 +28,9 @@ lightgallery: false
 license: ""
 ---
 
-## Stop Letting AI Write Shit iOS Code: The Context Problem
+You've seen it. You've *suffered* through it. You fed your AI coding assistant a seemingly simple task, and it spat out a steaming pile of Swift garbage.
 
 <!--more-->
-
-You've seen it. You've *suffered* through it. You fed your AI coding assistant a seemingly simple task, and it spat out a steaming pile of Swift garbage.
 
 > Why? Because context is king, and most AI tools are flying blind in large iOS codebases.
 
@@ -49,7 +47,7 @@ I had situations where AI would start writing code for a component that *already
 File trees alone don't cut it. Projects with complex business logic? Forget it. AI won't magically know how to use your internal components.
 
 Smaller projects? You *could* write descriptions, but they're outdated instantly.
-<br/>
+
 
 
 ## Sourcery: Your Secret Weapon for AI-Powered Code
@@ -91,15 +89,7 @@ struct UserProfileView: View {
 }
 ```
 
-{{< mermaid >}}
-graph LR
-    A[Source Files] -->|Sourcery| B[Type Information]
-    B --> C[Template Engine]
-    C --> D[Generated Index]
-    D --> E[AI Context]
-    style E fill:#00ff00,stroke:#333,stroke-width:2px
-{{< /mermaid >}}
-<br/><br/>
+
 
 ### Getting Started with Sourcery: Installation and Basic Usage
 
@@ -114,7 +104,7 @@ Sourcery is a command-line tool. You have several options:
 2. Create your template
 3. Run: `sourcery --sources Sources --templates Template.stencil --output .project-context`
 {{< /admonition >}}
-<br/>
+
 
 ## How to Generate a Project Index with Sourcery (Step-by-Step)
 
@@ -132,15 +122,12 @@ case {{ type.name | lowercase }}
 
 Then run Sourcery with your source path and template path:
 
-{{< admonition note "Command Line Usage" true >}}
 ```bash {open=true, lineNos=false, wrap=true, title="Command Line Usage"}
 sourcery --sources Sources --templates AllTypes.stencil --output .project-context
 ```
-{{< /admonition >}}
 
 That can also be configured in `.sourcery.yml`:
 
-{{< admonition example "Configuration File" true >}}
 ```yaml {open=true, lineNos=false, wrap=true, title="sourcery.yml"}
 sources:
 - ./Sources
@@ -149,7 +136,6 @@ templates:
 output:
 - .project-context
 ```
-{{< /admonition >}}
 
 Then you just run `sourcery` and that is it.
 
@@ -237,7 +223,7 @@ And then we can access it in template:
 Here you can find materials for the workshop for Sourcery [Pages · krzysztofzablocki/SourceryWorkshops Wiki · GitHub](https://github.com/krzysztofzablocki/SourceryWorkshops/wiki)
 
 Optionally, you can add content of your .cursorrules directly into template and then output generated file to .cursorrules so it has your rules and up to date index.
-<br/>
+
 
 ## Integrate with Cursor: Giving Your AI Superpowers
 
@@ -271,12 +257,12 @@ templates:
 output:
 .cursor/rules/.full_code_index.mdc
 ```
-<br/>
+
 ## My Proven Codebase Index Template (Steal This)
 
 Here is my index file swift template with some extra filtering to make it smaller:
 
-[sourcery template for generating a code index file from swift source files · GitHub](https://gist.github.com/Saik0s/a6f09e3f1cdeb6424ce343609a8fd581)
+{{< gist Saik0s a6f09e3f1cdeb6424ce343609a8fd581 >}}
 
 Sourcery lets you define feature-level, domain-specific, and complex indexes. This means not only listing types, but actually personalizing it and giving your AI *exactly* the context it needs, *when* it needs it.
 
