@@ -8,14 +8,14 @@
 }
 
 .home-profile-heading {
-  font-size: 48px;
+  font-size: 3rem;
   font-weight: 600;
   margin: 0;
   line-height: 1.2em !important;
 }
 
 .home-profile-subheading {
-  font-size: 48px;
+  font-size: 3reb;
   font-weight: 600;
   color: #858585;
   line-height: 1.2em !important;
@@ -24,20 +24,20 @@
 @media screen and (max-width: 420px) {
   .home-profile-heading,
   .home-profile-subheading {
-    font-size: 33px;
+    font-size: 2rem;
   }
 }
 
 .home-profile-description {
-  font-size: 18px;
+  font-size: 1.125rem;
   font-weight: 500;
   color: #858585;
-  margin: 15px 0;
+  margin: 1rem 0;
   font-family: 'Inter-Medium', 'Inter', sans-serif;
 }
 
 .home-profile-buttons {
-  margin-top: 20px;
+  margin-top: 2rem;
   padding-left: 0 !important;
 }
 
@@ -46,10 +46,10 @@
   color: #e6edf3 !important;
   text-decoration: none;
   border-radius: 5px;
-  margin-right: 10px;
-  font-size: 18px;
+  font-size: 1.125rem;
+  padding: 0.6rem 1.5rem;
+  margin-right: 0.75rem;
   transition: all 0.3s ease;
-  padding: 8px 16px;
 }
 
 .about-button {
@@ -67,8 +67,8 @@
   background-color: #1a8d4c;
   color: #ffffff !important;
   font-weight: 700;
-  font-size: 14px;
-  padding: 3px 6px;
+  font-size: 1.125rem;
+  padding: 0.1rem 0.4rem;
   border-radius: 4px;
   text-decoration: none;
   position: relative;

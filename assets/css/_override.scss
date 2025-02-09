@@ -1,0 +1,178 @@
+/*  In your CSS file, probably best in a :root or body selector for global scope */
+
+html.dark {
+  --global-background-color: #0d1117; /* Example dark background - REPLACE */
+  --global-font-color: #97A3BA; /* Example dark text color - REPLACE */
+  --global-font-secondary-color: #d4dbe1; /* Example dark secondary text - REPLACE */
+  --fgColor-muted: #848d97; /* Example dark muted text - REPLACE */
+  --fgColor-heading: #C6C6C6; /* Example dark heading text - REPLACE */
+  --fgColor-link: #4493f8; /* Example dark link color - REPLACE */
+  --code-background-color: #1b2029; /* Example dark code block background - REPLACE */
+  --code-color: #e5bf78; /* Example dark code text color - REPLACE */
+  --blockquote-bg-color: #388bfd1a; /* Example dark admonition background - REPLACE */
+  --blockquote-color: #1f6feb; /* Example dark admonition color - REPLACE */
+  --bgColor-secondary: #161b22; /* Example secondary background color - REPLACE */
+  --borderColor-default: #30363d; /* Example border color - REPLACE */
+  --bgColor-neutral-muted: #6e768166; /* Example neutral muted background - REPLACE */
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--fgColor-heading);
+  font-weight: bolder;
+}
+
+a {
+    color: var(--aw-color-link);
+}
+
+a:hover {
+    color: var(--aw-color-link-hover)
+}
+
+/* Basic Prose Styling - Consider using Tailwind's `prose` class instead, shown later */
+/*
+.content p {
+  margin-bottom: 1em;
+}
+*/
+
+@media only screen and (max-width: 1440px) {
+  .page {
+    width: 800px !important;
+  }
+}
+
+@media only screen and (max-width: 1200px) {
+  .page {
+    width: 800px !important;
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  .page {
+    width: 800px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+}
+
+@media only screen and (max-width: 680px) {
+  .page {
+    width: 100% !important;
+    margin-left: auto !important;
+    padding-top: $header-height;
+
+    .categories-card,
+    .author-card,
+    .series-card {
+      .card-item {
+        width: 100%;
+      }
+    }
+  }
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.6;
+  letter-spacing: 0.02em;
+  color: var(--fgColor-default); /* Assuming your theme uses CSS variables, adjust accordingly */
+}
+
+.page.single {
+  max-width: 800px;
+  width: 60%;
+  margin: 0 auto;
+  padding-top: 3.5rem;
+}
+
+.single-title {
+  font-size: 3rem; /* Adjust as needed */
+  font-weight: bolder;
+  color: var(--fgColor-heading); /* Assuming your theme has heading color variable */
+}
+
+.single-subtitle {
+  font-size: 1.5rem; /* Adjust as needed */
+  color: var(--fgColor-secondary); /* Assuming your theme has secondary color variable */
+}
+
+.post-meta {
+  font-size: 0.875rem; /* Equivalent to text-sm in Tailwind */
+  color: var(--fgColor-muted); /* Assuming your theme has muted color variable */
+
+  .post-meta-line {
+    display: flex;
+    flex-wrap: wrap; /* For responsiveness */
+  }
+
+  /* If needed, add specific styling for author, category, series spans */
+}
+
+.content.prose {
+    color: var(--fgColor-default); /* Ensure text color is correct within prose */
+
+    h1, h2, h3, h4, h5, h6 {
+        color: var(--fgColor-heading); /* Ensure heading colors are correct within prose */
+        font-weight: bolder;
+    }
+
+    /* You might need to adjust prose styles further to match inspiration */
+}
+
+/* Style for details/admonition blocks - basic example, customize further */
+.details.admonition {
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--borderColor-default); /* Assuming border color variable */
+    border-radius: 0.375rem; /* Tailwind rounded-md */
+    background-color: var(--bgColor-secondary); /* Assuming secondary background variable */
+    overflow: hidden; /* To contain rounded corners */
+
+    .details-summary.admonition-title {
+        padding: 1rem 1.5rem;
+        font-weight: bold;
+        color: var(--fgColor-default);
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: var(--bgColor-secondary); /* Match container background */
+    }
+
+    .details-content.admonition-content {
+        padding: 1.5rem;
+        border-top: 1px solid var(--borderColor-default); /* Separator line */
+    }
+
+    .details-icon {
+        /* Style for the icon (e.g., SVG chevron) */
+    }
+}
+
+/* Style for code blocks - basic example, customize further */
+.code-block {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 0.375rem; /* Tailwind rounded-md */
+    overflow: hidden; /* For rounded corners and scrollbar */
+    background-color: var(--code-background-color); /* Assuming code background variable */
+
+    .code-block-title {
+        background-color: var(--code-header-color); /* Assuming code header variable */
+        color: var(--fgColor-default); /* Text color for title */
+        padding: 0.5rem 1rem;
+        font-size: 0.875rem; /* text-sm */
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    pre code.chroma {
+        display: block;
+        padding: 1rem;
+        overflow-x: auto;
+        font-family: var(--aw-font-mono); /* Assuming monospace font variable */
+        color: var(--code-color); /* Assuming code text color variable */
+        white-space: pre; /* Keep whitespace */
+    }
+}
