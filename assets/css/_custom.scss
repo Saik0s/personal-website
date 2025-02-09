@@ -4,6 +4,7 @@
   color: $global-font-color;
   text-align: left !important;
   font-family: 'Inter', 'Inter Placeholder', sans-serif;
+  max-width: 500px !important;
 }
 
 .home-profile-heading {
@@ -36,7 +37,7 @@
 }
 
 .home-profile-buttons {
-  margin-top: 30px;
+  margin-top: 20px;
   padding-left: 0 !important;
 }
 
@@ -203,14 +204,14 @@
 .home {
   max-width: 800px !important;
   margin: 0 auto;
-  padding: 2rem 2rem 4rem;
+  padding: 5rem 2rem 4rem;
 
   @media screen and (max-width: 768px) {
-    padding: 2rem 1rem 4rem;
+    padding: 3rem 1rem 4rem;
   }
 
   @media screen and (max-width: 480px) {
-    padding: 2rem 0.5rem 4rem;
+    padding: 3rem 0.5rem 4rem;
   }
 
   &.posts {
