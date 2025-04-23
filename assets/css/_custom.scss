@@ -195,6 +195,12 @@
   animation-fill-mode: forwards;
 }
 
+.fadeInUp-animation-5 {
+  animation: 0.6s fadeInUp cubic-bezier(0.25, 0.1, 0.25, 1) 0.6s;
+  opacity: 0;
+  animation-fill-mode: forwards;
+}
+
 #header-desktop {
   .header-wrapper {
     padding: 0 2em 0 2em !important;
