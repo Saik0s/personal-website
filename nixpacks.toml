@@ -1,5 +1,5 @@
 [phases.setup]
-# nixpkgsArchive = "eb28b94bd14835836b539bc3854a6abf929876d4"
+nixpkgsArchive = "c11863f1e964833214b767f4a369c6e6a7aba141"
 nixPkgs = ["hugo"]
 
 [phases.build]
