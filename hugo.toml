@@ -102,10 +102,23 @@ defaultContentLanguage = "en"
       copyTex = true
       mhchem = true
     [params.page.comment]
-      enable = false
-      [params.page.comment.disqus]
-        enable = false
-        shortname = "igortarasenko"
+      enable = true
+      [params.page.comment.giscus]
+        enable = true
+        # owner/repo
+        dataRepo = "Saik0s/blog-comments"
+        dataRepoId = "R_kgDOOepoCg"
+        dataCategory = "Blog Comments"
+        dataCategoryId = "DIC_kwDOOepoCs4CpZHA"
+        dataMapping = "pathname"
+        dataStrict = "0"
+        dataReactionsEnabled = "1"
+        dataEmitMetadata = "0"
+        dataInputPosition = "bottom"
+        lightTheme = "dark"
+        darkTheme = "dark"
+        dataLang = "en"
+        dataLoading = "lazy"
 
   [params.analytics]
     enable = true
