@@ -27,7 +27,7 @@ license: "MIT"
 
 <!--more-->
 
-*Learn how to turn a text prompt into a vertical TikTok-style AI video using **ComfyUI**, the **Flux** image model, and **LTX Video** – all without coding. We'll start by generating a portrait image and then animate it into a short video. This guide is written by an AI enthusiast in a casual, hands-on style, so let's dive in!*
+*You'll create TikTok-ready AI videos from text using ComfyUI with Flux and LTX Video. No coding needed - first generate a portrait, then bring it to life with animation.*
 
 > 🎯 **Difficulty Level:** Intermediate
 > ⏱️ **Total Time:** ~1-2 hours for first setup, 5-10 minutes per video after
@@ -43,9 +43,18 @@ For those who want to jump right in, here's the TL;DR version:
    - Advanced users can alternatively use `pip install comfy-cli` for CLI installation
 
 2. **Download Required Models** (20-30 min)
-   - Flux/RedCraft model (~11GB)
-   - LTX Video model (~2-3GB)
-   - T5 text encoder and CLIP (automatically downloaded via ComfyUI Manager)
+   - **Flux/RedCraft model** (~11GB)
+     Download: [RedCraft RealReveal5 ULTRA (FP8, pruned)](https://civitai.green/models/958009?modelVersionId=1576605)
+     Save to: `models/checkpoints/RedCraft_RealReveal5_ULTRA_15Steps_fp8_pruned.safetensors`
+   - **LTX Video model** (~2-3GB)
+     Download: [ltxv-2b-0.9.6-distilled-04-25.safetensors](https://huggingface.co/Lightricks/LTX-Video)
+     Save to: `models/checkpoints/ltxv-2b-0.9.6-distilled-04-25.safetensors`
+   - **T5 XXL text encoder** (~10GB)
+     Download: [t5xxl_fp16.safetensors](https://huggingface.co/comfyanonymous/flux_text_encoders)
+     Save to: `models/text_encoders/t5xxl_fp16.safetensors`
+   - **CLIP text encoder** (~500MB)
+     Download: [clip_l.safetensors](https://huggingface.co/comfyanonymous/flux_text_encoders)
+     Save to: `models/clip/clip_l.safetensors`
 
 3. **Generate Portrait** (2-3 min)
    - Load Flux model
@@ -56,7 +65,7 @@ For those who want to jump right in, here's the TL;DR version:
 4. **Create Video** (3-5 min)
    - Feed portrait to LTX
    - Add motion prompt
-   - Generate 16-24 frames
+   - Generate 17-33 frames at 24 FPS
    - Export as MP4
 
 > 💡 **Pro Tip:** Start with simple camera movements like gentle pans or zooms for best results.
@@ -95,13 +104,13 @@ ComfyUI links these stages, so after Stage 1 finishes, Stage 2 can use the outpu
 
 Before we get into the nuts and bolts, let’s set realistic expectations:
 
-- **Video Length & Quality:** The videos will be **very short** (on the order of 1–2 seconds, e.g. ~16–24 frames at 12–15 FPS). The idea is to produce a cool animated *moment* or looping clip, not a full movie. Quality can be surprisingly good for small motions and camera pans. For example, a gentle pan or the subject blinking can look natural. However, complex movements (like running, or multiple subjects interacting) will **not** look realistic – the model isn’t that advanced yet.
+- **Video Length & Quality:** The model generates high-quality videos at **24 FPS** with support for up to **129 frames** (about 5.4 seconds). The idea is to produce cinematic sequences with smooth, natural motion. Quality can be surprisingly good for camera movements and subtle animations. For example, a gentle pan or the subject's expression changing can look very natural. However, complex movements (like running, or multiple subjects interacting) will **not** look realistic – the model isn't that advanced yet.
 
-- **Speed:** Don’t expect real-time video rendering on typical hardware. Flux image generation might take several seconds per image (especially on higher resolutions or if your GPU is modest). LTX Video generation will take some seconds more to produce multiple frames. On a high-end GPU (e.g. Nvidia RTX 3080/4090), the process is quite fast – a few seconds for an image and perhaps 20–30 seconds for a short video ([How to use LTX Video 0.9.5 on ComfyUI - Stable Diffusion Art](https://stable-diffusion-art.com/ltx-video-0-9-5/#:~:text=LTX%20Video%200,time%2C%20but%20very%20close)). On lower-end hardware (or Apple M1/M2), it will be slower (possibly a few minutes total). Still, this is *way faster* than traditional video rendering or earlier AI video models.
+- **Speed:** The latest LTX Video model (0.9.6-distilled) is highly optimized and can generate videos faster than real-time playback at 24 FPS on high-end GPUs. On a high-end GPU (e.g. Nvidia RTX 3080/4090), you can expect generation times of 15-30 seconds for a typical video. On lower-end hardware (or Apple M1/M2), it will be slower (possibly a few minutes total), but still much faster than traditional video rendering or earlier AI video models. The distilled model achieves this speed by using only 8 diffusion steps per frame while maintaining quality.
 
 - **Realism Limits:** The output video is essentially a series of AI-generated images, so you might see minor flicker or differences frame to frame (the model works to keep them consistent, but it’s not perfect). The motions will be subtle. For instance, you can create a slow camera pan, slight subject movements (like a head turn or smile), or environmental effects (like leaves trembling). It excels at **small, smooth changes**. If you try something extreme (like “she starts dancing wildly”), the result will likely be strange or glitchy. **Don’t expect** the kind of coherence you’d get from a real video camera – think of it more like a moving painting.
 
-- **Resolution:** We’ll use **576×1024** pixels (a vertical 9:16 aspect ratio) as an example. This is a decent resolution for preview/TikTok. Higher resolutions (e.g. 1080p) are possible but will be slower and may require a beefy GPU with lots of VRAM. It’s best to start smaller.
+- **Resolution:** The model is optimized for **768×512** resolution, where it can generate videos faster than real-time playback. While other resolutions are possible, this is the sweet spot for performance and quality. The model works best with resolutions that are divisible by 32.
 
 - **One scene only:** LTX does not *create new content per frame*; it transforms the given image. So if your image is a person standing, the video will be that same person – they won’t suddenly change clothes or location (unless your motion prompt somehow forces a change, but that often just yields artifacts). It’s essentially **the same scene with slight motion**. This is great for cinematic camera moves or a bit of life in a portrait, but not for storyboarding multi-scene sequences.
 
@@ -113,7 +122,7 @@ Let’s make sure you have the right setup before we proceed.
 
 **Operating System:** You can do this on **Windows or macOS**. (Linux works too, but this guide focuses on Win/Mac.) On Windows, you’ll need an **NVIDIA GPU** for GPU acceleration ([Download ComfyUI for Windows/Mac](https://www.comfy.org/download#:~:text=For%20Mac%3A%20Requires%20Apple%20Silicon)). On macOS, you’ll need an **Apple Silicon** Mac (M1, M2, M3 chips) ([Download ComfyUI for Windows/Mac](https://www.comfy.org/download#:~:text=For%20Mac%3A%20Requires%20Apple%20Silicon)) – the Desktop version of ComfyUI doesn’t support Intel Macs, and Apple Silicon provides the needed ML acceleration (Metal Performance Shaders).
 
-**GPU and VRAM:** For Windows/NVIDIA users, a GPU with at least **8 GB VRAM** is recommended. 12GB+ will allow higher resolution and more frames. (Flux and LTX are heavy models; Flux’s all-in-one FP8 model is ~11 GB on disk and typically wants ~16 GB VRAM to run comfortably ([How to install Flux AI model on ComfyUI - Stable Diffusion Art](https://stable-diffusion-art.com/flux-comfyui/#:~:text=You%20need%2016%20GB%20of,VRAM%20to%20run%20this%20workflow)) ([Flux Model Resource Collection | ComfyUI Wiki](https://comfyui-wiki.com/en/resource/flux#:~:text=Version%20Name%20License%20VRAM%20Requirement,0%2012GB%2BDownloadLightweight%20commercial%20version)), but it can work on 8–12 GB with optimizations or lower resolution.) For macOS M1/M2 users, at least **16 GB unified memory** is recommended (32 GB is better). Macs use the GPU integrated in the chip – it can run these models, but slower. Be prepared for longer generation times on Mac compared to a high-end PC GPU. If you have no dedicated GPU (and only a CPU), it’s technically possible to run ComfyUI, but it will be **extremely slow** (minutes per frame); this guide assumes you have some GPU capability.
+**GPU and VRAM:** For Windows/NVIDIA users, a GPU with at least **8 GB VRAM** is recommended. 12GB+ will allow higher resolution (up to 720×1280) and more frames. (Flux and LTX are heavy models; Flux's all-in-one FP8 model is ~11 GB on disk and typically wants ~16 GB VRAM to run comfortably, but it can work on 8–12 GB with optimizations or lower resolution.) The LTX 0.9.6-distilled model is optimized for efficiency, requiring only 8 diffusion steps per frame. For macOS M1/M2 users, at least **16 GB unified memory** is recommended (32 GB is better). Macs use the GPU integrated in the chip – it can run these models, but slower. Be prepared for longer generation times on Mac compared to a high-end PC GPU. If you have no dedicated GPU (and only a CPU), it's technically possible to run ComfyUI, but it will be **extremely slow** (minutes per frame); this guide assumes you have some GPU capability.
 
 **RAM and Disk:** Ensure you have sufficient disk space – the models are large (the Flux model ~11 GB, LTX model ~ >2 GB, plus another ~10 GB for a text encoder file). RAM isn’t usually a bottleneck beyond what’s needed to load models into VRAM, but having 16 GB+ system RAM is a good idea.
 
@@ -239,7 +248,7 @@ Save this `.safetensors` file to a location you can find. (It might be named alo
 
 Next, get the LTX model weights:
 
-- **LTX model download:** Download **ltxv-2b-0.9.6-distilled-04-25.safetensors** from [Hugging Face – Lightricks LTX-Video repo】 ([GitHub - Lightricks/ComfyUI-LTXVideo: LTX-Video Support for ComfyUI](https://github.com/Lightricks/ComfyUI-LTXVideo#:~:text=17,%E2%AD%90)). The file is around 2–3 GB. (This is the “0.9.6 distilled” version – a lighter, faster version of LTX 0.9.6 requiring only 8 diffusion steps per frame ([GitHub - Lightricks/ComfyUI-LTXVideo: LTX-Video Support for ComfyUI](https://github.com/Lightricks/ComfyUI-LTXVideo#:~:text=1,Download%20from%20here)), great for quick results).
+- **LTX model download:** Download **ltxv-2b-0.9.6-distilled-04-25.safetensors** from [Hugging Face – Lightricks LTX-Video repo](https://huggingface.co/Lightricks/LTX-Video). The file is around 2–3 GB. This is the "0.9.6 distilled" version – a highly optimized version of LTX that requires only 8 diffusion steps per frame while maintaining high quality output. It's specifically designed for fast generation, capable of producing 24 FPS videos at 768x512 resolution faster than they can be watched.
 
 If you have trouble finding that exact file, you can use the direct link provided (in ComfyUI Manager you could also search for LTXVideo and see if it provides links). Ensure the file is named `ltxv-2b-0.9.6-distilled-04-25.safetensors` (or similar).
 
@@ -393,7 +402,7 @@ Now for the fun part – animating that still image. We’ll set up the LTX vide
 
 4. **Motion Prompt (Text) for Video:** Now add another **Text Encode** node (or a prompt node specifically for LTX if provided by extension). This will be the description of the video motion and any scene details. Write a prompt that **describes what happens over the next few seconds** and also matches the content of the image. It’s important to *match the image* so the model knows what it’s animating ([How to use LTX Video 0.9.5 on ComfyUI - Stable Diffusion Art](https://stable-diffusion-art.com/ltx-video-0-9-5/#:~:text=Step%205%3A%20Revise%20the%20prompt)). For example, if your image is a woman in a sunny garden, your video prompt should mention that context, then describe motion:
 
-   *Example motion prompt:* *“a close-up portrait of a young woman in a sunny garden, slight camera movement; slowly pan the camera upward from her torso to her face, her hair swaying gently in a breeze.”*
+   *Example motion prompt:* *"a close-up portrait of a young woman in a sunny garden, slight camera movement; slowly pan the camera upward from her torso to her face, her hair swaying gently in a breeze. The lighting is warm and natural, likely from the setting sun, casting a soft glow on the scene. The scene appears to be real-life footage."*
 
    This prompt contains the scene (so LTX knows it’s a woman in a garden) and the motion (pan upward, hair swaying). LTX works better with **long descriptive prompts** ([How to use LTX Video 0.9.5 on ComfyUI - Stable Diffusion Art](https://stable-diffusion-art.com/ltx-video-0-9-5/#:~:text=Step%205%3A%20Revise%20the%20prompt)), so don’t be shy to include detail. You can even ask ChatGPT or similar to expand a simple motion idea into a vivid description (as a fun tip from LTX docs ([How to use LTX Video 0.9.5 on ComfyUI - Stable Diffusion Art](https://stable-diffusion-art.com/ltx-video-0-9-5/#:~:text=uploaded%20image%20and%20describe%20what,in%20the%20next%204%20seconds))).
 
@@ -409,9 +418,10 @@ Now for the fun part – animating that still image. We’ll set up the LTX vide
      - **Text Conditioning:** Connect the output of the motion Text Encode to the conditioning input of the LTX node (likely labeled similarly to the image sampler’s conditioning).
 
    - Configure the LTX node’s parameters:
-     - **Number of Frames:** e.g. **20** frames. This determines how many frames the video will have (not counting the initial one sometimes). 16–24 is a good range as noted, which at ~12 FPS gives ~1.3 to 2 seconds of video.
-     - **FPS (frames per second):** Many workflows just output frames, and you can play them at whatever FPS you want. But if the node has an FPS setting for motion consistency, set it to **12** or **15**. (12 FPS will look a bit choppy but is easier for the model; 15 is slightly smoother; you can always interpolate if needed).
-     - **Steps per Frame:** LTX 0.9.6 distilled is designed to use only **8 diffusion steps per frame** ([GitHub - Lightricks/ComfyUI-LTXVideo: LTX-Video Support for ComfyUI](https://github.com/Lightricks/ComfyUI-LTXVideo#:~:text=1,Download%20from%20here)). Ensure it’s set to ~8 (if using the distilled model). If using the full 0.9.6, you might use more steps (and it will be slower).
+     - **Resolution:** Set to **768×512** pixels - this is the optimal resolution where the model can generate videos faster than real-time playback.
+     - **FPS:** The model is optimized for **24 FPS** output, providing smooth, cinematic motion.
+     - **Number of Frames:** The model supports up to **129 frames**, allowing for longer sequences up to 5.4 seconds. For testing, you might start with fewer frames and work up to the full length.
+     - **Steps per Frame:** Use **8 diffusion steps per frame** with the 0.9.6 distilled model - this is optimized for the best balance of speed and quality.
      - **CFG Scale:** For LTX, something like **7–8** is typical (this is separate from the image CFG). Some LTX example flows use multiple CFG values through advanced schedulers, but to keep simple, try CFG ~7.
      - **Noise Schedule / Strength:** Some nodes might ask how strongly to deviate from the initial image each frame. Usually, leaving default or moderate values is fine. The model will try to keep things coherent.
 
@@ -463,19 +473,19 @@ At this point, you’ve successfully generated a portrait and animated it with A
 To help inspire you, here are a couple of example prompt combinations (Stage 1 prompt + Stage 2 motion prompt) you can try:
 
 - **Example 1 – Portrait in Nature:**
-  **Image Prompt:** *“Cinematic portrait of a 25-year-old woman with long flowing black hair, standing amid a field of sunflowers at golden hour, gentle smile, highly detailed face, natural light, bokeh background”*.
+  **Image Prompt:** *"Cinematic portrait of a 25-year-old woman with long flowing black hair, standing amid a field of sunflowers at golden hour, gentle smile, highly detailed face, natural light, bokeh background. The lighting is warm and natural, likely from the setting sun, casting a soft glow on the scene. The scene appears to be real-life footage."*
   *(Negative: low quality, blurry, deformed, extra arms)*
   Settings: 15 steps, CFG 1, Euler sampler, SGM_uniform scheduler.
-  **Motion Prompt:** *“the same young woman standing in a sunflower field at sunset, camera slowly dollying forward towards her face, her hair and the sunflowers gently swaying in the breeze, warm sunlight flickering”*.
-  FPS: 12, Frames: 20, CFG ~7, 8 steps/frame.
-  **Expected Result:** A slow push-in camera movement; background and hair moving subtly as if wind is blowing.
+  **Motion Prompt:** *"the same young woman standing in a sunflower field at sunset, camera slowly dollying forward towards her face, her hair and the sunflowers gently swaying in the breeze, warm sunlight flickering. The lighting remains consistent throughout, maintaining the golden hour atmosphere. The motion is smooth and cinematic, with the camera movement feeling natural and professional."*
+  FPS: 24, Frames: 25, CFG ~7, 8 steps/frame.
+  **Expected Result:** A smooth, cinematic push-in camera movement at high quality 24 FPS; background and hair moving subtly as if wind is blowing.
 
 - **Example 2 – Still Life Object:**
-  **Image Prompt:** *“A crystal glass filled with water on a table, sunlight refraction, ultra-detailed, realistic photography”*.
-  Settings: 20 steps, CFG 2 (since it’s an object, a bit higher CFG might be okay), DPM++ 2M.
-  **Motion Prompt:** *“the crystal glass of water on the table in bright sunlight; camera rotates slowly around the glass, light glinting through the crystal and water; the reflections and refractions moving realistically”*.
-  FPS: 15, Frames: 16.
-  **Expected Result:** The glass stays the same, but you get a parallax effect as if the camera is orbiting, and the light sparkles change.
+  **Image Prompt:** *"A crystal glass filled with water on a table, sunlight refraction, ultra-detailed, realistic photography. The glass is perfectly clear, with intricate facets catching and splitting the light. The scene has a professional studio quality with controlled lighting."*
+  Settings: 20 steps, CFG 2 (since it's an object, a bit higher CFG might be okay), DPM++ 2M.
+  **Motion Prompt:** *"the crystal glass of water on the table in bright sunlight; camera rotates slowly around the glass, light glinting through the crystal and water; the reflections and refractions moving realistically. The motion is smooth and precise, maintaining perfect focus throughout the rotation. The lighting remains consistent, creating a professional studio-quality look."*
+  FPS: 24, Frames: 17, CFG ~7, 8 steps/frame.
+  **Expected Result:** A high-quality, smooth camera orbit at 24 FPS; the glass stays perfectly stable while light and reflections change naturally with the movement.
 
 Feel free to mix and match. The key is to have a strong, clear image first, then apply a motion that makes sense for that scene.
 
@@ -531,9 +541,9 @@ A: Flux models are memory-intensive. Here's how to handle OOM issues:
 ### 🎬 Video Generation Issues
 
 > ⚡ **Performance Optimization Guide**
-> - Fast (30s): 8 frames, 512x912, 8 steps
-> - Balanced (1min): 12 frames, 576x1024, 8 steps
-> - Quality (2min+): 16+ frames, full res, 20 steps
+> - Testing (15s): 33 frames, 768x512, 8 steps
+> - Standard (30s): 65 frames, 768x512, 8 steps
+> - Full Length (1min+): 129 frames, 768x512, 8 steps
 
 **Q: The video generation is super slow or OOM.**
 
@@ -586,7 +596,19 @@ A: Seamless loops are tricky. One idea: make the last frame similar to the first
 
 ## Tips for Better Results and Experimentation
 
-- **Experiment with Prompts:** The art of prompt crafting applies here as with any AI art. Because Flux is so good, you can try very descriptive prompts or even stylistic ones (photographic vs. painted styles). The LTX stage tends to work best with **literal, descriptive prompts** (imagine you’re describing the video to someone in detail). If you’re not sure, run your motion prompt by ChatGPT with *“Is this a clear description of a video scene?”* – sometimes refining language helps.
+- **Craft Detailed Video Prompts:** LTX works best with long, descriptive prompts that include:
+  1. **Subject Description:** Clearly describe who/what is in the scene (e.g., "A woman with long brown hair and light skin, wearing a black jacket")
+  2. **Scene Context:** Include setting and lighting details (e.g., "warm and natural lighting, likely from the setting sun")
+  3. **Camera Movement:** Specify how the camera behaves (e.g., "camera slowly dollying forward", "camera remains stationary")
+  4. **Motion Details:** Describe any movement in the scene (e.g., "her hair swaying gently", "waves crashing against rocks")
+  5. **Atmosphere:** Add mood and quality indicators (e.g., "the scene appears to be real-life footage", "the lighting is dim, casting soft shadows")
+
+Example prompt template:
+*"[Subject description with specific details], [Action/pose], [Setting/location]. [Camera movement/angle]. [Lighting description]. [Motion details]. [Quality/style indicators]."*
+
+Real examples from LTX documentation:
+- *"A woman with long brown hair and light skin smiles at another woman with long blonde hair. The woman with brown hair wears a black jacket and has a small, barely noticeable mole on her right cheek. The camera angle is a close-up, focused on the woman with brown hair's face. The lighting is warm and natural, likely from the setting sun, casting a soft glow on the scene. The scene appears to be real-life footage."*
+- *"The waves crash against the jagged rocks of the shoreline, sending spray high into the air. The rocks are a dark gray color, with sharp edges and deep crevices. The water is a clear blue-green, with white foam where the waves break against the rocks. The sky is a light gray, with a few white clouds dotting the horizon."*
 
 - **Use Seeds to Your Advantage:** If you find a seed that gives a great image, note it down. Similarly, LTX might allow a seed for noise in the motion (some workflows allow setting a “video seed”). Consistent seeds can reproduce results or allow you to vary one thing at a time. If you want different outcomes, randomize seeds. If you want the *same* general motion on a slightly different image (or vice versa), keep one seed constant and change the other.
 
