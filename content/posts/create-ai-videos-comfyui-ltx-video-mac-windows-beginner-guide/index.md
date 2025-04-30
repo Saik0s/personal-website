@@ -1,33 +1,67 @@
 ---
-title: "Index"
-subtitle: ""
+title: "Create AI Videos with ComfyUI: Complete Guide to Flux and LTX Video (Mac & Windows)"
+subtitle: "Transform Still Images into Moving Art: A Beginner-Friendly Tutorial"
 date: 2025-04-30T04:48:17+02:00
 lastmod: 2025-04-30T04:48:17+02:00
-draft: true
-authors: []
-description: ""
+draft: false
+authors: ["Igor Tarasenko"]
+description: "Learn how to create AI-generated videos using ComfyUI, Flux, and LTX Video. This comprehensive guide covers installation, workflow setup, and best practices for both Mac and Windows users."
 
-tags: []
-categories: []
-series: []
+tags: ["ai", "comfyui", "flux", "ltx-video", "stable-diffusion", "tutorial", "video-generation"]
+categories: ["AI & Machine Learning", "Tutorials"]
+series: ["AI Video Creation"]
 
 hiddenFromHomePage: false
 hiddenFromSearch: false
 
-featuredImage: ""
-featuredImagePreview: ""
+featuredImage: "featured-image.jpg"
+featuredImagePreview: "featured-image.jpg"
 
 toc:
   enable: true
 math:
   enable: false
-lightgallery: false
-license: ""
+lightgallery: true
+license: "MIT"
 ---
 
 <!--more-->
 
-*Learn how to turn a text prompt into a vertical TikTok-style AI video using **ComfyUI**, the **Flux** image model, and **LTX Video** – all without coding. We’ll start by generating a portrait image and then animate it into a short video. This guide is written by an AI enthusiast in a casual, hands-on style, so let’s dive in!*
+*Learn how to turn a text prompt into a vertical TikTok-style AI video using **ComfyUI**, the **Flux** image model, and **LTX Video** – all without coding. We'll start by generating a portrait image and then animate it into a short video. This guide is written by an AI enthusiast in a casual, hands-on style, so let's dive in!*
+
+> 🎯 **Difficulty Level:** Intermediate
+> ⏱️ **Total Time:** ~1-2 hours for first setup, 5-10 minutes per video after
+> 💻 **Prerequisites:** Windows PC with NVIDIA GPU (12GB+ VRAM) or Apple Silicon Mac (16GB+ RAM)
+
+## Quick Start Guide
+
+For those who want to jump right in, here's the TL;DR version:
+
+1. **Install ComfyUI Desktop** (15-20 min)
+   - Windows: Download and install ComfyUI Desktop from [comfy.org](https://comfy.org/download) (NVIDIA GPU required)
+   - Mac: Download and install ComfyUI Desktop from [comfy.org](https://comfy.org/download) (Apple Silicon only)
+   - Advanced users can alternatively use `pip install comfy-cli` for CLI installation
+
+2. **Download Required Models** (20-30 min)
+   - Flux/RedCraft model (~11GB)
+   - LTX Video model (~2-3GB)
+   - T5 text encoder (~10GB)
+
+3. **Generate Portrait** (2-3 min)
+   - Load Flux model
+   - Set resolution to 576x1024
+   - Write descriptive prompt
+   - Generate image
+
+4. **Create Video** (3-5 min)
+   - Feed portrait to LTX
+   - Add motion prompt
+   - Generate 16-24 frames
+   - Export as MP4
+
+> 💡 **Pro Tip:** Start with simple camera movements like gentle pans or zooms for best results.
+
+For detailed instructions and troubleshooting, continue reading below.
 
 ## What is ComfyUI, Flux, and LTX Video?
 
@@ -43,9 +77,17 @@ license: ""
 
 At a high level, the process works in two stages:
 
-- **Stage 1: Text-to-Image (Flux)** – You write a text prompt describing the portrait or scene you want. ComfyUI feeds this prompt into the Flux model, which diffuses random noise into an image that matches your description. This is done via a neural network that has learned to generate images from text. The result is a single AI-generated **portrait image** (we’ll make it vertical format for TikTok). *Example:* Prompt: *“A serene portrait of a young woman in sunlight, highly detailed.”* → Flux model → **[resulting portrait image]*.
+- **Stage 1: Text-to-Image (Flux)** – You write a text prompt describing the portrait or scene you want. ComfyUI feeds this prompt into the Flux model, which diffuses random noise into an image that matches your description. This is done via a neural network that has learned to generate images from text. The result is a single AI-generated **portrait image** (we'll make it vertical format for TikTok).
 
-- **Stage 2: Image-to-Video (LTX)** – Now take the image from Stage 1 and feed it, along with a **motion prompt**, into the LTX Video model. LTX generates additional frames as if the scene in the image is moving or the camera is moving. It does this by diffusing noise into new images while trying to stay consistent with the original picture. Essentially, it treats the Stage 1 image as the starting frame of a video, then creates subsequent frames based on your motion description. *Example:* Motion prompt: *“slowly pan the camera upward with a gentle breeze rustling her hair.”* → LTX model → **[sequence of video frames]*.
+[Example Image: Portrait generated from prompt "A serene portrait of a young woman in sunlight, highly detailed"]
+
+[System Architecture Diagram: Text → Flux Model → Image]
+
+- **Stage 2: Image-to-Video (LTX)** – Now take the image from Stage 1 and feed it, along with a **motion prompt**, into the LTX Video model. LTX generates additional frames as if the scene in the image is moving or the camera is moving. It does this by diffusing noise into new images while trying to stay consistent with the original picture. Essentially, it treats the Stage 1 image as the starting frame of a video, then creates subsequent frames based on your motion description.
+
+[Example: Frame sequence showing camera pan with hair movement]
+
+[Workflow Diagram: Initial Image + Motion Prompt → LTX Model → Video Frames]
 
 ComfyUI links these stages, so after Stage 1 finishes, Stage 2 can use the output automatically. The end result is a short video (several seconds long) where the initial AI image comes to life. You might see the camera zoom or pan, the subject’s expression change slightly, or environmental movement, depending on your motion prompt. It’s like those Harry Potter photos – still images that move a bit!
 
@@ -89,31 +131,97 @@ Now that we have what we need, let’s get everything set up.
 
 ## Installation: ComfyUI Desktop
 
-ComfyUI Desktop is the easiest way to get up and running. It packages ComfyUI with a one-click installer and manages all the Python dependencies for you ([MacOS Desktop Version - ComfyUI](https://docs.comfy.org/installation/desktop/macos#:~:text=ComfyUI%20Desktop%20is%20a%20standalone,settings%2C%20models%2C%20workflows%2C%20and%20files)). No need to use the command line (unless you want to).
+ComfyUI Desktop is the easiest way to get up and running. It packages ComfyUI with a one-click installer and manages all the Python dependencies for you. No need to use the command line (unless you want to).
 
-### Windows Installation (ComfyUI Desktop)
+> ⚠️ **System Requirements Check**
+> Before proceeding, verify you have:
+> - Windows: NVIDIA GPU with 8GB+ VRAM, Windows 10/11
+> - Mac: M1/M2/M3 chip, 16GB+ unified memory
+> - ~25GB free disk space for models
+> - Stable internet connection for downloads
 
-1. **Download ComfyUI for Windows:** Go to the official [ComfyUI download page](https://comfy.org/download) and click **“Download Windows (NVIDIA) Beta”** ([Download ComfyUI for Windows/Mac](https://www.comfy.org/download#:~:text=Download%20Windows%20)). This will download an installer (or a zip/executable). The Windows version requires an NVIDIA graphics card (CUDA support) ([Download ComfyUI for Windows/Mac](https://www.comfy.org/download#:~:text=For%20Mac%3A%20Requires%20Apple%20Silicon)).
-2. **Run the Installer:** Launch the installer and follow the prompts. It will install ComfyUI like a regular program. If it’s a zip, unzip it to a folder of your choice (e.g. `C:\ComfyUI\`). The installer will also fetch needed dependencies (it may download PyTorch, etc., which can be a few GB, so be patient).
-3. **Launch ComfyUI:** After installation, run **ComfyUI**. You might see a console window and then a GUI. On first run, ComfyUI Desktop may present a setup screen – just proceed with default settings unless you have a previous ComfyUI install to import. It will set up the environment automatically ([MacOS Desktop Version - ComfyUI](https://docs.comfy.org/installation/desktop/macos#:~:text=ComfyUI%20Desktop%20is%20a%20standalone,settings%2C%20models%2C%20workflows%2C%20and%20files)). Once done, you should see the ComfyUI interface: a blank canvas area, a top menu/toolbar (with buttons like *Manager*, *Load*, *Save*, *Queue* etc.), and maybe a preview panel. Congrats, you have ComfyUI running!
-4. **(Optional) Verify GPU:** ComfyUI usually auto-detects your GPU. You can check the console log for something like “Using device cuda” or check in the ComfyUI *Manager > Settings* if there’s a device option. By default it will use your NVIDIA GPU.
+### 🪟 Windows Installation (15-20 minutes)
 
-### macOS Installation (ComfyUI Desktop)
+1. **Download ComfyUI Desktop:** Go to the official [ComfyUI download page](https://comfy.org/download) and click **"Download for Windows (NVIDIA)"**. The Windows version requires an NVIDIA graphics card for CUDA support.
 
-1. **Download ComfyUI for Mac:** On the [ComfyUI download page](https://comfy.org/download), click **“Download Mac (Apple Silicon) Beta”** ([Download ComfyUI for Windows/Mac](https://www.comfy.org/download#:~:text=Download%20Windows%20)). You will get a disk image (`.dmg`) or zip for the ComfyUI Desktop app. (Make sure you have an M1/M2 Mac; the app is Apple Silicon only ([MacOS Desktop Version - ComfyUI](https://docs.comfy.org/installation/desktop/macos#:~:text=ComfyUI%20Desktop%20,Apple%20Silicon)).)
-2. **Install the App:** Open the downloaded `.dmg` file. You should see a window instructing you to drag **ComfyUI** into your Applications folder ([MacOS Desktop Version - ComfyUI](https://docs.comfy.org/installation/desktop/macos#:~:text=ComfyUI%20Desktop%20Installation%20Steps)). Do the drag-drop to Applications.
-3. **First Launch:** Navigate to your Applications, find **ComfyUI**, and open it. The first time, you might need to right-click and choose “Open” (to bypass Gatekeeper since it’s from an unidentified developer) ([MacOS Desktop Version - ComfyUI](https://docs.comfy.org/installation/desktop/macos#:~:text=Double,Applications%20folder%20following%20the%20arrow)). ComfyUI Desktop will then start an **Initialization** process – basically setting up its internal Python environment. Follow any on-screen steps. You might have to allow it to download PyTorch and other libraries (it will do this automatically; it’s a large download, ~15GB, so give it time).
-4. **Complete Setup:** After initialization, ComfyUI should open its main window. On Mac, it might open a browser pointing to a local web UI (earlier versions of ComfyUI were browser-based). Newer Desktop versions have their own window. Either way, you should see the node editor interface. If prompted about analytics or updates, you can opt in or out.
-5. **MPS Acceleration:** ComfyUI on Mac will use Apple’s Metal Performance Shaders (MPS) backend via PyTorch for GPU acceleration. This is automatic. Just note that on first run, PyTorch may compile certain kernels which could make the first generation slower. Subsequent runs get faster.
+2. **Run the Installer:** Double-click the downloaded installation package. The installer will:
+   - Create a ComfyUI Desktop shortcut on your desktop
+   - Set up the required environment
+   - Install dependencies (including PyTorch, which is several GB)
 
-### Optional: ComfyUI via CLI (Advanced Users)
+3. **First Launch & Setup:**
+   - Double-click the ComfyUI Desktop shortcut
+   - On first run, you'll see an initialization screen
+   - Select "NVIDIA GPU (Recommended)" when prompted
+   - Choose an installation location (preferably on an SSD with at least 15GB free space)
+   - Optionally import settings from an existing ComfyUI installation
+   - Configure preferences (updates, analytics, etc.)
+   - Wait for the initialization to complete
 
-If you prefer not to use the Desktop app or want more control (or if you’re on an unsupported system like Linux or need AMD support), you can install ComfyUI manually:
+4. **Verify Installation:**
+   - The ComfyUI interface should open automatically
+   - You'll see a blank canvas with a toolbar (Manager, Load, Save, Queue buttons)
+   - Check the console for "Using device cuda" to confirm GPU detection
 
-- **Install from GitHub:** ComfyUI is open source. You can get it by cloning the [ComfyUI GitHub repo](https://github.com/comfyanonymous/ComfyUI) ([Download ComfyUI for Windows/Mac](https://www.comfy.org/download#:~:text=OR)). You’ll need Python 3.10+, Git, and do a `pip install -r requirements.txt`. This approach is for the technically inclined and is not covered in detail here, but ComfyUI’s README has instructions. Once installed, you typically run `python main.py` (or a provided `.bat`/`.sh` script) to launch the server and UI.
-- **ComfyUI “CLI” mode:** ComfyUI can also be run headless or via command line for automated tasks, but that’s beyond our scope. We’ll stick to the GUI.
+> 🔧 **Pro Tip:** Windows Defender might warn about Python components - this is normal as ComfyUI is a Python application. The software is open source and safe.
 
-For most beginners, **ComfyUI Desktop** is the way to go. It simplifies updates as well (there’s an update button in the UI). Now, with ComfyUI open, let’s get the AI models we need.
+### 🍎 macOS Installation (15-20 minutes)
+
+1. **Download ComfyUI Desktop:** On the [ComfyUI download page](https://comfy.org/download), click **"Download for MacOS"**. The app requires Apple Silicon (M1/M2/M3) - Intel Macs are not supported.
+
+2. **Install the App:**
+   - Open the downloaded .dmg file
+   - Drag ComfyUI into your Applications folder
+   - If you see a prohibition sign on the icon, your system may not be compatible
+
+3. **First Launch & Setup:**
+   - Find ComfyUI in Launchpad and click to open
+   - Right-click and choose "Open" if you see a Gatekeeper warning
+   - On the initialization screen, select "MPS (Recommended)" for GPU acceleration
+   - Choose an installation location (ensure ~5GB free space)
+   - Optionally import existing ComfyUI settings
+   - Configure preferences (updates, analytics, etc.)
+   - Wait for initialization to complete (includes downloading ~15GB of dependencies)
+
+4. **Verify Installation:**
+   - The ComfyUI interface should open automatically
+   - You'll see the node editor interface
+   - The app uses Metal Performance Shaders (MPS) for acceleration
+
+> 🚨 **M1/M2/M3 Mac Note:** First run is slower due to PyTorch optimization compilation. Performance improves in subsequent runs.
+
+### ⌨️ Optional: ComfyUI via CLI (Advanced Users)
+
+If you're comfortable with the terminal or need features not available in the Desktop app (like AMD GPU support), you can use the CLI installation method:
+
+1. **Install ComfyUI CLI:**
+```bash
+pip install comfy-cli
+```
+
+2. **Create and activate a Python environment:**
+```bash
+# Using conda
+conda create -n comfy-env python=3.11
+conda activate comfy-env
+
+# Or using venv
+python -m venv comfy-env
+source comfy-env/bin/activate  # On Unix/Mac
+comfy-env\Scripts\activate     # On Windows
+```
+
+3. **Install ComfyUI:**
+```bash
+comfy install
+```
+
+4. **Launch ComfyUI:**
+```bash
+comfy launch
+```
+
+The CLI version offers more flexibility and control, but requires more technical knowledge. For most users, **ComfyUI Desktop** is recommended as it handles updates and environment management automatically. Now, let's proceed to downloading the required AI models.
 
 ## Downloading the Models (Flux and LTX)
 
@@ -178,7 +286,14 @@ After organizing these files, your ComfyUI models folder should look something l
 - `models/clip/` (if used)
   - `clip_l.safetensors`
 
-**[screenshot of model files in their folders]**
+[Screenshot: ComfyUI models folder structure showing:
+- models/checkpoints/
+  - RedCraft-RealReveal5-ULTRA-15Steps-fp8.safetensors
+  - ltxv-2b-0.9.6-distilled-04-25.safetensors
+- models/text_encoders/
+  - t5xxl_fp16.safetensors
+- models/clip/
+  - clip_l.safetensors]
 
 Now we have all the pieces in place. Time to build the workflow in ComfyUI and generate our video!
 
@@ -223,13 +338,22 @@ First, we’ll use the Flux model (RedCraft RealReveal5 ULTRA) to create a verti
 
 5. **Preview/Save the Image:** Add an **Image Preview** or **Save Image** node. ComfyUI by default might show the final image output in the UI’s preview panel if the last node returns an image. But to be sure, add a **Save Image** node and connect the output of the VAE Decoder to it. In Save Image’s settings, you can specify a filename or leave it to auto-generate (it will save to ComfyUI’s output folder by default). Alternatively, a **Preview** node would just display it without saving. You can do both if you like.
 
-Now the Step 1 graph is complete: **[flowchart of node connections for image generation]**. It should look something like:
+Now the Step 1 graph is complete:
+
+[Flowchart: Node connections for image generation showing:
+1. Text Encoder → Sampler
+2. Checkpoint Loader → Sampler & VAE
+3. Noise Generator → Sampler
+4. Sampler → VAE Decode
+5. VAE Decode → Save Image]
 
 *TextEncode* (prompt) → *Sampler* (with Flux model) → *VAE Decode* → *Image Output*. And *Noise* → *Sampler*, plus the Checkpoint loader feeding into sampler and VAE.
 
 Double-check everything is connected properly.
 
-6. **Run the Image Generation:** In the ComfyUI top bar, click **“Queue”** (some versions might say “Execute” or have a play button ▶️). The workflow will start. Watch the console for any errors. If all goes well, after a short while (a progress bar might appear on the sampler node), you’ll get a generated image appearing in the UI! **[result of generation]**
+6. **Run the Image Generation:** In the ComfyUI top bar, click **"Queue"** (some versions might say "Execute" or have a play button ▶️). The workflow will start. Watch the console for any errors. If all goes well, after a short while (a progress bar might appear on the sampler node), you'll get a generated image appearing in the UI!
+
+[Screenshot: ComfyUI interface showing generated portrait with progress bar]
 
    If you used the example prompt, you should see a portrait of a woman with the described features, in vertical orientation. If it’s not to your liking, you can tweak the prompt or try a different seed and queue again. The beauty of ComfyUI is you can iteratively adjust nodes and re-run quickly.
 
@@ -291,7 +415,14 @@ Now for the fun part – animating that still image. We’ll set up the LTX vide
    - Go to **Manager > Install Missing Custom Nodes** (ComfyUI might have a button that automatically fetches any nodes referenced in a loaded workflow, for example) ([How to use LTX Video 0.9.5 on ComfyUI - Stable Diffusion Art](https://stable-diffusion-art.com/ltx-video-0-9-5/#:~:text=Step%203%3A%20Install%20missing%20nodes)).
    - Specifically search and install **“LTXVideo”** (for the LTX nodes) ([LTX Video - New Open Source Video Model with ComfyUI Workflows](https://www.reddit.com/r/StableDiffusion/comments/1gx9mv3/ltx_video_new_open_source_video_model_with/#:~:text=LTX%20Video%20,v0.9.safetensors%20into)) and **“VideoHelperSuite”** or **“Video Nodes”** for the combine node. Once installed, restart ComfyUI and rebuild the connections if needed.
 
-Now the Step 2 part of the graph is done. It should look like: **[flowchart of node connections for video generation]** – the loaded image goes into VAE encode, then into LTX model along with text, and outputs frames that go through VAE decode and into Video Combine.
+Now the Step 2 part of the graph is done. Here's how the nodes connect:
+
+[Flowchart: Video generation workflow showing:
+1. Load Image → VAE Encode
+2. LTX Model + Motion Text → LTX Video Node
+3. LTX Video Node → VAE Decode (Batch)
+4. VAE Decode → Video Combine
+5. Video Combine → Output MP4]
 
 7. **Run the Video Generation:** Ensure the Step 2 nodes are all connected properly. Click **Queue** again to run this part. If you left the image generation nodes in the same workflow and still connected, the entire thing will run from scratch (doing image and video). To avoid re-generating the image each time, you can *disable* the image part or simply start a new workflow for step 2, loading the saved image. If doing it separately, just ensure only the LTX part is queued.
 
@@ -332,28 +463,85 @@ To help inspire you, here are a couple of example prompt combinations (Stage 1 p
 
 Feel free to mix and match. The key is to have a strong, clear image first, then apply a motion that makes sense for that scene.
 
-## Troubleshooting FAQ
+## 🔧 Troubleshooting FAQ
 
-**Q: I hit “Queue” but got an error / red error box.**
+> 🚨 **Common Error Quick Reference**
+> - Model not found → Check paths in `models/` folder
+> - Red nodes → Install missing extensions via Manager
+> - Black frames → Verify T5 encoder is installed
+> - OOM errors → Reduce resolution or batch size
+> - Crashes → Monitor VRAM usage, reduce load
+
+### 🛑 Error Messages and Solutions
+
+**Q: I hit "Queue" but got an error / red error box.**
 A: Read the error message carefully. Common issues:
 - *Missing model file:* Did you place the model files in the correct folders? If the Checkpoint Loader can’t find the model, double-check the filenames and paths. Make sure ComfyUI’s `extra_models_config.yaml` (if used) includes those folders. By default, `models/checkpoints` and `models/text_encoders` are loaded ([How to use LTX Video 0.9.5 on ComfyUI - Stable Diffusion Art](https://stable-diffusion-art.com/ltx-video-0-9-5/#:~:text=Download%20ltx,checkpoints)). If you named something incorrectly (e.g., forgot “.safetensors”), fix that.
 - *Missing custom node:* If you see something like “No such node: LTX*” or “VideoCombine not found”, you need to install the extension nodes. Go to **Manager > Custom Nodes** and install the LTX Video extension ([LTX Video - New Open Source Video Model with ComfyUI Workflows](https://www.reddit.com/r/StableDiffusion/comments/1gx9mv3/ltx_video_new_open_source_video_model_with/#:~:text=LTX%20Video%20,v0.9.safetensors%20into)) and any video helper nodes. After installing, restart ComfyUI and try again.
 - *Load errors on Mac (MPS issues):* Sometimes you might see messages about MPS or data types. Ensure you’re on the latest ComfyUI and that the pruned FP8 model is supported on Mac. As of writing, pruned FP8 models now work on MPS with updated PyTorch ([Flux + ComfyUI on Apple Silicon Macs— 2024 | by Jason Griffin | Medium](https://medium.com/@tchpnk/flux-comfyui-on-apple-silicon-with-hardware-acceleration-2024-4d44ed437179#:~:text=This%20advice%20appears%20to%20come,fp8%29%20version%20instead)). If not, you might try using the full FP16 model version, but that might require more VRAM than the Mac has, leading to needing CPU. If nothing works, you may have to run in CPU mode (very slow) or use a cloud GPU.
 
+### 💾 Memory Management
+
+> 📊 **VRAM Requirements Guide**
+> - 6GB VRAM: Use NF4 quantized models only
+> - 8GB VRAM: FP8 pruned model at 448x768
+> - 12GB VRAM: Full resolution, any model variant
+> - 16GB+ VRAM: Multiple models loaded simultaneously
+
 **Q: The image generation (Flux) is running out of memory (OOM error).**
-A: Flux models are big. If you have a lower VRAM GPU (say 8GB), try these:
-- Use the FP8 pruned model (which we did) instead of full FP16 (which would definitely OOM on 8GB). The FP8 model is smaller but still borderline.
-- Reduce the resolution. Instead of 576x1024, try 448x768 or even 384x640 to see if it runs, then upscale later if needed.
-- Close other programs to free up GPU memory (and system RAM).
-- On Windows, you can try running ComfyUI with the `--lowvram` or `--medvram` flags (if available, similar to AUTOMATIC1111) or enable settings in ComfyUI Manager like “disable some optimizations” – but ComfyUI’s defaults are usually optimized already.
-- On the software side, if using CLI, you can launch with `--disable-safe-unpickle` or other flags but that’s not relevant here since we use safetensors (safe format).
-- If you still OOM, you may need a smaller model. For example, try using **Flux Schnell** (the 4-step distilled model, smaller) ([How to install Flux AI model on ComfyUI - Stable Diffusion Art](https://stable-diffusion-art.com/flux-comfyui/#:~:text=The%20Flux%20Schnell%20is%20for,is%20a%20bit%20lower%20quality)). It trades some quality for speed and memory. There’s also an *NF4 quantized* version that can run on 6GB cards ([Flux Model Resource Collection | ComfyUI Wiki](https://comfyui-wiki.com/en/resource/flux#:~:text=Flux%20FP8%20ComfyUI%208GB%2BDev%20%2F,lllyasviel%206GB%2BV2%20VersionRequires%20specific%20plugins)), but that requires a special loader extension (beyond our scope).
+
+A: Flux models are memory-intensive. Here's how to handle OOM issues:
+
+1. **Model Optimization**
+   - Use FP8 pruned model (recommended for 8GB cards)
+   - Try Flux Schnell for lower VRAM usage
+   - Consider NF4 quantized version for 6GB cards
+
+2. **Resolution Management**
+   - Start with 448x768 instead of 576x1024
+   - For very limited VRAM, try 384x640
+   - Upscale results after generation if needed
+
+3. **System Optimization**
+   - Close background applications
+   - Use `--lowvram` or `--medvram` flags
+   - Monitor VRAM usage with task manager
+
+4. **Alternative Solutions**
+   - Try Flux Schnell (4-step distilled model)
+   - Use NF4 quantized version for 6GB cards
+   - Consider cloud solutions for heavy workloads
+
+### 🎬 Video Generation Issues
+
+> ⚡ **Performance Optimization Guide**
+> - Fast (30s): 8 frames, 512x912, 8 steps
+> - Balanced (1min): 12 frames, 576x1024, 8 steps
+> - Quality (2min+): 16+ frames, full res, 20 steps
 
 **Q: The video generation is super slow or OOM.**
-A: Video means multiple images, so it multiplies load.
-- If it’s slow but working, consider generating fewer frames (8–12 frames) or at lower resolution for testing. You can also try the non-distilled model if you want quality and don’t mind slow (not recommended on low VRAM though).
-- If it OOMs during LTX: perhaps too many frames or too high res. Each frame generation might load a lot into memory. Try 10 frames at 512x912 or so to see if it passes. Also, ensure that after image gen, the big Flux model is not still hogging VRAM. If doing both in one go, both models might be loaded – which definitely can OOM. Instead, do them separately (unload Flux model before loading LTX – ComfyUI might unload automatically once that branch is done, but not sure). Worst case, restart ComfyUI and only load the LTX part with the saved image to ensure Flux isn’t sitting in memory.
-- On M1/M2 Mac: the unified memory gets taxed by these large models. There’s not much to do except reduce workload (res, frames, steps). MPS backend also might not be as memory-efficient. Monitor your Activity Monitor memory pressure. If you push it too far, the Mac might start swapping (slowing things dramatically).
+
+A: Video generation multiplies memory usage. Here's how to optimize:
+
+1. **Frame Management**
+   - Start with 8-12 frames for testing
+   - Use lower resolution (512x912)
+   - Stick to 8 steps per frame with distilled model
+
+2. **Memory Efficiency**
+   - Generate image and video separately
+   - Restart ComfyUI between stages
+   - Monitor VRAM usage carefully
+
+3. **Mac-Specific Optimization**
+   - Watch Activity Monitor
+   - Keep memory pressure below 80%
+   - Reduce batch size if swapping occurs
+
+4. **Workflow Tips**
+   - Save intermediate results
+   - Use separate workflows for image/video
+   - Consider frame interpolation later
 
 **Q: My video output is black / blank frames.**
 A: If the output video is just black frames, a few potential causes:
