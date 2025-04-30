@@ -45,7 +45,7 @@ For those who want to jump right in, here's the TL;DR version:
 2. **Download Required Models** (20-30 min)
    - Flux/RedCraft model (~11GB)
    - LTX Video model (~2-3GB)
-   - T5 text encoder (~10GB)
+   - T5 text encoder and CLIP (automatically downloaded via ComfyUI Manager)
 
 3. **Generate Portrait** (2-3 min)
    - Load Flux model
@@ -243,17 +243,33 @@ Next, get the LTX model weights:
 
 If you have trouble finding that exact file, you can use the direct link provided (in ComfyUI Manager you could also search for LTXVideo and see if it provides links). Ensure the file is named `ltxv-2b-0.9.6-distilled-04-25.safetensors` (or similar).
 
-### 3. T5 XXL Text Encoder (for prompts)
+### 3. T5 XXL Text Encoder and CLIP (for prompts)
 
-Both Flux and LTX rely on a large text encoder (T5-XXL) to understand prompts with greater detail. Many Stable Diffusion models use CLIP by default, but Flux and LTX benefit from T5 (which can handle longer, more complex descriptions). We need to download this once:
+Both Flux and LTX rely on text encoders to understand prompts with greater detail. The T5-XXL encoder handles longer, more complex descriptions, while CLIP provides additional understanding capabilities. The good news is that ComfyUI Manager can automatically download and install these for you:
 
-- **T5 encoder download:** Download **t5xxl_fp16.safetensors** (9.79 GB) ([Lightricks LTX-Video Model | ComfyUI_examples](https://comfyanonymous.github.io/ComfyUI_examples/ltxv/#:~:text=If%20you%20don%E2%80%99t%20have%20it,it%20in%20your%20ComfyUI%2Fmodels%2Ftext_encoders%2F%20folder)) ([How to use LTX Video 0.9.5 on ComfyUI - Stable Diffusion Art](https://stable-diffusion-art.com/ltx-video-0-9-5/#:~:text=ComfyUI%C2%A0)). This file can be obtained from Hugging Face (for example, from the `comfyanonymous/flux_text_encoders` repository ([RedCraft | 红潮 CADS | UPdated-Apr28 | Commercial & Advertising Design System - Reveal5[SFW]ULTRA | Flux Checkpoint | Civitai](https://civitai.green/models/958009/redcraft-or-cads-or-updated-apr15-or-commercial-and-advertising-design-system?modelVersionId=1576605#:~:text=If%20you%20don%27t%20have%20them%2C,download%20them%20from%20here)) or other Flux resources). It’s big – about 10 GB. (There are also FP8 or quantized versions, but we’ll stick with FP16 for compatibility unless disk space is an issue).
+1. In ComfyUI, click the "Manager" button in the top toolbar
+2. Look for any missing model notifications
+3. Click to automatically download T5 and CLIP encoders
 
-This T5 model will be used by ComfyUI to encode your text prompts for both the image and video stages, ensuring the AI fully grasps the nuances of your descriptions.
+[Screenshot: ComfyUI Manager interface showing model download options]
 
-### 4. (Optional) CLIP Encoder (OpenCLIP-Large)
+Alternatively, you can manually download these files:
 
-The Flux model can also make use of an OpenCLIP text encoder (`clip_l` for ViT-L/14). In many cases, the all-in-one Flux checkpoint already includes what it needs. If you find any errors about missing CLIP models, you can download **clip_l.safetensors** (the OpenCLIP Large text encoder) and place it similarly to T5. This file is smaller (~500 MB). It’s often included in Flux packages or available on Hugging Face ([How to install Flux AI model on ComfyUI - Stable Diffusion Art](https://stable-diffusion-art.com/flux-comfyui/#:~:text=Step%202%3A%20Download%20the%20CLIP,models)). Most likely, you won’t need this if using the pruned FP8 checkpoint which is all-in-one (AIO) ([RedCraft | 红潮 CADS | UPdated-Apr28 | Commercial & Advertising Design System - Reveal5[SFW]ULTRA | Flux Checkpoint | Civitai](https://civitai.green/models/958009/redcraft-or-cads-or-updated-apr15-or-commercial-and-advertising-design-system?modelVersionId=1576605#:~:text=The%20versions%20with%20AIO%20,as%20Checkpoint%20or%20Compact%20version)), but keep it in mind for troubleshooting.
+- **T5 encoder:** Download **t5xxl_fp16.safetensors** (9.79 GB) from Hugging Face (e.g., `comfyanonymous/flux_text_encoders` repository)
+- Place in `models/text_encoders/` folder
+
+The text encoders will be used by ComfyUI for both the image and video stages, ensuring the AI fully grasps the nuances of your descriptions.
+
+### 4. (Optional) Manual CLIP Installation
+
+While ComfyUI Manager handles CLIP installation automatically, you can manually install it if needed. The Flux model uses an OpenCLIP text encoder (`clip_l` for ViT-L/14). If you see errors about missing CLIP models and prefer manual installation:
+
+- Download **clip_l.safetensors** (~500 MB) from Hugging Face
+- Place in `models/clip/` folder
+
+Note: Most likely you won't need this manual step if:
+1. You're using ComfyUI Manager (recommended)
+2. Using the pruned FP8 checkpoint which is all-in-one (AIO)
 
 ### Placing the Model Files in ComfyUI
 
