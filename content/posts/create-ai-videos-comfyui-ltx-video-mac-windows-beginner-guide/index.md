@@ -1,11 +1,11 @@
 ---
-title: "The $0 AI Video Playbook: ComfyUI + Flux + LTX"
+title: "The $0 AI Video Playbook: ComfyUI + Flux + LTX-Video"
 subtitle: "Create Jaw-Dropping Videos From Images (Even If You're Clueless)"
 date: 2025-04-30T04:48:17+02:00
 lastmod: 2025-04-30T04:48:17+02:00
 draft: false
 authors: ["Igor"]
-description: "Tired of AI video hype that doesn't deliver? Get the exact steps to turn static images into pro-level videos using ComfyUI, Flux & LTX. No BS, no prior skills needed. Works on Mac/Windows."
+description: "Tired of AI video hype that doesn't deliver? Get the exact steps to turn static images into pro-level videos using ComfyUI, Flux & LTX-Video. No BS, no prior skills needed. Works on Mac/Windows."
 
 tags: ["ai", "comfyui"]
 categories: ["AI & Machine Learning", "Tutorials"]
@@ -21,7 +21,6 @@ math:
   enable: false
 toc:
   enable: false
-  auto: true
 code:
   copy: true
 lightgallery: false
@@ -30,71 +29,71 @@ license: ""
 
 <!--more-->
 
-*You'll create TikTok-ready AI videos from text using ComfyUI with Flux and LTX Video. No coding needed - first generate a portrait, then bring it to life with animation.*
+*Turn text into living videos with AI. This guide shows you how to chain Flux (for images) and LTX-Video (for motion) in ComfyUI's visual programming interface.*
 
-## The Bare Bones: What You Actually Need to Know
+> 🎯 **Difficulty:** Like assembling IKEA furniture with instructions
+>
+> ⏱️ **Time Investment:** 1-2 hours setup, then 5-10 minutes per video
+>
+> 💻 **Hardware:** NVIDIA GPU (16GB+ VRAM) or M1/M2 Mac (16GB+ RAM)
 
-Alright, let's cut the fluff. You want to make AI videos. Here’s the minimum you need to grasp before we get hands-on. No magic, just tech explained simply.
+## Intro
 
-### What Are We Even Doing Here? (AI Image/Video Gen)
+### The AI Video Pipeline Explained
 
-*   **AI Image Generation:** You type words (a "prompt"), the AI spits out an image. Like commissioning art, but your artist is code and ridiculously fast.
-*   **AI Video Generation:** Takes that image (or just text) and adds motion based on your instructions. Think "make this photo breathe" or "pan the camera left". It turns static pixels into short video clips.
+1. **Text → Image (Flux)**
+   - You describe a scene ("a cyberpunk detective smoking")
+   - Flux generates a high-quality still image
+   - *Think of this as writing a movie script for a single frame*
 
-### Key Jargon, Demystified
+2. **Image → Video (LTX-Video)**
+   - You describe motion ("slow zoom in, cigarette smoke rising")
+   - LTX-Video animates the image over set number of frames
+   - *This is where your still photo becomes a living scene*
 
-1.  **Diffusion Models:** How the AI "creates".
-    *   Imagine starting with pure static (like an old TV screen).
-    *   The AI cleans up that static, step-by-step, guided by your text prompt.
-    *   Result: The static becomes your desired image. It "diffuses" noise away. That's it.
+### Core Concepts Made Simple
 
-2.  **VRAM (Video RAM):** Your graphics card's dedicated memory.
-    *   Think of it as the **workbench space** for your GPU.
-    *   Big AI models and high-res images need a *big* workbench.
-    *   **Why care?** Not enough VRAM = painfully slow results, or it just crashes. Size matters here.
+**Diffusion Models (How AI Creates)**
+- Imagine starting with a blurry, static-filled TV screen
+- The AI gradually clears up this static based on your description
+- With each step, the picture becomes clearer until your image appears
+- *It's like watching a Polaroid photo develop before your eyes*
 
-3.  **Nodes:** The building blocks in ComfyUI.
-    *   Each node is a **single-purpose tool** (load model, enter text, generate image, save file).
-    *   You **connect the outputs of one node to the inputs of another**, like snapping LEGO bricks together.
-    *   This chain of nodes creates your **workflow** or "assembly line" for making images/videos.
+**VAE (Variational Autoencoder)**
+- Think of this as the translator between what you see (the image) and what the AI understands
+- You don't need to worry about how it works - it happens automatically
 
-### How Nodes Make the Sausage (Visual Example)
+**Text Encoders (Your Words to AI Language)**
+- These turn your everyday English into special code the AI can understand
+- Like having a personal interpreter who speaks both human and computer
 
-Forget sandwiches, think assembly line:
+**Samplers (Different Quality Settings)**
+- Think of these as different quality modes on your camera
+- "Quick mode" = faster but rougher results
+- "Detailed mode" = slower but prettier results
+- You'll mostly use the default, which is a good balance
 
-1.  **Load Model Node:** Grabs the AI brain (the model file).
-2.  **Prompt Node:** Takes your text description.
-3.  **Generator Node (Sampler):** Uses the model + prompt to create the image data.
-4.  **Save Node:** Saves the image data as a file you can actually see.
+**VRAM (Video Memory)**
+- Model weights need to be loaded into VRAM to be used
+- Bigger models require more VRAM
+- 12GB VRAM is the minimum for most models
+- 24GB VRAM is recommended for better performance
 
-Connect `Model` -> `Prompt` -> `Generator` -> `Save`. That’s the core idea. Everything else is just adding more steps or fancier tools to this basic line.
+**Nodes - ComfyUI's Building Blocks**
+- Each node does one specific job
+- Connect them like LEGO to build workflows
+- *Example pipeline:*
+  1. `Text Prompt` → `Flux Sampler` → `Image`
+  2. `Image + Motion Prompt` → `LTX Sampler` → `Video`
 
-### Important Technical Terms Explained
+*Pro Tip:* FP16 gives better quality but needs more VRAM. FP8 is more efficient for testing ideas.
 
-- **Latent Space** - Think of this as the AI's imagination space. Just like how you can imagine a cat without seeing one, the AI has an internal representation of images. It's like a compressed version of the image that the AI understands.
+### The Full Assembly Line
 
-- **VAE (Variational AutoEncoder)** - This is like a translator between human-viewable images and the AI's internal representation:
-  - The "Encoder" converts regular images into the AI's language (latent space)
-  - The "Decoder" converts the AI's language back into regular images we can see
-
-- **Text Encoders** - These are like language interpreters for the AI:
-  - They convert your English descriptions into a format the AI understands
-  - Different encoders (like T5, CLIP) understand different aspects of language
-  - It's similar to having both a poetry expert and a technical writer helping to understand text
-
-- **FP8/FP16** - These refer to how precisely numbers are stored:
-  - FP16 is like measuring with millimeters (more precise, needs more space)
-  - FP8 is like measuring with centimeters (less precise, saves space)
-  - Lower precision (FP8) uses less memory but might slightly reduce quality
-
-- **Sampling Methods** - These are different techniques for creating images:
-  - Think of them like different painting techniques (watercolor vs. oil painting)
-  - Some are faster but rougher, others are slower but more detailed
-  - Common ones include "Euler" (balanced) and "DPM++" (high quality but slower)
-
-> 🎯 **Difficulty Level:** Intermediate
-> ⏱️ **Total Time:** ~1-2 hours for first setup, 5-10 minutes per video after
-> 💻 **Prerequisites:** Windows PC with NVIDIA GPU (12GB+ VRAM) or Apple Silicon Mac (16GB+ RAM)
+1. **Load Models** (Flux + LTX)
+2. **Text Prompt** → Flux generates image
+3. **Image + Motion Prompt** → LTX generates video frames
+4. **Save Video** (stitches frames together)
 
 ## Quick Start Guide
 
@@ -107,17 +106,21 @@ For those who want to jump right in, here's the TL;DR version:
 
 2. **Download Required Models** (20-30 min)
    - **Flux/RedCraft model** (~11GB)
-     Download: [RedCraft RealReveal5 ULTRA (FP8, pruned)](https://civitai.green/models/958009?modelVersionId=1576605)
-     Save to: `models/checkpoints/RedCraft_RealReveal5_ULTRA_15Steps_fp8_pruned.safetensors`
-   - **LTX Video model** (~2-3GB)
-     Download: [ltxv-2b-0.9.6-distilled-04-25.safetensors](https://huggingface.co/Lightricks/LTX-Video)
-     Save to: `models/checkpoints/ltxv-2b-0.9.6-distilled-04-25.safetensors`
-   - **T5 XXL text encoder** (~10GB)
-     Download: [t5xxl_fp16.safetensors](https://huggingface.co/comfyanonymous/flux_text_encoders)
-     Save to: `models/text_encoders/t5xxl_fp16.safetensors`
-   - **CLIP text encoder** (~500MB)
-     Download: [clip_l.safetensors](https://huggingface.co/comfyanonymous/flux_text_encoders)
-     Save to: `models/clip/clip_l.safetensors`
+     - ![redcraft](redcraft-download.png)
+     - Download: [RedCraft RealReveal5 ULTRA (FP8, pruned)](https://civitai.green/models/958009?modelVersionId=1576605)
+     - Save to: `models/unet/RedCraft_RealReveal5_ULTRA_15Steps_fp8_pruned.safetensors`
+   - **LTX Video model** (~6GB)
+     - Download: [ltxv-2b-0.9.6-distilled-04-25.safetensors](https://huggingface.co/Lightricks/LTX-Video/blob/main/ltxv-2b-0.9.6-distilled-04-25.safetensors)
+     - Save to: `models/checkpoints/ltxv-2b-0.9.6-distilled-04-25.safetensors`
+   - **T5 XXL text encoder** (4.89 GB)
+     - Download: [t5xxl_fp8_e4m3fn.safetensors](https://huggingface.co/comfyanonymous/flux_text_encoders/blob/main/t5xxl_fp8_e4m3fn.safetensors)
+     - Save to: `models/text_encoders/t5xxl_fp8_e4m3fn.safetensors`
+   - **CLIP text encoder** (246 MB)
+     - Download: [clip_l.safetensors](https://huggingface.co/comfyanonymous/flux_text_encoders/blob/main/clip_l.safetensors)
+     - Save to: `models/clip/clip_l.safetensors`
+   - **VAE** (168 MB)
+     - Download: [diffusion_pytorch_model.safetensors](https://huggingface.co/black-forest-labs/FLUX.1-schnell/blob/main/vae/diffusion_pytorch_model.safetensors)
+     - Save to: `models/vae/vae.safetensors` (rename `diffusion_pytorch_model.safetensors` to `vae.safetensors`)
 
 3. **Run workflow** (2-10 minutes)
    - Open [Workflow file](./ltx_video_workflow.json)
@@ -132,13 +135,13 @@ For detailed instructions and troubleshooting, continue reading below.
 
 ## What is ComfyUI, Flux, and LTX Video?
 
-**ComfyUI** is a powerful, node-based graphical interface for Stable Diffusion image generation ([Beginner's Guide to ComfyUI - Stable Diffusion Art](https://stable-diffusion-art.com/comfyui/#:~:text=What%20is%20ComfyUI%3F)). Instead of writing code, you visually connect **blocks (nodes)** to build an AI pipeline. For example, one node loads an AI model, another takes your text prompt, another generates an image, etc. You chain these nodes to create workflows for images or even videos. It’s like building a flowchart that produces art!
+**ComfyUI** is a powerful, node-based graphical interface for image generation. Instead of writing code, you visually connect **blocks (nodes)** to build an AI pipeline. For example, one node loads an AI model, another takes your text prompt, another generates an image, etc. You chain these nodes to create workflows for images or even videos. It's like building a flowchart that produces art!
 
-**Flux** is a family of high-quality text-to-image diffusion models developed by Black Forest Labs ([How to install Flux AI model on ComfyUI - Stable Diffusion Art](https://stable-diffusion-art.com/flux-comfyui/#:~:text=Flux%20is%20a%20family%20of,SDXL%20%20and%20%2021)). As of late 2024, Flux models are considered some of the best open-source image models, often surpassing even Stable Diffusion XL in quality ([How to install Flux AI model on ComfyUI - Stable Diffusion Art](https://stable-diffusion-art.com/flux-comfyui/#:~:text=Flux%20is%20a%20family%20of,SDXL%20%20and%20%2021)). In simple terms, Flux is the AI “brain” we’ll use to generate a stunning portrait from your text prompt. (Flux was used to train specialized models like *RedCraft RealReveal5 ULTRA*, known for realistic portraits.)
+**Flux** is a family of high-quality text-to-image diffusion models developed by Black Forest Labs. As of early 2025, Flux models are considered some of the best image generation models. In simple terms, Flux is the AI "brain" we'll use to generate a stunning portrait from your text prompt. We will use a custom version of Flux model called *RedCraft RealReveal5 ULTRA* that is optimized for portraits.
 
-**LTX Video** is an open-source *text-to-video* diffusion model developed by Lightricks. It takes an image (or text) and generates a short video clip by imagining motion ([How to use LTX Video 0.9.5 on ComfyUI - Stable Diffusion Art](https://stable-diffusion-art.com/ltx-video-0-9-5/#:~:text=LTX%20Video%200,time%2C%20but%20very%20close)). LTX is optimized for speed – for instance, version 0.9.5 could render a 4-second video in ~17 seconds on an RTX 4090 ([How to use LTX Video 0.9.5 on ComfyUI - Stable Diffusion Art](https://stable-diffusion-art.com/ltx-video-0-9-5/#:~:text=LTX%20Video%200,time%2C%20but%20very%20close)). It’s not magic movie maker – think of it as adding subtle motion (camera movements, slight subject movements, etc.) to a still image. We’ll use LTX to animate the image created by Flux.
+**LTX Video** is an open-source video generation model developed by Lightricks. It takes an image (or text) and generates a short video clip by imagining motion. LTX is optimized for speed – for instance, version 0.9.5 could render a 4-second video in ~17 seconds on an RTX 4090. We will use 0.9.6-distilled version of LTX Video model which is even faster. It's not magic movie maker – think of it as adding subtle motion (camera movements, slight subject movements, etc.) to a still image.
 
-**How they fit together:** First, **Flux** generates a vertical portrait image from a prompt (e.g. a person or scene you describe). Then **LTX Video** takes that image and a “motion prompt” (describing how the camera or subject should move) to produce a series of frames – in other words, a short video. ComfyUI is the glue that lets us run Flux and LTX in one workflow: the output of the image generation nodes will feed into the video generation nodes. Essentially, **text → image → video** all within ComfyUI, using Flux and LTX under the hood.
+**How they fit together:** First, **Flux** generates a vertical portrait image from a prompt (e.g. a person or scene you describe). Then **LTX Video** takes that image and a "motion prompt" (describing how the camera or subject should move) to produce a series of frames – in other words, a short video. ComfyUI is the glue that lets us run Flux and LTX in one workflow: the output of the image generation nodes will feed into the video generation nodes. Essentially, **text → image → video** all within ComfyUI, using Flux and LTX under the hood.
 
 ## How Does Text Become a Video?
 
@@ -146,7 +149,7 @@ At a high level, the process works in two stages:
 
 - **Stage 1: Text-to-Image (Flux)** – You write a text prompt describing the portrait or scene you want. ComfyUI feeds this prompt into the Flux model, which diffuses random noise into an image that matches your description. This is done via a neural network that has learned to generate images from text. The result is a single AI-generated **portrait image** (we'll make it vertical format for TikTok).
 
-[AI Generation Description: A professional portrait photograph of a young woman (25-30) with flawless skin and subtle makeup. She faces slightly to the right, with a gentle, natural smile. Her features are illuminated by soft, directional sunlight coming from the upper left, creating delicate shadows and highlighting her cheekbones. She has medium-length hair styled in loose waves that catch the light. The background is slightly out of focus (f/2.8 bokeh) with warm, natural tones. The image has photorealistic quality with sharp details in the eyes and skin texture. Style: Modern portrait photography, 8K resolution, shot on high-end DSLR with 85mm portrait lens.]
+![](portrait_1.png)
 
 [AI Generation Description: A clean, minimalist technical diagram on a white background. Three connected boxes arranged horizontally, labeled "Text Input" (left), "Flux Model" (center), and "Generated Image" (right). Boxes are light blue (#E6F3FF) with dark blue borders (#2B5D9B). Black arrows (→) connect the boxes from left to right. Each box has a subtle drop shadow. The text is in a modern sans-serif font (Arial or Helvetica) in dark gray (#333333). The diagram has a professional, technical appearance similar to software documentation.]
 
@@ -156,45 +159,45 @@ At a high level, the process works in two stages:
 
 [AI Generation Description: A professional flowchart diagram showing the LTX video generation process. Four main elements arranged horizontally: 1) Two input boxes at left labeled "Initial Image" and "Motion Prompt" (stacked vertically), 2) Arrows flowing right to a central box, 3) A prominent center box labeled "LTX Model" with a subtle AI-themed icon, 4) An output box showing a filmstrip of multiple frames. The design uses a modern tech aesthetic with a blue and white color scheme (#2B5D9B, #FFFFFF). Connecting arrows are animated-style with gradient effects. The background is clean white with a subtle grid pattern. Text uses a modern sans-serif font. Style: Modern tech infographic, clean vector graphics.]
 
-ComfyUI links these stages, so after Stage 1 finishes, Stage 2 can use the output automatically. The end result is a short video (several seconds long) where the initial AI image comes to life. You might see the camera zoom or pan, the subject’s expression change slightly, or environmental movement, depending on your motion prompt. It’s like those Harry Potter photos – still images that move a bit!
+ComfyUI links these stages, so after Stage 1 finishes, Stage 2 can use the output automatically. The end result is a short video (several seconds long) where the initial AI image comes to life. You might see the camera zoom or pan, the subject's expression change slightly, or environmental movement, depending on your motion prompt. It's like those Harry Potter photos – still images that move a bit!
 
 ## What to Expect (and What *Not* to Expect)
 
-Before we get into the nuts and bolts, let’s set realistic expectations:
+Before we get into the nuts and bolts, let's set realistic expectations:
 
 - **Video Length & Quality:** The model generates high-quality videos at **24 FPS** with support for up to **129 frames** (about 5.4 seconds). The idea is to produce cinematic sequences with smooth, natural motion. Quality can be surprisingly good for camera movements and subtle animations. For example, a gentle pan or the subject's expression changing can look very natural. However, complex movements (like running, or multiple subjects interacting) will **not** look realistic – the model isn't that advanced yet.
 
 - **Speed:** The latest LTX Video model (0.9.6-distilled) is highly optimized and can generate videos faster than real-time playback at 24 FPS on high-end GPUs. On a high-end GPU (e.g. Nvidia RTX 3080/4090), you can expect generation times of 15-30 seconds for a typical video. On lower-end hardware (or Apple M1/M2), it will be slower (possibly a few minutes total), but still much faster than traditional video rendering or earlier AI video models. The distilled model achieves this speed by using only 8 diffusion steps per frame while maintaining quality.
 
-- **Realism Limits:** The output video is essentially a series of AI-generated images, so you might see minor flicker or differences frame to frame (the model works to keep them consistent, but it’s not perfect). The motions will be subtle. For instance, you can create a slow camera pan, slight subject movements (like a head turn or smile), or environmental effects (like leaves trembling). It excels at **small, smooth changes**. If you try something extreme (like “she starts dancing wildly”), the result will likely be strange or glitchy. **Don’t expect** the kind of coherence you’d get from a real video camera – think of it more like a moving painting.
+- **Realism Limits:** The output video is essentially a series of AI-generated images, so you might see minor flicker or differences frame to frame (the model works to keep them consistent, but it's not perfect). The motions will be subtle. For instance, you can create a slow camera pan, slight subject movements (like a head turn or smile), or environmental effects (like leaves trembling). It excels at **small, smooth changes**. If you try something extreme (like "she starts dancing wildly"), the result will likely be strange or glitchy. **Don't expect** the kind of coherence you'd get from a real video camera – think of it more like a moving painting.
 
 - **Resolution:** The model works on resolutions that are divisible by 32 and number of frames that are divisible by 8 + 1 (e.g. 257). In case the resolution or number of frames are not divisible by 32 or 8 + 1, the input will be padded with -1 and then cropped to the desired resolution and number of frames. The model works best on resolutions under 720 x 1280 and number of frames below 257. For optimal performance, **768×512** resolution is recommended, where it can generate videos faster than real-time playback.
 
-- **One scene only:** LTX does not *create new content per frame*; it transforms the given image. So if your image is a person standing, the video will be that same person – they won’t suddenly change clothes or location (unless your motion prompt somehow forces a change, but that often just yields artifacts). It’s essentially **the same scene with slight motion**. This is great for cinematic camera moves or a bit of life in a portrait, but not for storyboarding multi-scene sequences.
+- **One scene only:** LTX does not *create new content per frame*; it transforms the given image. So if your image is a person standing, the video will be that same person – they won't suddenly change clothes or location (unless your motion prompt somehow forces a change, but that often just yields artifacts). It's essentially **the same scene with slight motion**. This is great for cinematic camera moves or a bit of life in a portrait, but not for storyboarding multi-scene sequences.
 
-In short, **expect** a short, artsy moving portrait with mild motion. **Don’t expect** a full dynamic action sequence or a perfectly stable video on the first try. Part of the fun is experimenting and seeing what the AI can do within these limits!
+In short, **expect** a short, artsy moving portrait with mild motion. **Don't expect** a full dynamic action sequence or a perfectly stable video on the first try. Part of the fun is experimenting and seeing what the AI can do within these limits!
 
 ## Requirements: Hardware and Software
 
-Let’s make sure you have the right setup before we proceed.
+Let's make sure you have the right setup before we proceed.
 
-**Operating System:** You can do this on **Windows or macOS**. (Linux works too, but this guide focuses on Win/Mac.) On Windows, you’ll need an **NVIDIA GPU** for GPU acceleration ([Download ComfyUI for Windows/Mac](https://www.comfy.org/download#:~:text=For%20Mac%3A%20Requires%20Apple%20Silicon)). On macOS, you’ll need an **Apple Silicon** Mac (M1, M2, M3 chips) ([Download ComfyUI for Windows/Mac](https://www.comfy.org/download#:~:text=For%20Mac%3A%20Requires%20Apple%20Silicon)) – the Desktop version of ComfyUI doesn’t support Intel Macs, and Apple Silicon provides the needed ML acceleration (Metal Performance Shaders).
+**Operating System:** You can do this on **Windows or macOS**. (Linux works too, but this guide focuses on Win/Mac.) On Windows, you'll need an **NVIDIA GPU** for GPU acceleration ([Download ComfyUI for Windows/Mac](https://www.comfy.org/download#:~:text=For%20Mac%3A%20Requires%20Apple%20Silicon)). On macOS, you'll need an **Apple Silicon** Mac (M1, M2, M3 chips) ([Download ComfyUI for Windows/Mac](https://www.comfy.org/download#:~:text=For%20Mac%3A%20Requires%20Apple%20Silicon)) – the Desktop version of ComfyUI doesn't support Intel Macs, and Apple Silicon provides the needed ML acceleration (Metal Performance Shaders).
 
 **GPU and VRAM:** For Windows/NVIDIA users, a GPU with at least **8 GB VRAM** is recommended. 12GB+ will allow higher resolution (up to 720×1280) and more frames. (Flux and LTX are heavy models; Flux's all-in-one FP8 model is ~11 GB on disk and typically wants ~16 GB VRAM to run comfortably, but it can work on 8–12 GB with optimizations or lower resolution.) The LTX 0.9.6-distilled model is optimized for efficiency, requiring only 8 diffusion steps per frame. For macOS M1/M2 users, at least **16 GB unified memory** is recommended (32 GB is better). Macs use the GPU integrated in the chip – it can run these models, but slower. Be prepared for longer generation times on Mac compared to a high-end PC GPU. If you have no dedicated GPU (and only a CPU), it's technically possible to run ComfyUI, but it will be **extremely slow** (minutes per frame); this guide assumes you have some GPU capability.
 
-**RAM and Disk:** Ensure you have sufficient disk space – the models are large (the Flux model ~11 GB, LTX model ~ >2 GB, plus another ~10 GB for a text encoder file). RAM isn’t usually a bottleneck beyond what’s needed to load models into VRAM, but having 16 GB+ system RAM is a good idea.
+**RAM and Disk:** Ensure you have sufficient disk space – the models are large (the Flux model ~11 GB, LTX model ~ >2 GB, plus another ~10 GB for a text encoder file). RAM isn't usually a bottleneck beyond what's needed to load models into VRAM, but having 16 GB+ system RAM is a good idea.
 
-**Software:** We will use **ComfyUI Desktop** (the easy installer version). ComfyUI will handle all the heavy lifting (no need to install Python environments manually unless you want to). We’ll also use ComfyUI’s built-in **Manager** to install the needed **custom nodes** (the LTX extension, etc.). No coding required – just some downloads and clicking.
+**Software:** We will use **ComfyUI Desktop** (the easy installer version). ComfyUI will handle all the heavy lifting (no need to install Python environments manually unless you want to). We'll also use ComfyUI's built-in **Manager** to install the needed **custom nodes** (the LTX extension, etc.). No coding required – just some downloads and clicking.
 
 **Summary:**
 
 - **Windows + NVIDIA GPU** (8GB+ VRAM, Windows 10/11) – Supported (ComfyUI Desktop for Windows) ([Download ComfyUI for Windows/Mac](https://www.comfy.org/download#:~:text=For%20Mac%3A%20Requires%20Apple%20Silicon)).
 - **macOS + Apple Silicon (M1/M2)** (16GB+ recommended) – Supported (ComfyUI Desktop for Mac) ([Download ComfyUI for Windows/Mac](https://www.comfy.org/download#:~:text=For%20Mac%3A%20Requires%20Apple%20Silicon)).
-- **macOS Intel or Windows with AMD GPU** – *Not directly supported by ComfyUI Desktop.* You would need to use the ComfyUI source/CLI with relevant hacks (beyond this guide). It’s possible via PlaidML or CPU, but not beginner-friendly.
-- **Storage** – ~25 GB free for models/files.
+- **macOS Intel or Windows with AMD GPU** – *Not directly supported by ComfyUI Desktop.* You would need to use the ComfyUI source/CLI with relevant hacks (beyond this guide). It's possible via PlaidML or CPU, but not beginner-friendly.
+- **Storage** – ~35 GB free for models/files.
 - **Internet** – needed to download models and ComfyUI, but generation itself runs locally.
 
-Now that we have what we need, let’s get everything set up.
+Now that we have what we need, let's get everything set up.
 
 ## Installation: ComfyUI Desktop
 
@@ -204,7 +207,7 @@ ComfyUI Desktop is the easiest way to get up and running. It packages ComfyUI wi
 > Before proceeding, verify you have:
 > - Windows: NVIDIA GPU with 8GB+ VRAM, Windows 10/11
 > - Mac: M1/M2/M3 chip, 16GB+ unified memory
-> - ~25GB free disk space for models
+> - ~35GB free disk space for models
 > - Stable internet connection for downloads
 
 ### 🪟 Windows Installation (15-20 minutes)
@@ -292,15 +295,15 @@ The CLI version offers more flexibility and control, but requires more technical
 
 ## Downloading the Models (Flux and LTX)
 
-We need to download two model files: the *Flux model* (for image generation) and the *LTX Video model* (for video generation). We’ll also grab a necessary **text encoder** file for LTX (and Flux) to understand prompts properly.
+We need to download two model files: the *Flux model* (for image generation) and the *LTX Video model* (for video generation). We'll also grab a necessary **text encoder** file for LTX (and Flux) to understand prompts properly.
 
-### 1. Flux Model – “RedCraft RealReveal5 ULTRA” (Flux-based)
+### 1. Flux Model – "RedCraft RealReveal5 ULTRA" (Flux-based)
 
-Flux.1 is the core model, but here we’ll use a specialized **Flux checkpoint** that’s good for portraits. The creators of RedCraft RealReveal5 ULTRA (a Flux-based model) provided a ready-to-use safetensor file. Download it from Civitai using this link:
+Flux.1 is the core model, but here we'll use a specialized **Flux checkpoint** that's good for portraits. The creators of RedCraft RealReveal5 ULTRA (a Flux-based model) provided a ready-to-use safetensor file. Download it from Civitai using this link:
 
-- **Flux model download:** [RedCraft RealReveal5 ULTRA (Flux, FP8, pruned) – safetensors, ~11GB】 ([RedCraft | 红潮 CADS | UPdated-Apr28 | Commercial & Advertising Design System - Reveal5[SFW]ULTRA | Flux Checkpoint | Civitai](https://civitai.green/models/958009/redcraft-or-cads-or-updated-apr15-or-commercial-and-advertising-design-system?modelVersionId=1576605#:~:text=Download%20%2811)) ([RedCraft | 红潮 CADS | UPdated-Apr28 | Commercial & Advertising Design System - Reveal5[SFW]ULTRA | Flux Checkpoint | Civitai](https://civitai.green/models/958009/redcraft-or-cads-or-updated-apr15-or-commercial-and-advertising-design-system?modelVersionId=1576605#:~:text=2%20Files)). (**Tip:** If clicking a direct download link doesn’t work in browser, you may copy it or use the Civitai page. On the Civitai page, look for a download button showing ~11.08 GB ([RedCraft | 红潮 CADS | UPdated-Apr28 | Commercial & Advertising Design System - Reveal5[SFW]ULTRA | Flux Checkpoint | Civitai](https://civitai.green/models/958009/redcraft-or-cads-or-updated-apr15-or-commercial-and-advertising-design-system?modelVersionId=1576605#:~:text=Download%20%2811)).)
+- **Flux model download:** [RedCraft RealReveal5 ULTRA (Flux, FP8, pruned) – safetensors, ~11GB】 ([RedCraft | 红潮 CADS | UPdated-Apr28 | Commercial & Advertising Design System - Reveal5[SFW]ULTRA | Flux Checkpoint | Civitai](https://civitai.green/models/958009/redcraft-or-cads-or-updated-apr15-or-commercial-and-advertising-design-system?modelVersionId=1576605#:~:text=Download%20%2811)) ([RedCraft | 红潮 CADS | UPdated-Apr28 | Commercial & Advertising Design System - Reveal5[SFW]ULTRA | Flux Checkpoint | Civitai](https://civitai.green/models/958009/redcraft-or-cads-or-updated-apr15-or-commercial-and-advertising-design-system?modelVersionId=1576605#:~:text=2%20Files)). (**Tip:** If clicking a direct download link doesn't work in browser, you may copy it or use the Civitai page. On the Civitai page, look for a download button showing ~11.08 GB ([RedCraft | 红潮 CADS | UPdated-Apr28 | Commercial & Advertising Design System - Reveal5[SFW]ULTRA | Flux Checkpoint | Civitai](https://civitai.green/models/958009/redcraft-or-cads-or-updated-apr15-or-commercial-and-advertising-design-system?modelVersionId=1576605#:~:text=Download%20%2811)).)
 
-Save this `.safetensors` file to a location you can find. (It might be named along the lines of `RedCraft_RealReveal5_ULTRA_15Steps_fp8_pruned.safetensors` – that’s just an example.)
+Save this `.safetensors` file to a location you can find. (It might be named along the lines of `RedCraft_RealReveal5_ULTRA_15Steps_fp8_pruned.safetensors` – that's just an example.)
 
 ### 2. LTX Video Model
 
@@ -322,7 +325,7 @@ Both Flux and LTX rely on text encoders to understand prompts with greater detai
 
 Alternatively, you can manually download these files:
 
-- **T5 encoder:** Download **t5xxl_fp16.safetensors** (9.79 GB) from Hugging Face (e.g., `comfyanonymous/flux_text_encoders` repository)
+- **T5 encoder:** Download **t5xxl_fp8_e4m3fn.safetensors** (9.79 GB) from Hugging Face (e.g., `comfyanonymous/flux_text_encoders` repository)
 - Place in `models/text_encoders/` folder
 
 The text encoders will be used by ComfyUI for both the image and video stages, ensuring the AI fully grasps the nuances of your descriptions.
@@ -342,22 +345,21 @@ Note: Most likely you won't need this manual step if:
 
 Now that we have the files, we need to put them where ComfyUI can find them. ComfyUI organizes models in a **`models/`** directory, with subfolders for different model types. If you used ComfyUI Desktop, it likely created this structure for you. We need to locate it:
 
-- **Find the ComfyUI “models” folder:** If you’re using ComfyUI Desktop, the location can vary. A quick way: in the ComfyUI interface, click on the **“Manager”** button on the top toolbar, then look for an option or info about “Custom Nodes or Models directory”. If not obvious, you can use your OS search:
-  - On Windows, if you installed for a single user, the models folder might be in `%LOCALAPPDATA%\ComfyUI\pc` or within the installation directory (e.g., `C:\Program Files\ComfyUI\models\`). If you see folders like `checkpoints`, `vae`, `clip`, etc., you’re in the right place.
-  - On Mac, ComfyUI Desktop typically stores models in `~/Library/Application Support/ComfyUI/` or within the app container. Easiest way: use Finder’s Go->Go to Folder and enter `~/Library/Application Support/ComfyUI/` and look for a `models` folder. If not, it might be inside the app bundle (which is complex). Alternatively, upon first run, ComfyUI might have asked where to import models. If you have a `ComfyUI` folder in your home directory, check there too.
-  - If all else fails, use the search function of your OS for the file `extra_models_config.yaml` (ComfyUI often has this in the config, listing model paths ([MacOS Desktop Version - ComfyUI](https://docs.comfy.org/installation/desktop/macos#:~:text=match%20at%20L399%20extra_models_config,should%20not%20be%20edited%20directly))).
+- **Find the ComfyUI "models" folder:** If you're using ComfyUI Desktop, the location can vary. A quick way: in the ComfyUI interface, click on the **"Manager"** button on the top toolbar, then look for an option or info about "Custom Nodes or Models directory". If not obvious, you can use your OS search:
+  - On Windows, if you installed for a single user, the models folder might be in `%LOCALAPPDATA%\ComfyUI\pc` or within the installation directory (e.g., `C:\Program Files\ComfyUI\models\`). If you see folders like `checkpoints`, `vae`, `clip`, etc., you're in the right place.
+  - On Mac, ComfyUI Desktop typically stores models in `~/Library/Application Support/ComfyUI/` or within the app container. Easiest way: use Finder's Go->Go to Folder and enter `~/Library/Application Support/ComfyUI/` and look for a `models` folder. If not, it might be inside the app bundle (which is complex). Alternatively, upon first run, ComfyUI might have asked where to import models. If you have a `ComfyUI` folder in your home directory, check there too.
 
 Once you find the `models` directory, proceed to place the files:
 
-- **Flux model:** Copy the `*.safetensors` file for RedCraft/Flux into `models/checkpoints/`. (Create the `checkpoints` folder if it doesn’t exist.) ComfyUI treats this like a standard Stable Diffusion checkpoint ([How to install Flux AI model on ComfyUI - Stable Diffusion Art](https://stable-diffusion-art.com/flux-comfyui/#:~:text=Download%20the%20Flux1%20dev%20FP8,checkpoint)). For example, the path might end up as:
+- **Flux model:** Copy the `*.safetensors` file for RedCraft/Flux into `models/checkpoints/`. (Create the `checkpoints` folder if it doesn't exist.) ComfyUI treats this like a standard Stable Diffusion checkpoint ([How to install Flux AI model on ComfyUI - Stable Diffusion Art](https://stable-diffusion-art.com/flux-comfyui/#:~:text=Download%20the%20Flux1%20dev%20FP8,checkpoint)). For example, the path might end up as:
   `.../ComfyUI/models/checkpoints/RedCraft-RealReveal5-ULTRA-15Steps-fp8.safetensors`
-  (Your file name might differ; that’s okay.)
+  (Your file name might differ; that's okay.)
 
-- **LTX model:** Also copy the `ltxv-2b-0.9.6-distilled-04-25.safetensors` file into `models/checkpoints/` ([How to use LTX Video 0.9.5 on ComfyUI - Stable Diffusion Art](https://stable-diffusion-art.com/ltx-video-0-9-5/#:~:text=Download%20ltx,checkpoints)). Essentially, ComfyUI will also load this as a “checkpoint” model (even though it’s for video). If you want, you can separate it by making a subfolder (like `models/checkpoints/video/ltx-video.safetensors`), but it’s not necessary.
+- **LTX model:** Also copy the `ltxv-2b-0.9.6-distilled-04-25.safetensors` file into `models/checkpoints/` ([How to use LTX Video 0.9.5 on ComfyUI - Stable Diffusion Art](https://stable-diffusion-art.com/ltx-video-0-9-5/#:~:text=Download%20ltx,checkpoints)). Essentially, ComfyUI will also load this as a "checkpoint" model (even though it's for video). If you want, you can separate it by making a subfolder (like `models/checkpoints/video/ltx-video.safetensors`), but it's not necessary.
 
-- **T5 text encoder:** Copy the `t5xxl_fp16.safetensors` file into `models/text_encoders/` ([How to use LTX Video 0.9.5 on ComfyUI - Stable Diffusion Art](https://stable-diffusion-art.com/ltx-video-0-9-5/#:~:text=ComfyUI%C2%A0)). (If that folder doesn’t exist, create it exactly with that name). This is where ComfyUI looks for additional text encoders. *Important:* Without this, the LTX model may not work or will produce black frames because it can’t understand the prompt. So don’t skip it!
+- **T5 text encoder:** Copy the `t5xxl_fp8_e4m3fn.safetensors` file into `models/text_encoders/` ([How to use LTX Video 0.9.5 on ComfyUI - Stable Diffusion Art](https://stable-diffusion-art.com/ltx-video-0-9-5/#:~:text=ComfyUI%C2%A0)). (If that folder doesn't exist, create it exactly with that name). This is where ComfyUI looks for additional text encoders. *Important:* Without this, the LTX model may not work or will produce black frames because it can't understand the prompt. So don't skip it!
 
-- **(Optional) CLIP text encoder:** If you downloaded `clip_l.safetensors`, place it into `models/clip/` (or `models/clip_encoders/` depending on ComfyUI version – usually just `clip`). Again, you might not need to do this if the checkpoint is all-in-one. But if you run Flux and get a console error like “Clip model not found”, then add this.  ([How to install Flux AI model on ComfyUI - Stable Diffusion Art](https://stable-diffusion-art.com/flux-comfyui/#:~:text=Step%202%3A%20Download%20the%20CLIP,models))
+- **(Optional) CLIP text encoder:** If you downloaded `clip_l.safetensors`, place it into `models/clip/` (or `models/clip_encoders/` depending on ComfyUI version – usually just `clip`). Again, you might not need to do this if the checkpoint is all-in-one. But if you run Flux and get a console error like "Clip model not found", then add this.  ([How to install Flux AI model on ComfyUI - Stable Diffusion Art](https://stable-diffusion-art.com/flux-comfyui/#:~:text=Step%202%3A%20Download%20the%20CLIP,models))
 
 After organizing these files, your ComfyUI models folder should look something like this:
 
@@ -365,7 +367,7 @@ After organizing these files, your ComfyUI models folder should look something l
   - `RedCraft-RealReveal5-ULTRA-15Steps-fp8.safetensors`
   - `ltxv-2b-0.9.6-distilled-04-25.safetensors`
 - `models/text_encoders/`
-  - `t5xxl_fp16.safetensors`
+  - `t5xxl_fp8_e4m3fn.safetensors`
 - `models/clip/` (if used)
   - `clip_l.safetensors`
 
@@ -403,38 +405,38 @@ Now let's understand how the workflow actually works. We'll create it step by st
 
 ### **Step 1: Generate a Portrait Image with Flux**
 
-First, we’ll use the Flux model (RedCraft RealReveal5 ULTRA) to create a vertical portrait.
+First, we'll use the Flux model (RedCraft RealReveal5 ULTRA) to create a vertical portrait.
 
-1. **Load the Flux Model:** In ComfyUI’s node menu (right-click on the canvas to open the list of nodes), find **“Checkpoint Loader”** (or it might be called **“Load Checkpoint”** under a Diffusion category). Add that node to the canvas. In its settings (click the node to see options), there’s a drop-down to select a model file. Choose the **RedCraft/Flux model** you placed in `checkpoints`. For example, select “*RedCraft RealReveal5 ULTRA…*” from the list. This node will load the model when the workflow runs.
+1. **Load the Flux Model:** In ComfyUI's node menu (right-click on the canvas to open the list of nodes), find **"Checkpoint Loader"** (or it might be called **"Load Checkpoint"** under a Diffusion category). Add that node to the canvas. In its settings (click the node to see options), there's a drop-down to select a model file. Choose the **RedCraft/Flux model** you placed in `checkpoints`. For example, select "*RedCraft RealReveal5 ULTRA…*" from the list. This node will load the model when the workflow runs.
 
-   - *Settings:* Ensure **fp16** or **fp8** mode is correctly set if applicable (ComfyUI usually handles this automatically based on model file). The checkpoint loader will output a “Model” that other nodes can use.
+   - *Settings:* Ensure **fp16** or **fp8** mode is correctly set if applicable (ComfyUI usually handles this automatically based on model file). The checkpoint loader will output a "Model" that other nodes can use.
 
-2. **Add a Text Prompt:** We need a node to supply the text prompt for the image. ComfyUI typically uses a **Text Encode** node. Look for **“CLIP Text Encode”** (for SD1.x models) or any **“Text Encoder”** node that corresponds to your model. Since Flux uses a custom text encoder (T5 and possibly OpenCLIP), the exact node might be different. In recent ComfyUI, there’s a **“Dual Conditioning”** node or **“Load Text Encoder”** nodes, but to keep it simple: add a **Text Encoder node** (for example, “Clip Text Encode (large)” if available).
+2. **Add a Text Prompt:** We need a node to supply the text prompt for the image. ComfyUI typically uses a **Text Encode** node. Look for **"CLIP Text Encode"** (for SD1.x models) or any **"Text Encoder"** node that corresponds to your model. Since Flux uses a custom text encoder (T5 and possibly OpenCLIP), the exact node might be different. In recent ComfyUI, there's a **"Dual Conditioning"** node or **"Load Text Encoder"** nodes, but to keep it simple: add a **Text Encoder node** (for example, "Clip Text Encode (large)" if available).
 
-   - In the text encoder node’s properties, type your **prompt**. For a nice portrait, try something like:
-     *“Ultra-detailed close-up portrait photo of a beautiful woman, soft natural lighting, high contrast, 8k realism.”*
+   - In the text encoder node's properties, type your **prompt**. For a nice portrait, try something like:
+     *"Ultra-detailed close-up portrait photo of a beautiful woman, soft natural lighting, high contrast, 8k realism."*
      (Avoid NSFW terms as some models might be tuned to block them). This prompt will be encoded into embeddings that the diffusion model understands.
 
-   - Optionally add a **Negative Prompt** (some text encoders have a second input for negative prompt). You can use a negative prompt to avoid certain things. A common negative prompt: *“low quality, blurry, distorted, extra limbs”*, etc. RedCraft’s example negative prompt included things like “lowres, worst quality, bad anatomy, (etc)” – you can include those to steer the model away from problems ([RedCarft 亚洲美女模型 - Civitai中文网](https://civitai.me/49143.html#:~:text=Negative%20prompt%3A%20lowres%2C%20worst%20quality%2C,generated%2C%20open%20mouth)). This is optional but can improve output.
+   - Optionally add a **Negative Prompt** (some text encoders have a second input for negative prompt). You can use a negative prompt to avoid certain things. A common negative prompt: *"low quality, blurry, distorted, extra limbs"*, etc. RedCraft's example negative prompt included things like "lowres, worst quality, bad anatomy, (etc)" – you can include those to steer the model away from problems ([RedCarft 亚洲美女模型 - Civitai中文网](https://civitai.me/49143.html#:~:text=Negative%20prompt%3A%20lowres%2C%20worst%20quality%2C,generated%2C%20open%20mouth)). This is optional but can improve output.
 
 3. **Prepare the Image Generation Node (Sampler):** In ComfyUI, the actual image generation happens in a **Sampler** node. This node takes the model, the text conditioning, and generates an image latent. Add a sampler node, likely called **KSampler** or **DiffusionSampler**. ComfyUI has various samplers (Euler, DPM, etc.) built in. After adding it, do the following connections:
 
-   - Connect the **“Model” output** of the Checkpoint Loader to the **“Model” input** of the Sampler node. This gives the sampler our Flux model.
-   - Connect the **output of the Text Encode node** (the encoded conditioning) to the **conditioning input** of the Sampler. This input might be labeled like “Cond” or “Positive Conditioning”. If there’s a separate negative conditioning input, connect the negative prompt output accordingly.
-   - We also need to provide an initial latent (noise) to the sampler. Usually, the sampler node in ComfyUI has an input for latent (often if left unconnected, it internally creates noise). To be explicit, we can add a **Noise (Latent) node**. Look for **“Noise”** or **“Empty Latent Image”** node. Add it and set the width to 576 and height to 1024 (our target resolution). Connect its output to the **latent input** of the Sampler (commonly labeled “Latent Image” or similar). This node will generate a random latent as the starting point (pure noise). Alternatively, some workflows use a “Noise seed” but a noise node is simplest.
+   - Connect the **"Model" output** of the Checkpoint Loader to the **"Model" input** of the Sampler node. This gives the sampler our Flux model.
+   - Connect the **output of the Text Encode node** (the encoded conditioning) to the **conditioning input** of the Sampler. This input might be labeled like "Cond" or "Positive Conditioning". If there's a separate negative conditioning input, connect the negative prompt output accordingly.
+   - We also need to provide an initial latent (noise) to the sampler. Usually, the sampler node in ComfyUI has an input for latent (often if left unconnected, it internally creates noise). To be explicit, we can add a **Noise (Latent) node**. Look for **"Noise"** or **"Empty Latent Image"** node. Add it and set the width to 576 and height to 1024 (our target resolution). Connect its output to the **latent input** of the Sampler (commonly labeled "Latent Image" or similar). This node will generate a random latent as the starting point (pure noise). Alternatively, some workflows use a "Noise seed" but a noise node is simplest.
 
-   Now, configure the sampler node’s parameters:
+   Now, configure the sampler node's parameters:
    - **Sampler method:** Choose one of the recommended samplers: *Euler*, *DPM++ 2M*, or *DEIS* were suggested for this model ([RedCarft 亚洲美女模型 - Civitai中文网](https://civitai.me/49143.html#:~:text=RedCraft%20RealReveal5%20ULTRA%C2%A015Steps)). For example, select **DPM++ 2M** Karras or **Euler a**.
    - **Steps:** Set **15** steps. The model was designed to give good results in ~15 steps ([RedCarft 亚洲美女模型 - Civitai中文网](https://civitai.me/49143.html#:~:text=RedCraft%20RealReveal5%20ULTRA%C2%A015Steps)) (which is quite low; normally SD models use ~20-30, but Flux is powerful and RedCraft is optimized for fewer steps).
    - **CFG (Classifier-Free Guidance) scale:** Set **CFG = 1** ([RedCarft 亚洲美女模型 - Civitai中文网](https://civitai.me/49143.html#:~:text=RedCraft%20RealReveal5%20ULTRA%C2%A015Steps)). Yes, just 1 – unusually low, but the authors specifically recommend a very low CFG for this model. (Flux/RedCraft has been trained to follow prompts strongly even at low CFG, higher values may overly constrain it).
-   - **Scheduler (Noise schedule):** If available, choose **SGM_uniform** ([RedCarft 亚洲美女模型 - Civitai中文网](https://civitai.me/49143.html#:~:text=RedCraft%20RealReveal5%20ULTRA%C2%A015Steps)). This is a scheduler that evenly distributes denoising; it was recommended (“SGM_uniform”) for this model to get the best results in few steps. If that option isn’t present, the default or “simple” scheduler is okay, but SGM_uniform can improve quality.
-   - **Seed:** You can leave it random for now or set a numeric seed if you want reproducibility. A fixed seed means you’ll get the same image every time (with same prompt and settings). Random will surprise you each run.
+   - **Scheduler (Noise schedule):** If available, choose **SGM_uniform** ([RedCarft 亚洲美女模型 - Civitai中文网](https://civitai.me/49143.html#:~:text=RedCraft%20RealReveal5%20ULTRA%C2%A015Steps)). This is a scheduler that evenly distributes denoising; it was recommended ("SGM_uniform") for this model to get the best results in few steps. If that option isn't present, the default or "simple" scheduler is okay, but SGM_uniform can improve quality.
+   - **Seed:** You can leave it random for now or set a numeric seed if you want reproducibility. A fixed seed means you'll get the same image every time (with same prompt and settings). Random will surprise you each run.
 
-4. **Decode the Image (VAE):** The sampler produces a latent representation (basically encoded image). We need to decode it to an actual image we can see. Add a **VAE Decoder** node (often called **“VAEDecode”**). Connect the **latent output** of the Sampler to the **VAE Decoder’s input**. Also connect the **Model output** of the Checkpoint Loader to the VAE Decoder’s “VAE” input if required. (If using the same checkpoint for VAE, some workflows have a separate Load VAE node. But in many cases, the checkpoint includes a VAE, so the sampler’s model output might carry VAE info. If not, add a “Load VAE” node and choose a VAE file – Flux may have a recommended VAE ([How to install Flux AI model on ComfyUI - Stable Diffusion Art](https://stable-diffusion-art.com/flux-comfyui/#:~:text=Step%203%3A%20Download%20the%20VAE)). The RedCraft model likely uses a standard SD VAE or one provided in Flux VAE; if you have `flux_vae.safetensors`, you can load it. But often simply decoding with a generic SD1.5 VAE is fine for now.)
+4. **Decode the Image (VAE):** The sampler produces a latent representation (basically encoded image). We need to decode it to an actual image we can see. Add a **VAE Decoder** node (often called **"VAEDecode"**). Connect the **latent output** of the Sampler to the **VAE Decoder's input**. Also connect the **Model output** of the Checkpoint Loader to the VAE Decoder's "VAE" input if required. (If using the same checkpoint for VAE, some workflows have a separate Load VAE node. But in many cases, the checkpoint includes a VAE, so the sampler's model output might carry VAE info. If not, add a "Load VAE" node and choose a VAE file – Flux may have a recommended VAE ([How to install Flux AI model on ComfyUI - Stable Diffusion Art](https://stable-diffusion-art.com/flux-comfyui/#:~:text=Step%203%3A%20Download%20the%20VAE)). The RedCraft model likely uses a standard SD VAE or one provided in Flux VAE; if you have `flux_vae.safetensors`, you can load it. But often simply decoding with a generic SD1.5 VAE is fine for now.)
 
    The VAE Decoder will output an image (usually as a tensor). We want to preview or save it.
 
-5. **Preview/Save the Image:** Add an **Image Preview** or **Save Image** node. ComfyUI by default might show the final image output in the UI’s preview panel if the last node returns an image. But to be sure, add a **Save Image** node and connect the output of the VAE Decoder to it. In Save Image’s settings, you can specify a filename or leave it to auto-generate (it will save to ComfyUI’s output folder by default). Alternatively, a **Preview** node would just display it without saving. You can do both if you like.
+5. **Preview/Save the Image:** Add an **Image Preview** or **Save Image** node. ComfyUI by default might show the final image output in the UI's preview panel if the last node returns an image. But to be sure, add a **Save Image** node and connect the output of the VAE Decoder to it. In Save Image's settings, you can specify a filename or leave it to auto-generate (it will save to ComfyUI's output folder by default). Alternatively, a **Preview** node would just display it without saving. You can do both if you like.
 
 Now the Step 1 graph is complete:
 
@@ -448,44 +450,44 @@ Double-check everything is connected properly.
 
 [Screenshot: ComfyUI interface showing generated portrait with progress bar]
 
-   If you used the example prompt, you should see a portrait of a woman with the described features, in vertical orientation. If it’s not to your liking, you can tweak the prompt or try a different seed and queue again. The beauty of ComfyUI is you can iteratively adjust nodes and re-run quickly.
+   If you used the example prompt, you should see a portrait of a woman with the described features, in vertical orientation. If it's not to your liking, you can tweak the prompt or try a different seed and queue again. The beauty of ComfyUI is you can iteratively adjust nodes and re-run quickly.
 
-7. **(Optional) Tweak and Improve:** If the image has issues (maybe weird hands, etc.), consider refining the prompt or negative prompt. Flux is pretty good with anatomy, but no model is perfect. You could add terms to negative prompt like “disfigured, extra hands, text, watermark” to avoid those. Also try the different sampler methods (Euler vs DPM++). Euler a may produce slightly sharper results, DPM++ 2M Karras might be smoother. **CFG** 1 is very low – if you feel the image isn’t following prompt enough or is too off-track, you could try CFG 2 or 3, but usually the recommendation is 1 to preserve detail. We’re following the model’s guidelines strictly here ([RedCarft 亚洲美女模型 - Civitai中文网](https://civitai.me/49143.html#:~:text=RedCraft%20RealReveal5%20ULTRA%C2%A015Steps)).
+7. **(Optional) Tweak and Improve:** If the image has issues (maybe weird hands, etc.), consider refining the prompt or negative prompt. Flux is pretty good with anatomy, but no model is perfect. You could add terms to negative prompt like "disfigured, extra hands, text, watermark" to avoid those. Also try the different sampler methods (Euler vs DPM++). Euler a may produce slightly sharper results, DPM++ 2M Karras might be smoother. **CFG** 1 is very low – if you feel the image isn't following prompt enough or is too off-track, you could try CFG 2 or 3, but usually the recommendation is 1 to preserve detail. We're following the model's guidelines strictly here ([RedCarft 亚洲美女模型 - Civitai中文网](https://civitai.me/49143.html#:~:text=RedCraft%20RealReveal5%20ULTRA%C2%A015Steps)).
 
-For now, once you have a nice portrait image, **save it** (if it wasn’t auto-saved). We’ll use it in the next step. If you used Save Image node, check the output directory (ComfyUI will typically output to `ComfyUI/output` with a timestamped filename). You can also right-click the Save node to open the folder.
+For now, once you have a nice portrait image, **save it** (if it wasn't auto-saved). We'll use it in the next step. If you used Save Image node, check the output directory (ComfyUI will typically output to `ComfyUI/output` with a timestamped filename). You can also right-click the Save node to open the folder.
 
 *(You could also keep the image in-memory and feed it directly to LTX in one go, but saving it and reusing is simpler to explain.)*
 
 ### **Step 2: Animate the Image with LTX Video**
 
-Now for the fun part – animating that still image. We’ll set up the LTX video generation nodes.
+Now for the fun part – animating that still image. We'll set up the LTX video generation nodes.
 
 1. **Load the LTX Model:** Add another **Checkpoint Loader** node (you can copy the first one or add a new one). This time, select the **LTX Video model** (`ltxv-2b-0.9.6-distilled-04-25.safetensors`) in its model selection. This node will load the video diffusion model.
 
-   - If ComfyUI has native support, it might not complain, otherwise ensure you installed the LTX custom nodes. (If the LTX model isn’t recognized, you might need to update ComfyUI to the latest version ([GitHub - Lightricks/ComfyUI-LTXVideo: LTX-Video Support for ComfyUI](https://github.com/Lightricks/ComfyUI-LTXVideo#:~:text=provide%20useful%20tools%20for%20working,can%20be%20found%20%2083)), as LTX support was added in core around version 0.3.** and also install the **ComfyUI-LTXVideo** extension via the Manager. We’ll cover installing extensions in a moment if needed.)
+   - If ComfyUI has native support, it might not complain, otherwise ensure you installed the LTX custom nodes. (If the LTX model isn't recognized, you might need to update ComfyUI to the latest version ([GitHub - Lightricks/ComfyUI-LTXVideo: LTX-Video Support for ComfyUI](https://github.com/Lightricks/ComfyUI-LTXVideo#:~:text=provide%20useful%20tools%20for%20working,can%20be%20found%20%2083)), as LTX support was added in core around version 0.3.** and also install the **ComfyUI-LTXVideo** extension via the Manager. We'll cover installing extensions in a moment if needed.)
 
-2. **Prepare the Initial Frame (our image):** We need to feed the Stage 1 image into LTX as the starting frame. Add an **Image Loader** node (called **“Load Image”**). In its settings, browse and select the portrait image file we got from step 1 (e.g., the saved PNG). Alternatively, if you kept everything in one workflow, you could directly connect the output image from VAE to the LTX pipeline, but using a Load Image node is straightforward. Once loaded, this node will output the image.
+2. **Prepare the Initial Frame (our image):** We need to feed the Stage 1 image into LTX as the starting frame. Add an **Image Loader** node (called **"Load Image"**). In its settings, browse and select the portrait image file we got from step 1 (e.g., the saved PNG). Alternatively, if you kept everything in one workflow, you could directly connect the output image from VAE to the LTX pipeline, but using a Load Image node is straightforward. Once loaded, this node will output the image.
 
-3. **Encode the Image to Latent:** LTX works in latent space (like Stable Diffusion). So we must encode our loaded image into a latent representation. Add a **VAE Encode Image** node. Connect the **output of the Load Image node** to this VAE Encode’s input. Also connect the **LTX Checkpoint Loader’s model** output to this VAE Encode’s “VAE” input (if it requires a VAE). If the LTX model safetensors includes a VAE, it might use that; otherwise using the same VAE as the initial image’s model (Flux’s VAE) is fine because they’re both SD-based. In many cases, the default SD1.5 VAE is used for LTX as well. This VAE Encode node will output a **latent** frame (the starting frame latent).
+3. **Encode the Image to Latent:** LTX works in latent space (like Stable Diffusion). So we must encode our loaded image into a latent representation. Add a **VAE Encode Image** node. Connect the **output of the Load Image node** to this VAE Encode's input. Also connect the **LTX Checkpoint Loader's model** output to this VAE Encode's "VAE" input (if it requires a VAE). If the LTX model safetensors includes a VAE, it might use that; otherwise using the same VAE as the initial image's model (Flux's VAE) is fine because they're both SD-based. In many cases, the default SD1.5 VAE is used for LTX as well. This VAE Encode node will output a **latent** frame (the starting frame latent).
 
-4. **Motion Prompt (Text) for Video:** Now add another **Text Encode** node (or a prompt node specifically for LTX if provided by extension). This will be the description of the video motion and any scene details. Write a prompt that **describes what happens over the next few seconds** and also matches the content of the image. It’s important to *match the image* so the model knows what it’s animating ([How to use LTX Video 0.9.5 on ComfyUI - Stable Diffusion Art](https://stable-diffusion-art.com/ltx-video-0-9-5/#:~:text=Step%205%3A%20Revise%20the%20prompt)). For example, if your image is a woman in a sunny garden, your video prompt should mention that context, then describe motion:
+4. **Motion Prompt (Text) for Video:** Now add another **Text Encode** node (or a prompt node specifically for LTX if provided by extension). This will be the description of the video motion and any scene details. Write a prompt that **describes what happens over the next few seconds** and also matches the content of the image. It's important to *match the image* so the model knows what it's animating ([How to use LTX Video 0.9.5 on ComfyUI - Stable Diffusion Art](https://stable-diffusion-art.com/ltx-video-0-9-5/#:~:text=Step%205%3A%20Revise%20the%20prompt)). For example, if your image is a woman in a sunny garden, your video prompt should mention that context, then describe motion:
 
    *Example motion prompt:* *"a close-up portrait of a young woman in a sunny garden, slight camera movement; slowly pan the camera upward from her torso to her face, her hair swaying gently in a breeze. The lighting is warm and natural, likely from the setting sun, casting a soft glow on the scene. The scene appears to be real-life footage."*
 
-   This prompt contains the scene (so LTX knows it’s a woman in a garden) and the motion (pan upward, hair swaying). LTX works better with **long descriptive prompts** ([How to use LTX Video 0.9.5 on ComfyUI - Stable Diffusion Art](https://stable-diffusion-art.com/ltx-video-0-9-5/#:~:text=Step%205%3A%20Revise%20the%20prompt)), so don’t be shy to include detail. You can even ask ChatGPT or similar to expand a simple motion idea into a vivid description (as a fun tip from LTX docs ([How to use LTX Video 0.9.5 on ComfyUI - Stable Diffusion Art](https://stable-diffusion-art.com/ltx-video-0-9-5/#:~:text=uploaded%20image%20and%20describe%20what,in%20the%20next%204%20seconds))).
+   This prompt contains the scene (so LTX knows it's a woman in a garden) and the motion (pan upward, hair swaying). LTX works better with **long descriptive prompts** ([How to use LTX Video 0.9.5 on ComfyUI - Stable Diffusion Art](https://stable-diffusion-art.com/ltx-video-0-9-5/#:~:text=Step%205%3A%20Revise%20the%20prompt)), so don't be shy to include detail. You can even ask ChatGPT or similar to expand a simple motion idea into a vivid description (as a fun tip from LTX docs ([How to use LTX Video 0.9.5 on ComfyUI - Stable Diffusion Art](https://stable-diffusion-art.com/ltx-video-0-9-5/#:~:text=uploaded%20image%20and%20describe%20what,in%20the%20next%204%20seconds))).
 
-   You might also use a negative prompt here (to avoid janky artifacts between frames – e.g. “low quality, flicker, glitch”). If the Text Encode node supports negative, use it similarly as before.
+   You might also use a negative prompt here (to avoid janky artifacts between frames – e.g. "low quality, flicker, glitch"). If the Text Encode node supports negative, use it similarly as before.
 
-5. **Set up the LTX Video Sampler:** Now, this part depends on the custom nodes from the LTX extension. Typically, after encoding the initial frame and preparing the prompt, we need a node that **generates a series of frames**. In some LTX example workflows, this is done by a custom node called **“LTX Recurrent Scheduler”** or **“LTX Video Diffusion”**. The exact node name might be different, but conceptually:
+5. **Set up the LTX Video Sampler:** Now, this part depends on the custom nodes from the LTX extension. Typically, after encoding the initial frame and preparing the prompt, we need a node that **generates a series of frames**. In some LTX example workflows, this is done by a custom node called **"LTX Recurrent Scheduler"** or **"LTX Video Diffusion"**. The exact node name might be different, but conceptually:
 
-   - Add the **LTX video generation node** (look for something like *“LTXVideo Diffuser”* or check under a “LTX” category if the extension is installed). If you don’t see any, you may need to install the LTXVideo extension: Click **Manager > Install Custom Nodes**, search for **“LTXVideo”** and install ([LTX Video - New Open Source Video Model with ComfyUI Workflows](https://www.reddit.com/r/StableDiffusion/comments/1gx9mv3/ltx_video_new_open_source_video_model_with/#:~:text=Update%20to%20the%20latest%20version,v0.9.safetensors%20into)). After a restart, you should have nodes for LTX.
+   - Add the **LTX video generation node** (look for something like *"LTXVideo Diffuser"* or check under a "LTX" category if the extension is installed). If you don't see any, you may need to install the LTXVideo extension: Click **Manager > Install Custom Nodes**, search for **"LTXVideo"** and install ([LTX Video - New Open Source Video Model with ComfyUI Workflows](https://www.reddit.com/r/StableDiffusion/comments/1gx9mv3/ltx_video_new_open_source_video_model_with/#:~:text=Update%20to%20the%20latest%20version,v0.9.safetensors%20into)). After a restart, you should have nodes for LTX.
 
    - Once you have it, place the LTX video node and connect:
      - **Model:** Connect the output of the LTX Checkpoint Loader to the model input of this node.
      - **Initial Frame:** Connect the encoded latent from step 3 (VAE Encode output) to the initial frame input.
-     - **Text Conditioning:** Connect the output of the motion Text Encode to the conditioning input of the LTX node (likely labeled similarly to the image sampler’s conditioning).
+     - **Text Conditioning:** Connect the output of the motion Text Encode to the conditioning input of the LTX node (likely labeled similarly to the image sampler's conditioning).
 
-   - Configure the LTX node’s parameters:
+   - Configure the LTX node's parameters:
      - **Resolution:** Set to **768×512** pixels - this is the optimal resolution where the model can generate videos faster than real-time playback.
      - **FPS:** The model is optimized for **24 FPS** output, providing smooth, cinematic motion.
      - **Number of Frames:** The model supports up to **129 frames**, allowing for longer sequences up to 5.4 seconds. For testing, you might start with fewer frames and work up to the full length.
@@ -493,21 +495,21 @@ Now for the fun part – animating that still image. We’ll set up the LTX vide
      - **CFG Scale:** For LTX, something like **7–8** is typical (this is separate from the image CFG). Some LTX example flows use multiple CFG values through advanced schedulers, but to keep simple, try CFG ~7.
      - **Noise Schedule / Strength:** Some nodes might ask how strongly to deviate from the initial image each frame. Usually, leaving default or moderate values is fine. The model will try to keep things coherent.
 
-   This LTX node will generate the series of latents for each frame of the video. Essentially it runs a diffusion process for each frame, conditioning on the previous frame’s output so that frames are related (hence “recurrent”).
+   This LTX node will generate the series of latents for each frame of the video. Essentially it runs a diffusion process for each frame, conditioning on the previous frame's output so that frames are related (hence "recurrent").
 
 6. **Decode and Combine Frames into Video:** After the LTX node, you will have multiple latents (one per frame). We need to decode them to images and then combine into an actual video file. There are a couple ways:
 
-   - **Using a Video Combine node:** If you installed the **ComfyUI-VideoHelperSuite** or similar extension (which often is needed, and the LTX example workflows mention “VideoCombine” node ([GitHub - Lightricks/ComfyUI-LTXVideo: LTX-Video Support for ComfyUI](https://github.com/Lightricks/ComfyUI-LTXVideo#:~:text=Example%20workflows))), you should have a node called **“Video Combine”**. This node can take a batch of images and output a video file (e.g. MP4). The LTX node likely outputs a batch of latent images or images. You may need to first decode the batch of latents:
+   - **Using a Video Combine node:** If you installed the **ComfyUI-VideoHelperSuite** or similar extension (which often is needed, and the LTX example workflows mention "VideoCombine" node ([GitHub - Lightricks/ComfyUI-LTXVideo: LTX-Video Support for ComfyUI](https://github.com/Lightricks/ComfyUI-LTXVideo#:~:text=Example%20workflows))), you should have a node called **"Video Combine"**. This node can take a batch of images and output a video file (e.g. MP4). The LTX node likely outputs a batch of latent images or images. You may need to first decode the batch of latents:
      - Add a **VAE Decode** node that can handle batch (some VAE decode nodes automatically decode batches of latents into a batch of images if you pass all latents at once).
      - Connect the **frames output** of LTX node to the VAE Decode. This should output a list of images.
      - Then add **Video Combine** node. Connect the image batch to it. Set the frame rate in this node (should match the intended FPS, e.g. 12). You can also set output filename (`.mp4`) and quality (CRF value).
      - The Video Combine node will output a video file to your output folder (or a specified path).
 
-   - **Alternative (manual):** If you don’t have a VideoCombine node, ComfyUI will at least display or allow saving of individual frames. You could use a **Save Image** node on the batch of images (it will save them as frame_001.png, frame_002.png, etc.). Then you can use an external tool like `ffmpeg` to encode those PNGs into an MP4. This requires extra steps, so using the extension node is easier for beginners.
+   - **Alternative (manual):** If you don't have a VideoCombine node, ComfyUI will at least display or allow saving of individual frames. You could use a **Save Image** node on the batch of images (it will save them as frame_001.png, frame_002.png, etc.). Then you can use an external tool like `ffmpeg` to encode those PNGs into an MP4. This requires extra steps, so using the extension node is easier for beginners.
 
-   If you see **red nodes or errors** about missing nodes at this stage, it’s likely you need to install the custom node extensions:
+   If you see **red nodes or errors** about missing nodes at this stage, it's likely you need to install the custom node extensions:
    - Go to **Manager > Install Missing Custom Nodes** (ComfyUI might have a button that automatically fetches any nodes referenced in a loaded workflow, for example) ([How to use LTX Video 0.9.5 on ComfyUI - Stable Diffusion Art](https://stable-diffusion-art.com/ltx-video-0-9-5/#:~:text=Step%203%3A%20Install%20missing%20nodes)).
-   - Specifically search and install **“LTXVideo”** (for the LTX nodes) ([LTX Video - New Open Source Video Model with ComfyUI Workflows](https://www.reddit.com/r/StableDiffusion/comments/1gx9mv3/ltx_video_new_open_source_video_model_with/#:~:text=LTX%20Video%20,v0.9.safetensors%20into)) and **“VideoHelperSuite”** or **“Video Nodes”** for the combine node. Once installed, restart ComfyUI and rebuild the connections if needed.
+   - Specifically search and install **"LTXVideo"** (for the LTX nodes) ([LTX Video - New Open Source Video Model with ComfyUI Workflows](https://www.reddit.com/r/StableDiffusion/comments/1gx9mv3/ltx_video_new_open_source_video_model_with/#:~:text=LTX%20Video%20,v0.9.safetensors%20into)) and **"VideoHelperSuite"** or **"Video Nodes"** for the combine node. Once installed, restart ComfyUI and rebuild the connections if needed.
 
 Now the Step 2 part of the graph is done. Here's how the nodes connect:
 
@@ -515,19 +517,19 @@ Now the Step 2 part of the graph is done. Here's how the nodes connect:
 
 7. **Run the Video Generation:** Ensure the Step 2 nodes are all connected properly. Click **Queue** again to run this part. If you left the image generation nodes in the same workflow and still connected, the entire thing will run from scratch (doing image and video). To avoid re-generating the image each time, you can *disable* the image part or simply start a new workflow for step 2, loading the saved image. If doing it separately, just ensure only the LTX part is queued.
 
-   As it runs, you’ll see the model loading (it might take a moment to load the 2B LTX model into VRAM) and then it will iterate through frames. This might appear as multiple sampler steps in the console or just a progress bar. After it finishes, check your output:
+   As it runs, you'll see the model loading (it might take a moment to load the 2B LTX model into VRAM) and then it will iterate through frames. This might appear as multiple sampler steps in the console or just a progress bar. After it finishes, check your output:
    - If using Video Combine, look for the output video file (e.g., `ComfyUI/output/video.mp4`).
-   - If saving frames, you’ll see a sequence of images in the output folder.
-   - ComfyUI might also show a grid of the generated frames in the UI’s preview.
+   - If saving frames, you'll see a sequence of images in the output folder.
+   - ComfyUI might also show a grid of the generated frames in the UI's preview.
 
-   Open the video or image sequence and watch your AI-generated clip! With luck, you’ll see your portrait come to life: maybe the camera moves upward, and her hair gently moves, as per the prompt. It can be mesmerizing to see a once-static image gain a bit of motion.
+   Open the video or image sequence and watch your AI-generated clip! With luck, you'll see your portrait come to life: maybe the camera moves upward, and her hair gently moves, as per the prompt. It can be mesmerizing to see a once-static image gain a bit of motion.
 
-8. **Adjust and Refine:** If the video looks odd (common issues include a “breathing” effect where the AI slightly changes details back-and-forth), you can tweak:
-   - Use a more detailed or constrained prompt to keep things stable (e.g. if her face changed unexpectedly, explicitly say “maintains the same face and expression” in the prompt).
-   - If there’s flicker, try lowering CFG or using fewer diffusion steps, or add negative prompt terms like “no flicker, no change in background”.
+8. **Adjust and Refine:** If the video looks odd (common issues include a "breathing" effect where the AI slightly changes details back-and-forth), you can tweak:
+   - Use a more detailed or constrained prompt to keep things stable (e.g. if her face changed unexpectedly, explicitly say "maintains the same face and expression" in the prompt).
+   - If there's flicker, try lowering CFG or using fewer diffusion steps, or add negative prompt terms like "no flicker, no change in background".
    - Try a different type of motion – some motions might be too hard. Camera pans and slight zooms are usually safest. Large object movements can cause more artifacts.
    - Experiment with **frame count** and **FPS**. More frames (longer video) can compound errors, but you might get a slightly longer motion if your GPU can handle it. Fewer frames (like 12) might produce a very short subtle animation that can loop nicely.
-   - Also note: The **distilled** LTX model we used prioritizes speed. The full-quality model (non-distilled) might give slightly better quality but needs more steps (like 20 steps/frame) and more VRAM/time. You could try that if you’re chasing quality and have the resources.
+   - Also note: The **distilled** LTX model we used prioritizes speed. The full-quality model (non-distilled) might give slightly better quality but needs more steps (like 20 steps/frame) and more VRAM/time. You could try that if you're chasing quality and have the resources.
 
 At this point, you've successfully generated a portrait and animated it with AI – congratulations! Let's move on to Level 3 for those who want to explore more advanced techniques.
 
@@ -595,30 +597,23 @@ Feel free to mix and match. The key is to have a strong, clear image first, then
 
 **Q: I hit "Queue" but got an error / red error box.**
 A: Read the error message carefully. Common issues:
-- *Missing model file:* Did you place the model files in the correct folders? If the Checkpoint Loader can’t find the model, double-check the filenames and paths. Make sure ComfyUI’s `extra_models_config.yaml` (if used) includes those folders. By default, `models/checkpoints` and `models/text_encoders` are loaded ([How to use LTX Video 0.9.5 on ComfyUI - Stable Diffusion Art](https://stable-diffusion-art.com/ltx-video-0-9-5/#:~:text=Download%20ltx,checkpoints)). If you named something incorrectly (e.g., forgot “.safetensors”), fix that.
-- *Missing custom node:* If you see something like “No such node: LTX*” or “VideoCombine not found”, you need to install the extension nodes. Go to **Manager > Custom Nodes** and install the LTX Video extension ([LTX Video - New Open Source Video Model with ComfyUI Workflows](https://www.reddit.com/r/StableDiffusion/comments/1gx9mv3/ltx_video_new_open_source_video_model_with/#:~:text=LTX%20Video%20,v0.9.safetensors%20into)) and any video helper nodes. After installing, restart ComfyUI and try again.
-- *Load errors on Mac (MPS issues):* Sometimes you might see messages about MPS or data types. Ensure you’re on the latest ComfyUI and that the pruned FP8 model is supported on Mac. As of writing, pruned FP8 models now work on MPS with updated PyTorch ([Flux + ComfyUI on Apple Silicon Macs— 2024 | by Jason Griffin | Medium](https://medium.com/@tchpnk/flux-comfyui-on-apple-silicon-with-hardware-acceleration-2024-4d44ed437179#:~:text=This%20advice%20appears%20to%20come,fp8%29%20version%20instead)). If not, you might try using the full FP16 model version, but that might require more VRAM than the Mac has, leading to needing CPU. If nothing works, you may have to run in CPU mode (very slow) or use a cloud GPU.
+- *Missing model file:* Did you place the model files in the correct folders? If the Checkpoint Loader can't find the model, double-check the filenames and paths. By default, `models/checkpoints` and `models/text_encoders` are loaded. If you named something incorrectly (e.g., forgot ".safetensors"), fix that.
+- *Missing custom node:* If you see something like "No such node: LTX*" or "VideoCombine not found", you need to install the extension nodes. Go to **Manager > Custom Nodes** and install the LTX Video extension and any video helper nodes. After installing, restart ComfyUI and try again.
+- *Load errors on Mac (MPS issues):* Sometimes you might see messages about MPS or data types. Ensure you're on the latest ComfyUI and that the pruned FP8 model is supported on Mac. As of writing, pruned FP8 models now work on MPS with updated PyTorch. If not, you might try using the full FP16 model version, but that might require more VRAM than the Mac has, leading to needing CPU. If nothing works, you may have to run in CPU mode (very slow) or use a cloud GPU.
 
 ### 💾 Memory Management
-
-> 📊 **VRAM Requirements Guide**
-> - 6GB VRAM: Use NF4 quantized models only
-> - 8GB VRAM: FP8 pruned model at 448x768
-> - 12GB VRAM: Full resolution, any model variant
-> - 16GB+ VRAM: Multiple models loaded simultaneously
 
 **Q: The image generation (Flux) is running out of memory (OOM error).**
 
 A: Flux models are memory-intensive. Here's how to handle OOM issues:
 
 1. **Model Optimization**
-   - Use FP8 pruned model (recommended for 8GB cards)
+   - Use FP8 pruned model
    - Try Flux Schnell for lower VRAM usage
    - Consider NF4 quantized version for 6GB cards
 
 2. **Resolution Management**
-   - Start with 448x768 instead of 576x1024
-   - For very limited VRAM, try 384x640
+   - Start with lower resolution
    - Upscale results after generation if needed
 
 3. **System Optimization**
@@ -633,59 +628,30 @@ A: Flux models are memory-intensive. Here's how to handle OOM issues:
 
 ### 🎬 Video Generation Issues
 
-> ⚡ **Performance Optimization Guide**
-> - Testing (15s): 33 frames, 768x512, 8 steps
-> - Standard (30s): 65 frames, 768x512, 8 steps
-> - Full Length (1min+): 129 frames, 768x512, 8 steps
-
-**Q: The video generation is super slow or OOM.**
-
-A: Video generation multiplies memory usage. Here's how to optimize:
-
-1. **Frame Management**
-   - Start with 8-12 frames for testing
-   - Use lower resolution (512x912)
-   - Stick to 8 steps per frame with distilled model
-
-2. **Memory Efficiency**
-   - Generate image and video separately
-   - Restart ComfyUI between stages
-   - Monitor VRAM usage carefully
-
-3. **Mac-Specific Optimization**
-   - Watch Activity Monitor
-   - Keep memory pressure below 80%
-   - Reduce batch size if swapping occurs
-
-4. **Workflow Tips**
-   - Save intermediate results
-   - Use separate workflows for image/video
-   - Consider frame interpolation later
-
 **Q: My video output is black / blank frames.**
 A: If the output video is just black frames, a few potential causes:
-- The text prompt might not have been applied. Make sure the motion Text Encode is properly connected to the LTX node. If it wasn’t, the model might not know what to do and output nothing meaningful (though pure black is unusual – usually you’d get noise or something).
-- The **t5 text encoder model** wasn’t loaded. Black frames can happen if the model didn’t get any conditioning. Did you download and place `t5xxl_fp16.safetensors` in `models/text_encoders`? ([How to use LTX Video 0.9.5 on ComfyUI - Stable Diffusion Art](https://stable-diffusion-art.com/ltx-video-0-9-5/#:~:text=ComfyUI%C2%A0)) Without it, the LTX model might not have a text encoder to use. Check the console log when you run LTX – if it says “T5 encoder not found”, that’s the issue. Put the file in the right place and restart.
+- The text prompt might not have been applied. Make sure the motion Text Encode is properly connected to the LTX node. If it wasn't, the model might not know what to do and output nothing meaningful (though pure black is unusual – usually you'd get noise or something).
+- The **t5 text encoder model** wasn't loaded. Black frames can happen if the model didn't get any conditioning. Did you download and place `t5xxl_fp8_e4m3fn.safetensors` in `models/text_encoders`? Without it, the LTX model might not have a text encoder to use. Check the console log when you run LTX – if it says "T5 encoder not found", that's the issue. Put the file in the right place and restart.
 - If using negative prompts with certain custom schedulers, sometimes a bug could cause odd outputs. Try a run without negative prompt to isolate the issue.
 - It could also be an issue of the initial frame not being fed correctly. If the initial latent is not connected, the model might be generating from pure noise and if something fails, could yield black. Ensure the VAE Encode of the image is actually providing an output. You might test the VAE Encode + VAE Decode on the image alone to verify it reconstructs the input image (should output basically the same image).
 
 **Q: The video has jarring flicker / the subject changes appearance mid-way.**
 A: This is a common challenge in AI video. Some tips:
-- Use a stronger prompt emphasis on consistency. E.g., add phrases like “the person’s face remains the same throughout” or “maintains consistent appearance”.
-- If flicker is in background details, maybe simplify the background description so it’s less likely to introduce random elements.
-- Decrease CFG scale for the video model. High CFG can cause the model to “fight itself” each frame, sometimes causing oscillation. Try CFG 5 or 6 instead of 7 or 8.
-- If the model supports **frame interpolation or sequence conditioning** (the LTX 0.9.5 added some features ([GitHub - Lightricks/ComfyUI-LTXVideo: LTX-Video Support for ComfyUI](https://github.com/Lightricks/ComfyUI-LTXVideo#:~:text=1,Commercial%20license%20availability))), you could explore those advanced nodes. For example, feeding the last frame back in to guide the next (but that’s likely happening internally already).
+- Use a stronger prompt emphasis on consistency. E.g., add phrases like "the person's face remains the same throughout" or "maintains consistent appearance".
+- If flicker is in background details, maybe simplify the background description so it's less likely to introduce random elements.
+- Decrease CFG scale for the video model. High CFG can cause the model to "fight itself" each frame, sometimes causing oscillation. Try CFG 5 or 6 instead of 7 or 8.
+- If the model supports **frame interpolation or sequence conditioning** (the LTX 0.9.5 added some features), you could explore those advanced nodes. For example, feeding the last frame back in to guide the next (but that's likely happening internally already).
 - Another trick: generate a slightly longer video and then drop the first or last few frames which might be more unstable. Sometimes the very start or end frame can be off.
-- Ensure you’re using the distilled model correctly. If you inadvertently used the full model with only 8 steps, it might be under-processing leading to flicker. The full model needs more steps; the distilled one is okay with 8. Match the model to the step count.
+- Ensure you're using the distilled model correctly. If you inadvertently used the full model with only 8 steps, it might be under-processing leading to flicker. The full model needs more steps; the distilled one is okay with 8. Match the model to the step count.
 
 **Q: ComfyUI crashes or closes suddenly.**
-A: If it just disappears, it might be running out of system RAM or hitting some fatal error. Check if there’s a crash log or run ComfyUI from a terminal to see messages. On Windows, you might see a “Python has stopped working”. This could be memory (check if your RAM usage was maxed) or a bug. Try reducing load as above, and ensure you’re using the latest ComfyUI version, as many bugs are fixed in updates. Also, running too high resolution video frames can crash some video encoding nodes due to memory – try smaller.
+A: If it just disappears, it might be running out of system RAM or hitting some fatal error. Check if there's a crash log or run ComfyUI from a terminal to see messages. On Windows, you might see a "Python has stopped working". This could be memory (check if your RAM usage was maxed) or a bug. Try reducing load as above, and ensure you're using the latest ComfyUI version, as many bugs are fixed in updates. Also, running too high resolution video frames can crash some video encoding nodes due to memory – try smaller.
 
-**Q: The final video file won’t play or is not created.**
-A: If using Video Combine, ensure you gave it a proper file path ending in `.mp4` or `.gif`. Some older versions default to `.webm` or raw. Use `.mp4` for broad compatibility. Also check the console for ffmpeg errors (VideoCombine uses ffmpeg in the back). If it didn’t save, maybe the node didn’t execute. You might have to connect a dummy output (like an Image Viewer) to force execution, depending on node implementation. If all else fails, save frames and compile externally.
+**Q: The final video file won't play or is not created.**
+A: If using Video Combine, ensure you gave it a proper file path ending in `.mp4` or `.gif`. Some older versions default to `.webm` or raw. Use `.mp4` for broad compatibility. Also check the console for ffmpeg errors (VideoCombine uses ffmpeg in the back). If it didn't save, maybe the node didn't execute. You might have to connect a dummy output (like an Image Viewer) to force execution, depending on node implementation. If all else fails, save frames and compile externally.
 
 **Q: How can I loop the video seamlessly?**
-A: Seamless loops are tricky. One idea: make the last frame similar to the first. LTX 0.9.5 introduced a way to condition the last frame ([GitHub - Lightricks/ComfyUI-LTXVideo: LTX-Video Support for ComfyUI](https://github.com/Lightricks/ComfyUI-LTXVideo#:~:text=1,Commercial%20license%20availability)). If you had a way to feed the first frame as also a “target” for the last, you could morph back. Without that, you can try a subtle approach: not too much change overall, so looping isn’t too jarring. Sometimes reversing the video and concatenating can create a boomerang effect that loops. This is more of a creative editing trick afterwards.
+A: Seamless loops are tricky. One idea: make the last frame similar to the first. LTX 0.9.5 introduced a way to condition the last frame. If you had a way to feed the first frame as also a "target" for the last, you could morph back. Without that, you can try a subtle approach: not too much change overall, so looping isn't too jarring. Sometimes reversing the video and concatenating can create a boomerang effect that loops. This is more of a creative editing trick afterwards.
 
 ## Tips for Better Results and Experimentation
 
@@ -703,46 +669,39 @@ Real examples from LTX documentation:
 - *"A woman with long brown hair and light skin smiles at another woman with long blonde hair. The woman with brown hair wears a black jacket and has a small, barely noticeable mole on her right cheek. The camera angle is a close-up, focused on the woman with brown hair's face. The lighting is warm and natural, likely from the setting sun, casting a soft glow on the scene. The scene appears to be real-life footage."*
 - *"The waves crash against the jagged rocks of the shoreline, sending spray high into the air. The rocks are a dark gray color, with sharp edges and deep crevices. The water is a clear blue-green, with white foam where the waves break against the rocks. The sky is a light gray, with a few white clouds dotting the horizon."*
 
-- **Use Seeds to Your Advantage:** If you find a seed that gives a great image, note it down. Similarly, LTX might allow a seed for noise in the motion (some workflows allow setting a “video seed”). Consistent seeds can reproduce results or allow you to vary one thing at a time. If you want different outcomes, randomize seeds. If you want the *same* general motion on a slightly different image (or vice versa), keep one seed constant and change the other.
+- **Use Seeds to Your Advantage:** If you find a seed that gives a great image, note it down. Similarly, LTX might allow a seed for noise in the motion (some workflows allow setting a "video seed"). Consistent seeds can reproduce results or allow you to vary one thing at a time. If you want different outcomes, randomize seeds. If you want the *same* general motion on a slightly different image (or vice versa), keep one seed constant and change the other.
 
-- **Leverage Negative Prompts:** Don’t forget negative prompts in both stages. They can be powerful in removing unwanted artifacts. Common negatives for portraits: *“blurry, duplicate face, text, watermark, deformed, extra finger, mutated”*. For video: *“flicker, jump cut, glitch, distortion”* might help (no guarantee the model understands all those, but it might).
+- **Leverage Negative Prompts:** Don't forget negative prompts in both stages. They can be powerful in removing unwanted artifacts. Common negatives for portraits: *"blurry, duplicate face, text, watermark, deformed, extra finger, mutated"*. For video: *"flicker, jump cut, glitch, distortion"* might help (no guarantee the model understands all those, but it might).
 
-- **Play with Schedules and Advanced Nodes:** Once you get comfortable, you can explore advanced ComfyUI nodes like **STG (Sigma Threshold Gradient) or CFG schedules**. The LTX extension mentioned an “STGGuiderAdvanced” which can vary CFG over diffusion steps ([GitHub - Lightricks/ComfyUI-LTXVideo: LTX-Video Support for ComfyUI](https://github.com/Lightricks/ComfyUI-LTXVideo#:~:text=We%20introduce%20the%20STGGuiderAdvanced%20node%2C,See%20the%20Example%20Workflows%20section)). These are more technical, but can improve quality if tuned. For example, high CFG in early steps and lower in later steps might reduce flicker.
+- **Play with Schedules and Advanced Nodes:** Once you get comfortable, you can explore advanced ComfyUI nodes like **STG (Sigma Threshold Gradient) or CFG schedules**. The LTX extension mentioned an "STGGuiderAdvanced" which can vary CFG over diffusion steps. These are more technical, but can improve quality if tuned. For example, high CFG in early steps and lower in later steps might reduce flicker.
 
-- **Resolution Upscaling:** If you got a great result at low res, you can try to upscale the final video frames. You could use an AI upscaler frame by frame (like ESRGAN or CodeFormer via ComfyUI nodes, or an external tool). There’s no built-in video upscaler in ComfyUI, but you can save frames, upscale them as a batch, then recombine. This is extra work but can yield sharper videos.
+- **Resolution Upscaling:** If you got a great result at low res, you can try to upscale the final video frames. You could use an AI upscaler frame by frame (like ESRGAN or CodeFormer via ComfyUI nodes, or an external tool). There's no built-in video upscaler in ComfyUI, but you can save frames, upscale them as a batch, then recombine. This is extra work but can yield sharper videos.
 
-- **Try Text-to-Video Directly:** LTX can also generate video purely from text (no initial image) ([How to use LTX Video 0.9.5 on ComfyUI - Stable Diffusion Art](https://stable-diffusion-art.com/ltx-video-0-9-5/#:~:text=,last%20frames%20in%20the%20video)). This is outside our main flow, but if you’re adventurous, you can attempt a text2video node with LTX. The results might be less coherent without an image anchor, but interesting for abstract or landscape motions. Usually you’d just not use an initial image and prompt the whole scene (the LTX extension likely has a node setup for that).
+- **Try Text-to-Video Directly:** LTX can also generate video purely from text (no initial image)
 
-- **Use Community Workflows:** There are many ready ComfyUI workflows shared on forums (like on r/ComfyUI or the ComfyUI Examples page). For instance, the official ComfyUI examples GitHub has an LTX image-to-video workflow JSON you can download ([Lightricks LTX-Video Model | ComfyUI_examples](https://comfyanonymous.github.io/ComfyUI_examples/ltxv/#:~:text=Image%20to%20Video)) ([Lightricks LTX-Video Model | ComfyUI_examples](https://comfyanonymous.github.io/ComfyUI_examples/ltxv/#:~:text=Input%20image%3A%20Image)). Loading these can give you a baseline that you tweak. If you feel overwhelmed by node setups, don’t hesitate to use these as templates.
+- **Use Community Workflows:** There are many ready ComfyUI workflows shared on forums (like on r/ComfyUI or the ComfyUI Examples page).
 
-- **Keep an eye on VRAM usage:** ComfyUI doesn’t always show VRAM usage, but you can monitor with tools (Nvidia-SMI on Windows, Activity Monitor on Mac). If you’re close to the limit, smaller changes could push you over. Knowing your limits helps (e.g., if 1024x1024 is too much, stick to 768x768 etc.).
+- **Keep an eye on VRAM usage:** ComfyUI doesn't always show VRAM usage, but you can monitor with tools (Nvidia-SMI on Windows, Activity Monitor on Mac). If you're close to the limit, smaller changes could push you over. Knowing your limits helps (e.g., if 1024x1024 is too much, stick to 768x768 etc.).
 
 - **Document your workflow:** Once you have a working node setup, save the workflow (`File > Save Workflow` in ComfyUI). This lets you easily reuse it without rebuilding. You can create different workflows for different types of videos.
 
-- **Patience and Iteration:** As a maker, you know iteration is key. Don’t be discouraged if the first video is meh. Treat it as a draft. Maybe the lighting changed weirdly – then you add “consistent lighting” to the prompt. Maybe the motion wasn’t noticeable – make it a bit more extreme or add more frames. Each iteration teaches you something about how the models respond.
+- **Patience and Iteration:** As a maker, you know iteration is key. Don't be discouraged if the first video is meh. Treat it as a draft. Maybe the lighting changed weirdly – then you add "consistent lighting" to the prompt. Maybe the motion wasn't noticeable – make it a bit more extreme or add more frames. Each iteration teaches you something about how the models respond.
 
 ## Learn More and Next Steps
 
-You’ve now got the basics down! Where to go from here:
+You've now got the basics down! Where to go from here:
 
 - **ComfyUI GitHub and Wiki:** The [ComfyUI GitHub](https://github.com/comfyanonymous/ComfyUI) is a great place to check for updates (new versions often add features or performance improvements). The Wiki (like comfyui-wiki.com) has a wealth of tutorials and a **FAQ** for common questions. For example, you can learn about different samplers, using ControlNets, or other advanced models in ComfyUI.
 
-- **Flux Model Info:** If you want to dive deeper into Flux, check out the Civitai community discussions or the [Flux Quickstart Guide on Civitai Education】(https://education.civitai.com/)** ([Flux + ComfyUI on Apple Silicon Macs— 2024 | by Jason Griffin | Medium](https://medium.com/@tchpnk/flux-comfyui-on-apple-silicon-with-hardware-acceleration-2024-4d44ed437179#:~:text=lot%20of%20confusion%20about%20whether,can%2C%20what%20the%20limitations%20are)). Flux is an evolving project – keep an eye out for Flux 2 or further refinements. Black Forest Labs might release new variants.
-
-- **LTX Video Community:** LTX is relatively new, but there are Reddit threads (like r/StableDiffusion and r/ComfyUI) discussing it ([LTX Video Workflow Step-by-Step Guide - ComfyUI Wiki](https://comfyui-wiki.com/en/tutorial/advanced/ltx-video-workflow-step-by-step-guide#:~:text=LTX%20Video%20Workflow%20Step,There%20are%20two%20installation%20methods)). The developers (Lightricks) have shared example videos on Twitter and posts on how to use it. Following those can give you ideas (like using multiple control images, etc.). There’s also a YouTube tutorial “How To Use LTX: The FASTEST FREE AI Video Model” ([How To Use LTX: The FASTEST FREE AI Video Model - YouTube](https://www.youtube.com/watch?v=peSg06CzMdk#:~:text=How%20To%20Use%20LTX%3A%20The,on%20your%20own%20computer)) which might complement what you learned here with a visual walkthrough.
-
-- **YouTube Tutorials:** Search YouTube for *“ComfyUI Flux tutorial”* or *“ComfyUI LTX video guide”*. There are many community-made videos. Some YouTubers show their node setups which can be enlightening. Seeing someone build a workflow can solidify your understanding. Also, tutorials on general ComfyUI usage (like making an animation with **AnimateDiff** or using **ControlNet for depth** in videos) could give you new tools to add to your pipeline.
+- **YouTube Tutorials:** Search YouTube for *"ComfyUI Flux tutorial"* or *"ComfyUI LTX video guide"*. There are many community-made videos. Some YouTubers show their node setups which can be enlightening. Seeing someone build a workflow can solidify your understanding. Also, tutorials on general ComfyUI usage (like making an animation with **AnimateDiff** or using **ControlNet for depth** in videos) could give you new tools to add to your pipeline.
 
 - **Reddit and Discord:** The r/ComfyUI subreddit is active with people sharing workflows, problems, and art. If you run into unique issues, a search there might find someone who had the same trouble. Also, ComfyUI has an official Discord where you can ask questions in real-time and get help or just show off your results. The community is quite helpful to newcomers.
 
 - **Try Other Extensions:** Once comfortable, you could install other ComfyUI extensions for more capabilities:
   - **ControlNet Nodes:** to guide images/video with sketches or depth maps.
-  - **AnimateDiff:** an alternative text-to-video approach that you could experiment with inside ComfyUI.
   - **Upscalers and Post-processing:** nodes like ESRGAN upscaler, GIF export nodes, etc., to further polish your outputs.
 
-- **Stay Updated:** AI moves fast. New versions of LTX or Flux may come. For instance, if LTX Video 1.0 releases, it might improve a lot. Check the LTX GitHub or HuggingFace for releases ([GitHub - Lightricks/ComfyUI-LTXVideo: LTX-Video Support for ComfyUI](https://github.com/Lightricks/ComfyUI-LTXVideo#:~:text=17,%E2%AD%90)). ComfyUI’s Manager makes it easy to update nodes – do click “Update All” once in a while to get latest improvements ([How to install Flux AI model on ComfyUI - Stable Diffusion Art](https://stable-diffusion-art.com/flux-comfyui/#:~:text=ComfyUI%20has%20native%20support%20for,you%20haven%E2%80%99t%20already%20since%20then)).
-
-Finally, approach this as a fun creative process. We now have the ability to create little AI cinematography pieces from our imagination – something that still blows my mind! Tweak prompts, try different subjects (not just people – landscapes, objects, even abstract patterns), and see what motion brings them to life. As Andrej Karpathy might say, it’s all about experimenting and *“seeing what sticks”*. And like Paul Graham might advise, focus on **projects that interest you** – maybe you’ll create a mini film portfolio of AI-generated mood shots.
+Finally, approach this as a fun creative process. We now have the ability to create little AI cinematography pieces from our imagination – something that still blows my mind! Tweak prompts, try different subjects (not just people – landscapes, objects, even abstract patterns), and see what motion brings them to life.
 
 Enjoy your journey in AI video generation. I hope this guide served as a helpful playbook to get you started. Now go create some cool stuff! 😃
 
