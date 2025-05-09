@@ -23,7 +23,10 @@ toc:
   enable: false
   auto: true
 code:
-  copy: true
+  maxShownLines: 100
+  lineNos: false
+  wrap: false
+  header: true
 lightgallery: false
 license: ""
 ---
