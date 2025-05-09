@@ -22,7 +22,10 @@ math:
 toc:
   enable: false
 code:
-  copy: true
+  maxShownLines: 100
+  lineNos: false
+  wrap: true
+  header: false
 lightgallery: false
 license: ""
 ---
@@ -95,6 +98,8 @@ license: ""
 3. **Image + Motion Prompt** → LTX generates video frames
 4. **Save Video** (stitches frames together)
 
+---
+
 ## Quick Start Guide
 
 For those who want to jump right in, here's the TL;DR version:
@@ -106,7 +111,7 @@ For those who want to jump right in, here's the TL;DR version:
 
 2. **Download Required Models** (20-30 min)
    - **Flux/RedCraft model** (~11GB)
-     - ![redcraft](redcraft-download.png)
+     - <img src="./assets/redcraft-download.png" width="500" />
      - Download: [RedCraft RealReveal5 ULTRA (FP8, pruned)](https://civitai.green/models/958009?modelVersionId=1576605)
      - Save to: `models/unet/RedCraft_RealReveal5_ULTRA_15Steps_fp8_pruned.safetensors`
    - **LTX Video model** (~6GB)
@@ -132,6 +137,8 @@ For those who want to jump right in, here's the TL;DR version:
 > 💡 **Pro Tip:** Start with simple camera movements like gentle pans or zooms for best results.
 
 For detailed instructions and troubleshooting, continue reading below.
+
+---
 
 ## What is ComfyUI, Flux, and LTX Video?
 
@@ -174,7 +181,7 @@ In short, **expect** a short, artsy moving image with mild motion. **Don't expec
 
 Let's make sure you have the right setup before we proceed.
 
-**Operating System:** You can do this on **Windows or macOS**. (Linux works too, but this guide focuses on Win/Mac.) On Windows, you'll need an **NVIDIA GPU** for GPU acceleration ([Download ComfyUI for Windows/Mac](https://www.comfy.org/download#:~:text=For%20Mac%3A%20Requires%20Apple%20Silicon)). On macOS, you'll need an **Apple Silicon** Mac (M1, M2, M3 chips) ([Download ComfyUI for Windows/Mac](https://www.comfy.org/download#:~:text=For%20Mac%3A%20Requires%20Apple%20Silicon)) – the Desktop version of ComfyUI doesn't support Intel Macs, and Apple Silicon provides the needed ML acceleration (Metal Performance Shaders).
+**Operating System:** You can do this on **Windows or macOS**. (Linux works too, but this guide focuses on Win/Mac.) On Windows, you'll need an **NVIDIA GPU** for GPU acceleration. On macOS, you'll need an **Apple Silicon** Mac (M1, M2, M3 chips) – the Desktop version of ComfyUI doesn't support Intel Macs, and Apple Silicon provides the needed ML acceleration (Metal Performance Shaders).
 
 **GPU and VRAM:** For Windows/NVIDIA users, a GPU with at least **8 GB VRAM** is recommended. 12GB+ will allow higher resolution (up to 720×1280) and more frames. (Flux and LTX are heavy models; Flux's all-in-one FP8 model is ~11 GB on disk and typically wants ~16 GB VRAM to run comfortably, but it can work on 8–12 GB with optimizations or lower resolution.) The LTX 0.9.6-distilled model is optimized for efficiency, requiring only 8 diffusion steps per frame. For macOS M1/M2 users, at least **16 GB unified memory** is recommended (32 GB is better). Macs use the GPU integrated in the chip – it can run these models, but slower. Be prepared for longer generation times on Mac compared to a high-end PC GPU. If you have no dedicated GPU (and only a CPU), it's technically possible to run ComfyUI, but it will be **extremely slow** (minutes per frame); this guide assumes you have some GPU capability.
 
@@ -286,111 +293,158 @@ comfy launch
 
 The CLI version offers more flexibility and control, but requires more technical knowledge. For most users, **ComfyUI Desktop** is recommended as it handles updates and environment management automatically. Now, let's proceed to downloading the required AI models.
 
-## Downloading the Models (Flux and LTX)
+---
 
-We need to download two model files: the *Flux model* (for image generation) and the *LTX Video model* (for video generation). We'll also grab a necessary **text encoder** file for LTX (and Flux) to understand prompts properly.
+## Downloading the Models (Flux, LTX Video, Text Encoders, and VAE)
 
-### 1. Flux Model – "RedCraft RealReveal5 ULTRA" (Flux-based)
+Follow these straightforward steps to download all necessary models and place them in the correct locations within ComfyUI's folder structure. First, open your **Models Folder** within ComfyUI:
 
-Flux.1 is the core model, but here we'll use a specialized **Flux checkpoint** that's good for portraits. The creators of RedCraft RealReveal5 ULTRA (a Flux-based model) provided a ready-to-use safetensor file. Download it from Civitai using this link:
+![Open Models Folder](assets/open_model_folder.png)
 
-- **Flux model download:** [RedCraft RealReveal5 ULTRA (Flux, FP8, pruned) – safetensors, ~11GB】 ([RedCraft | 红潮 CADS | UPdated-Apr28 | Commercial & Advertising Design System - Reveal5[SFW]ULTRA | Flux Checkpoint | Civitai](https://civitai.green/models/958009/redcraft-or-cads-or-updated-apr15-or-commercial-and-advertising-design-system?modelVersionId=1576605#:~:text=Download%20%2811)) ([RedCraft | 红潮 CADS | UPdated-Apr28 | Commercial & Advertising Design System - Reveal5[SFW]ULTRA | Flux Checkpoint | Civitai](https://civitai.green/models/958009/redcraft-or-cads-or-updated-apr15-or-commercial-and-advertising-design-system?modelVersionId=1576605#:~:text=2%20Files)). (**Tip:** If clicking a direct download link doesn't work in browser, you may copy it or use the Civitai page. On the Civitai page, look for a download button showing ~11.08 GB ([RedCraft | 红潮 CADS | UPdated-Apr28 | Commercial & Advertising Design System - Reveal5[SFW]ULTRA | Flux Checkpoint | Civitai](https://civitai.green/models/958009/redcraft-or-cads-or-updated-apr15-or-commercial-and-advertising-design-system?modelVersionId=1576605#:~:text=Download%20%2811)).)
+You will place all downloaded files in subfolders within this models folder.
 
-Save this `.safetensors` file to a location you can find. (It might be named along the lines of `RedCraft_RealReveal5_ULTRA_15Steps_fp8_pruned.safetensors` – that's just an example.)
+### 1. Flux Model (RedCraft RealReveal5 ULTRA)
+
+* **Download**: [RedCraft RealReveal5 ULTRA (FP8, pruned)](https://civitai.green/models/958009?modelVersionId=1576605) (\~11GB)
+- <img src="./assets/redcraft-download.png" width="500" />
+* **Save to**:
+
+```
+models/unet/RedCraft_RealReveal5_ULTRA_15Steps_fp8_pruned.safetensors
+```
 
 ### 2. LTX Video Model
 
-Next, get the LTX model weights:
+* **Download**: [ltxv-2b-0.9.6-distilled-04-25.safetensors](https://huggingface.co/Lightricks/LTX-Video/blob/main/ltxv-2b-0.9.6-distilled-04-25.safetensors) (\~6GB)
+* **Save to**:
 
-- **LTX model download:** Download **ltxv-2b-0.9.6-distilled-04-25.safetensors** from [Hugging Face – Lightricks LTX-Video repo](https://huggingface.co/Lightricks/LTX-Video). The file is around 2–3 GB. This is the "0.9.6 distilled" version – a highly optimized version of LTX that requires only 8 diffusion steps per frame while maintaining high quality output. It's specifically designed for fast generation, capable of producing 24 FPS videos at 768x512 resolution faster than they can be watched.
+```
+models/checkpoints/ltxv-2b-0.9.6-distilled-04-25.safetensors
+```
 
-If you have trouble finding that exact file, you can use the direct link provided (in ComfyUI Manager you could also search for LTXVideo and see if it provides links). Ensure the file is named `ltxv-2b-0.9.6-distilled-04-25.safetensors` (or similar).
+### 3. T5 XXL Text Encoder
 
-### 3. T5 XXL Text Encoder and CLIP (for prompts)
+* **Download**: [t5xxl\_fp8\_e4m3fn.safetensors](https://huggingface.co/comfyanonymous/flux_text_encoders/blob/main/t5xxl_fp8_e4m3fn.safetensors) (\~4.89 GB)
+* **Save to**:
 
-Both Flux and LTX rely on text encoders to understand prompts with greater detail. The T5-XXL encoder handles longer, more complex descriptions, while CLIP provides additional understanding capabilities. The good news is that ComfyUI Manager can automatically download and install these for you:
+```
+models/text_encoders/t5xxl_fp8_e4m3fn.safetensors
+```
 
-1. In ComfyUI, click the "Manager" button in the top toolbar
-2. Look for any missing model notifications
-3. Click to automatically download T5 and CLIP encoders
+### 4. CLIP Text Encoder
 
-[AI Generation Description: A screenshot of the ComfyUI Manager interface window. The window has a dark theme background (#1E1E1E) with a clean, modern UI. At the top is a search bar and filter options. Below are listed model download cards arranged in a grid. Each card shows: model name in bold, file size, download progress bar, and an install/download button (blue #2B5D9B). The T5 and CLIP encoders are highlighted or marked as "Required". The interface includes typical UI elements like scroll bars, tooltips, and status indicators. Style: Modern software UI, high resolution, clear typography.]
+* **Download**: [clip\_l.safetensors](https://huggingface.co/comfyanonymous/flux_text_encoders/blob/main/clip_l.safetensors) (\~246 MB)
+* **Save to**:
 
-Alternatively, you can manually download these files:
+```
+models/clip/clip_l.safetensors
+```
 
-- **T5 encoder:** Download **t5xxl_fp8_e4m3fn.safetensors** (9.79 GB) from Hugging Face (e.g., `comfyanonymous/flux_text_encoders` repository)
-- Place in `models/text_encoders/` folder
+### 5. VAE
 
-The text encoders will be used by ComfyUI for both the image and video stages, ensuring the AI fully grasps the nuances of your descriptions.
+* **Download**: [diffusion\_pytorch\_model.safetensors](https://huggingface.co/black-forest-labs/FLUX.1-schnell/blob/main/vae/diffusion_pytorch_model.safetensors) (\~168 MB)
+* Rename downloaded file to `vae.safetensors`
+* **Save to**:
 
-### 4. (Optional) Manual CLIP Installation
+```
+models/vae/vae.safetensors
+```
 
-While ComfyUI Manager handles CLIP installation automatically, you can manually install it if needed. The Flux model uses an OpenCLIP text encoder (`clip_l` for ViT-L/14). If you see errors about missing CLIP models and prefer manual installation:
+---
 
-- Download **clip_l.safetensors** (~500 MB) from Hugging Face
-- Place in `models/clip/` folder
+Now, your `models` folder structure should look like this:
 
-Note: Most likely you won't need this manual step if:
-1. You're using ComfyUI Manager (recommended)
-2. Using the pruned FP8 checkpoint which is all-in-one (AIO)
+```
+models/
+├── checkpoints/
+│   └── ltxv-2b-0.9.6-distilled-04-25.safetensors
+├── unet/
+│   └── RedCraft_RealReveal5_ULTRA_15Steps_fp8_pruned.safetensors
+├── text_encoders/
+│   └── t5xxl_fp8_e4m3fn.safetensors
+├── clip/
+│   └── clip_l.safetensors
+└── vae/
+    └── vae.safetensors
+```
 
-### Placing the Model Files in ComfyUI
-
-Now that we have the files, we need to put them where ComfyUI can find them. ComfyUI organizes models in a **`models/`** directory, with subfolders for different model types. If you used ComfyUI Desktop, it likely created this structure for you. We need to locate it:
-
-- **Find the ComfyUI "models" folder:** If you're using ComfyUI Desktop, the location can vary. A quick way: in the ComfyUI interface, click on the **"Manager"** button on the top toolbar, then look for an option or info about "Custom Nodes or Models directory". If not obvious, you can use your OS search:
-  - On Windows, if you installed for a single user, the models folder might be in `%LOCALAPPDATA%\ComfyUI\pc` or within the installation directory (e.g., `C:\Program Files\ComfyUI\models\`). If you see folders like `checkpoints`, `vae`, `clip`, etc., you're in the right place.
-  - On Mac, ComfyUI Desktop typically stores models in `~/Library/Application Support/ComfyUI/` or within the app container. Easiest way: use Finder's Go->Go to Folder and enter `~/Library/Application Support/ComfyUI/` and look for a `models` folder. If not, it might be inside the app bundle (which is complex). Alternatively, upon first run, ComfyUI might have asked where to import models. If you have a `ComfyUI` folder in your home directory, check there too.
-
-Once you find the `models` directory, proceed to place the files:
-
-- **Flux model:** Copy the `*.safetensors` file for RedCraft/Flux into `models/checkpoints/`. (Create the `checkpoints` folder if it doesn't exist.) ComfyUI treats this like a standard Stable Diffusion checkpoint ([How to install Flux AI model on ComfyUI - Stable Diffusion Art](https://stable-diffusion-art.com/flux-comfyui/#:~:text=Download%20the%20Flux1%20dev%20FP8,checkpoint)). For example, the path might end up as:
-  `.../ComfyUI/models/checkpoints/RedCraft-RealReveal5-ULTRA-15Steps-fp8.safetensors`
-  (Your file name might differ; that's okay.)
-
-- **LTX model:** Also copy the `ltxv-2b-0.9.6-distilled-04-25.safetensors` file into `models/checkpoints/` ([How to use LTX Video 0.9.5 on ComfyUI - Stable Diffusion Art](https://stable-diffusion-art.com/ltx-video-0-9-5/#:~:text=Download%20ltx,checkpoints)). Essentially, ComfyUI will also load this as a "checkpoint" model (even though it's for video). If you want, you can separate it by making a subfolder (like `models/checkpoints/video/ltx-video.safetensors`), but it's not necessary.
-
-- **T5 text encoder:** Copy the `t5xxl_fp8_e4m3fn.safetensors` file into `models/text_encoders/` ([How to use LTX Video 0.9.5 on ComfyUI - Stable Diffusion Art](https://stable-diffusion-art.com/ltx-video-0-9-5/#:~:text=ComfyUI%C2%A0)). (If that folder doesn't exist, create it exactly with that name). This is where ComfyUI looks for additional text encoders. *Important:* Without this, the LTX model may not work or will produce black frames because it can't understand the prompt. So don't skip it!
-
-- **CLIP text encoder:** If you downloaded `clip_l.safetensors`, place it into `models/clip/` (or `models/clip_encoders/` depending on ComfyUI version – usually just `clip`). Again, you might not need to do this if the checkpoint is all-in-one. But if you run Flux and get a console error like "Clip model not found", then add this.  ([How to install Flux AI model on ComfyUI - Stable Diffusion Art](https://stable-diffusion-art.com/flux-comfyui/#:~:text=Step%202%3A%20Download%20the%20CLIP,models))
-
-- **VAE:** If you downloaded `vae.safetensors`, place it into `models/vae/`. This is the VAE model for Flux.
-
-After organizing these files, your ComfyUI models folder should look something like this:
-
-- `models/checkpoints/`
-  - `RedCraft-RealReveal5-ULTRA-15Steps-fp8.safetensors`
-  - `ltxv-2b-0.9.6-distilled-04-25.safetensors`
-- `models/text_encoders/`
-  - `t5xxl_fp8_e4m3fn.safetensors`
-- `models/clip/`
-  - `clip_l.safetensors`
-- `models/vae/`
-  - `vae.safetensors`
-
-[AI Generation Description: A screenshot of a file explorer window showing the ComfyUI models directory structure. The window uses the system's default file explorer theme (light mode). The folder tree is expanded to show the hierarchy, with folder icons and nested indentation. The 'models' folder is the root, with three visible subfolders: 'checkpoints', 'text_encoders', and 'clip'. Each subfolder shows its contents with file icons and complete filenames in a monospace font. File sizes are visible in the size column. The window includes standard UI elements like address bar, navigation buttons, and view options. Style: Clean system UI, clear folder structure visualization.]
-
-Now we have all the pieces in place. Time to build the workflow in ComfyUI and generate our video!
+After placing all files correctly, restart ComfyUI to ensure models are loaded properly.
 
 ## Step-by-Step Workflow in ComfyUI
 
-Lets first load a workflow that can generate images. (flux_redcraft_t2i.json)[flux_redcraft_t2i.json] to do that download the workflow and then select workflow -> open and select downloaded file.
+Follow these practical steps to generate your AI-powered videos smoothly. Ensure all your downloaded models are correctly placed as outlined earlier.
 
-If you put all models in the right place, you can just tap queue button to run workflow.
+### 🖼️ **Step 1: Generate an Image with Flux**
 
-result images are saved into output folder which is in the same folder as models folder.
+![Flux Workflow Screenshot](./assets/flux_workflow.png)
 
-Then lets download and open video workflow (ltxvideo-i2v-distilled.json)[ltxvideo-i2v-distilled.json]
+1. **Download the Image Workflow**:
+   - Get the workflow file [`flux_redcraft_t2i.json`](./workflows/flux_redcraft_t2i.json).
 
-It will probably show you an error about missing nodes. That is expected because this workflow requires couple of custom nodes. To install them go to manager -> install missing nodes. It will search for missing nodes and show you two node packages, install them both.
+2. **Open the Workflow in ComfyUI**:
+   - Launch ComfyUI Desktop.
+   - Click on **"Workflow" → "Open"** and select the downloaded `flux_redcraft_t2i.json`.
 
-After installing missing nodes, restartv comfy.
+3. **Run**:
+   - Press the **Queue** button to run the workflow.
 
-Now try to run the workflow. But first select a starting frame (for exzample image generated by image workflow).
+4. **Check Results**:
+   - Generated images will appear in the `output` folder within your ComfyUI directory (next to your `models` folder).
 
-Now lets download and open workflow that has all of these things combined (flux_ltxvideo_t2v_full.json)[flux_ltxvideo_t2v_full.json]
+### 🎬 **Step 2: Create Video from Your Image with LTX Video**
 
-This workflow will generate image and then use it as a first frame for video and generate video.
+![LTX-Video Workflow Screenshot](./assets/ltx_workflow.png)
+
+1. **Download the Video Workflow**:
+   - Download [`ltxvideo-i2v-distilled.json`](./workflows/ltxvideo-i2v-distilled.json).
+
+2. **Open the Workflow in ComfyUI**:
+   - Again, select **"Workflow" → "Open"** and pick the downloaded file.
+
+3. **Install Missing Nodes (If Required)**:
+   - Upon opening, if you encounter errors about missing nodes:
+     - Click **"Manager" → "Install Missing Nodes"** from the top menu.
+     - Install all listed extensions. Wait for completion and restart ComfyUI.
+
+4. **Select Your Starting Frame**:
+   - Connect your previously generated image from the Flux workflow:
+     - Use the **Image Loader** node and select your generated image (`output/your_image.png`).
+
+5. **Run and Check Your Video**:
+   - Click **Queue** to execute.
+   - Your video frames or final video will appear in the `output` directory.
+
+### 🚀 **Step 3: Full End-to-End Workflow (Text → Image → Video)**
+
+![Flux + LTX Combined Workflow](./assets/flux_and_ltx_workflow.png)
+
+For maximum efficiency, use the integrated workflow that automates image generation and video creation:
+
+1. **Download Integrated Workflow**:
+   - Grab [`flux_ltxvideo_t2v_full.json`](./workflows/flux_ltxvideo_t2v_full.json).
+
+2. **Load and Verify**:
+   - Open this workflow in ComfyUI.
+   - Ensure all model paths match exactly as above (Flux and LTX models).
+
+3. **Enter Prompts**:
+   - Enter your descriptive **text prompt** (for the image) and **motion prompt** (for the video).
+
+4. **Generate Your Complete AI Video**:
+   - Hit **Queue** and watch your workflow run:
+     - Flux generates your initial frame.
+     - LTX Video transforms it into a stunning moving sequence.
+
+5. **Enjoy and Share!**:
+   - Your fully-generated video will appear automatically in the `output` folder.
+   - Experiment with prompts, styles, and motions to get unique results!
+
+### 🎯 **Pro Tips for Smoother Workflows**:
+
+- Always double-check file paths if you encounter errors.
+- After installing nodes or adding models, restart ComfyUI for best results.
+- Keep your initial experiments simple (e.g., gentle camera pans) to ensure optimal performance and quality.
+- Experiment and iterate frequently—each attempt helps you master the AI video generation process!
 
 ### Advanced Techniques
 
@@ -500,12 +554,29 @@ A: Seamless loops are tricky. One idea: make the last frame similar to the first
   4. **Motion Details:** Describe any movement in the scene (e.g., "her hair swaying gently", "waves crashing against rocks")
   5. **Atmosphere:** Add mood and quality indicators (e.g., "the scene appears to be real-life footage", "the lighting is dim, casting soft shadows")
 
-Example prompt template:
-*"[Subject description with specific details], [Action/pose], [Setting/location]. [Camera movement/angle]. [Lighting description]. [Motion details]. [Quality/style indicators]."*
+For prompting Flux model follow this:
+
+```
+Describe your subject clearly, specify style (e.g., "photo-realistic portrait of a woman in a red dress, soft lighting"), and add context for details (background, mood, era). Use strong, direct language, and experiment with structure—place key elements at the start.
+
+For inspiration, visit https://civitai.green/images. Filter the results to view only Flux-generated images, and review the prompts by opening the image details.
+```
+
+Here is a template that can be used for writing prompts for LTXVideo:
+
+```
+[A | The] <subject>, <brief physical description & clothing>, <initial expression>.
+The camera <angle/position>.
+Lighting is <quality & colour>.
+<Subject> <first action>; <subject> <second action>; then <subject/other> <third action>.
+[Optional] A/Another <secondary subject>, <description>, <their action>.
+The camera <pans/follows/remains stationary>, <additional framing notes>.
+The scene appears to be <footage style>.
+```
 
 Real examples from LTX documentation:
+- *"The camera pans across a cityscape of tall buildings with a circular building in the center. The camera moves from left to right, showing the tops of the buildings and the circular building in the center. The buildings are various shades of gray and white, and the circular building has a green roof. The camera angle is high, looking down at the city. The lighting is bright, with the sun shining from the upper left, casting shadows from the buildings. The scene is computer-generated imagery."*
 - *"A woman with long brown hair and light skin smiles at another woman with long blonde hair. The woman with brown hair wears a black jacket and has a small, barely noticeable mole on her right cheek. The camera angle is a close-up, focused on the woman with brown hair's face. The lighting is warm and natural, likely from the setting sun, casting a soft glow on the scene. The scene appears to be real-life footage."*
-- *"The waves crash against the jagged rocks of the shoreline, sending spray high into the air. The rocks are a dark gray color, with sharp edges and deep crevices. The water is a clear blue-green, with white foam where the waves break against the rocks. The sky is a light gray, with a few white clouds dotting the horizon."*
 
 - **Use Seeds to Your Advantage:** If you find a seed that gives a great image, note it down. Similarly, LTX might allow a seed for noise in the motion (some workflows allow setting a "video seed"). Consistent seeds can reproduce results or allow you to vary one thing at a time. If you want different outcomes, randomize seeds. If you want the *same* general motion on a slightly different image (or vice versa), keep one seed constant and change the other.
 
@@ -542,5 +613,3 @@ You've now got the basics down! Where to go from here:
 Finally, approach this as a fun creative process. We now have the ability to create little AI cinematography pieces from our imagination – something that still blows my mind! Tweak prompts, try different subjects (not just people – landscapes, objects, even abstract patterns), and see what motion brings them to life.
 
 Enjoy your journey in AI video generation. I hope this guide served as a helpful playbook to get you started. Now go create some cool stuff! 😃
-
-
