@@ -123,7 +123,7 @@ For those who want to jump right in, here's the TL;DR version:
      - Save to: `models/vae/vae.safetensors` (rename `diffusion_pytorch_model.safetensors` to `vae.safetensors`)
 
 3. **Run workflow** (2-10 minutes)
-   - Open [Workflow file](./ltx_video_workflow.json)
+   - Open [Workflow file](./workflows/flux_ltxvideo_t2v_full.json)
    - Make sure correct models are selected in the nodes
    - Write descriptive prompt for first frame
    - Write motion prompt for the rest of the video
@@ -147,17 +147,10 @@ For detailed instructions and troubleshooting, continue reading below.
 
 At a high level, the process works in two stages:
 
-- **Stage 1: Text-to-Image (Flux)** – You write a text prompt describing the portrait or scene you want. ComfyUI feeds this prompt into the Flux model, which diffuses random noise into an image that matches your description. This is done via a neural network that has learned to generate images from text. The result is a single AI-generated **portrait image** (we'll make it vertical format for TikTok).
-
-![](portrait_1.png)
-
-[AI Generation Description: A clean, minimalist technical diagram on a white background. Three connected boxes arranged horizontally, labeled "Text Input" (left), "Flux Model" (center), and "Generated Image" (right). Boxes are light blue (#E6F3FF) with dark blue borders (#2B5D9B). Black arrows (→) connect the boxes from left to right. Each box has a subtle drop shadow. The text is in a modern sans-serif font (Arial or Helvetica) in dark gray (#333333). The diagram has a professional, technical appearance similar to software documentation.]
-
-- **Stage 2: Image-to-Video (LTX)** – Now take the image from Stage 1 and feed it, along with a **motion prompt**, into the LTX Video model. LTX generates additional frames as if the scene in the image is moving or the camera is moving. It does this by diffusing noise into new images while trying to stay consistent with the original picture. Essentially, it treats the Stage 1 image as the starting frame of a video, then creates subsequent frames based on your motion description.
-
-[AI Generation Description: A horizontal strip showing 5 sequential video frames arranged left to right. Each frame captures the same young woman from the earlier portrait, showing a smooth camera pan from left to right. Her hair shows subtle, natural movement in the breeze across the frames. Frame 1: Camera positioned left, showing her profile. Frame 2-4: Progressive movement rightward, revealing more of her face. Frame 5: Final position showing three-quarter view. The lighting remains consistent across all frames, maintaining the warm, natural sunlight. Each frame is labeled with a small frame number in the corner. Style: Cinematic quality, 24fps motion blur, professional color grading.]
-
-[AI Generation Description: A professional flowchart diagram showing the LTX video generation process. Four main elements arranged horizontally: 1) Two input boxes at left labeled "Initial Image" and "Motion Prompt" (stacked vertically), 2) Arrows flowing right to a central box, 3) A prominent center box labeled "LTX Model" with a subtle AI-themed icon, 4) An output box showing a filmstrip of multiple frames. The design uses a modern tech aesthetic with a blue and white color scheme (#2B5D9B, #FFFFFF). Connecting arrows are animated-style with gradient effects. The background is clean white with a subtle grid pattern. Text uses a modern sans-serif font. Style: Modern tech infographic, clean vector graphics.]
+| Stage | Example Output |
+|:------|:--------------:|
+| **Stage 1: Text-to-Image (Flux)** - You write a text prompt describing the portrait or scene you want. ComfyUI feeds this prompt into the Flux model, which diffuses random noise into an image that matches your description. This is done via a neural network that has learned to generate images from text. The result is a single AI-generated **portrait image** (we'll make it vertical format for TikTok). | <img src="portrait_1.png" /> |
+| **Stage 2: Image-to-Video (LTX)** - Take the image from Stage 1 and feed it, along with a **motion prompt**, into the LTX Video model. LTX generates additional frames as if the scene is moving or the camera is moving by diffusing noise into new images while maintaining consistency with the original. | <video controls><source src="assets/ltxv_1.webm" type="video/webm"></video> |
 
 ComfyUI links these stages, so after Stage 1 finishes, Stage 2 can use the output automatically. The end result is a short video (several seconds long) where the initial AI image comes to life. You might see the camera zoom or pan, the subject's expression change slightly, or environmental movement, depending on your motion prompt. It's like those Harry Potter photos – still images that move a bit!
 
@@ -175,7 +168,7 @@ Before we get into the nuts and bolts, let's set realistic expectations:
 
 - **One scene only:** LTX does not *create new content per frame*; it transforms the given image. So if your image is a person standing, the video will be that same person – they won't suddenly change clothes or location (unless your motion prompt somehow forces a change, but that often just yields artifacts). It's essentially **the same scene with slight motion**. This is great for cinematic camera moves or a bit of life in a portrait, but not for storyboarding multi-scene sequences.
 
-In short, **expect** a short, artsy moving portrait with mild motion. **Don't expect** a full dynamic action sequence or a perfectly stable video on the first try. Part of the fun is experimenting and seeing what the AI can do within these limits!
+In short, **expect** a short, artsy moving image with mild motion. **Don't expect** a full dynamic action sequence or a perfectly stable video on the first try. Part of the fun is experimenting and seeing what the AI can do within these limits!
 
 ## Requirements: Hardware and Software
 
