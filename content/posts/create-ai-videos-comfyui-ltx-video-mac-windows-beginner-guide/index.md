@@ -75,7 +75,7 @@ Here's what you can make after following this guide:
    - □ `models/vae/vae.safetensors` (rename from `diffusion_pytorch_model.safetensors`)
 
 4. **Run the workflow**
-   - □ Download [Workflow file](./workflows/flux_ltxvideo_t2v_full.json)
+   - □ Download <a href="./workflows/flux_ltxvideo_t2v_full.json" download>Workflow file</a>
    - □ Open ComfyUI and load the workflow
    - □ Write your text prompt for the image
    - □ Write your motion prompt for the video
@@ -134,9 +134,9 @@ Create the necessary subfolders if they don't exist, and place each file in its 
 
 The easiest way to start is with a complete workflow that combines image and video generation:
 
-1. Download the [combined workflow file](./workflows/flux_ltxvideo_t2v_full.json)
+1. Download the <a href="./workflows/flux_ltxvideo_t2v_full.json" download>combined workflow file</a>
 
-2. In ComfyUI, click "Load" and select the downloaded workflow file
+2. In ComfyUI, click "Workflow" -> "Open" and select the downloaded workflow file
 
 3. If you see missing nodes errors:
    - Click "Manager" → "Install Missing Nodes"
@@ -246,8 +246,8 @@ Avoid asking for walking, hand gestures, or complex body movements.
 ### Workflow Variations
 
 For more flexibility, try these workflow variations:
-1. [Image-only workflow](./workflows/flux_redcraft_t2i.json) - Just generate the image
-2. [Video-from-existing-image workflow](./workflows/ltxvideo-i2v-distilled.json) - Use your own images
+1. <a href="./workflows/flux_redcraft_t2i.json" download>Image-only workflow</a> - Just generate the image
+2. <a href="./workflows/ltxvideo-i2v-distilled.json" download>Video-from-existing-image workflow</a> - Use your own images
 
 ## How It Works (For The Curious)
 
