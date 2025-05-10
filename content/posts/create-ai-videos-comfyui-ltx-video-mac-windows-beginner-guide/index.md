@@ -179,6 +179,30 @@ Example: "Vertical phone selfie. A young woman sits casually in the driver's sea
 
 ## Troubleshooting Common Issues
 
+### Error with Float8_e4m3fn dtype on Apple Silicon (MPS)
+
+<img src="assets/e4m3fn_dtype_mps_error.png" width="500px" />
+
+**Problem:** Error message about "Float8_e4m3fn dtype not supported on MPS"
+
+**Solution:**
+1. You need to install the FP16 version of the T5 text encoder instead of the FP8 version
+
+2. Download the FP16 version from Model Manager
+
+3. Refresh ComfyUI
+
+4. Select the FP16 version in "DualCLIPLoader" node
+
+<details>
+<summary>Click to see visual guide</summary>
+
+![Step 1: Right-click on the T5 XXL node and select "Open in Editor"](assets/fp16_text_encoder_install_1.gif)
+
+![Step 2: Change the model name to t5xxl_fp16.safetensors](assets/fp16_text_encoder_install_2.gif)
+</details>
+
+
 ### Model Not Found Errors
 
 **Problem:** Red error text mentioning missing models or "Model not found"
