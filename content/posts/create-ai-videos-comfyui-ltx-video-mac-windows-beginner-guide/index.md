@@ -62,6 +62,7 @@ Here's what you can make after following this guide:
 
 2. **Download these models**
    - □ [Flux/RedCraft model](https://civitai.green/models/958009?modelVersionId=1576605) (~11GB)
+     - If you run into an FP8 error on Mac, also grab **"Pruned Model nf4 (6.46 GB)"** from the same page (GGUF format)
    - □ [LTX Video model](https://huggingface.co/Lightricks/LTX-Video/blob/main/ltxv-2b-0.9.6-distilled-04-25.safetensors) (~6GB)
    - □ [T5 XXL text encoder](https://huggingface.co/comfyanonymous/flux_text_encoders/blob/main/t5xxl_fp8_e4m3fn.safetensors) (4.89 GB)
    - □ [CLIP text encoder](https://huggingface.co/comfyanonymous/flux_text_encoders/blob/main/clip_l.safetensors) (246 MB)
@@ -69,6 +70,7 @@ Here's what you can make after following this guide:
 
 3. **Put models in correct folders**
    - □ `models/unet/RedCraft_RealReveal5_ULTRA_15Steps_fp8_pruned.safetensors`
+   - □ (Optional for Mac) `models/unet/redcraftCADSUpdatedMay11_reveal5SFWULTRA.gguf`
    - □ `models/checkpoints/ltxv-2b-0.9.6-distilled-04-25.safetensors`
    - □ `models/text_encoders/t5xxl_fp8_e4m3fn.safetensors`
    - □ `models/clip/clip_l.safetensors`
@@ -76,6 +78,7 @@ Here's what you can make after following this guide:
 
 4. **Run the workflow**
    - □ Download <a href="./workflows/flux_ltxvideo_t2v_full.json" download>Workflow file</a>
+   - □ (If using the GGUF model) Download <a href="./workflows/flux_ltxvideo_t2v_full_gguf.json" download>GGUF workflow file</a>
    - □ Open ComfyUI and load the workflow
    - □ Write your text prompt for the image
    - □ Write your motion prompt for the video
@@ -186,13 +189,11 @@ Example: "Vertical phone selfie. A young woman sits casually in the driver's sea
 **Problem:** Error message about "Float8_e4m3fn dtype not supported on MPS"
 
 **Solution:**
-1. You need to install the FP16 version of the T5 text encoder instead of the FP8 version
+1. Download the **"Pruned Model nf4 (6.46 GB)"** file from the [RedCraft page](https://civitai.green/models/958009?modelVersionId=1576605) and place it in `models/unet`
+2. Load the <a href="./workflows/flux_ltxvideo_t2v_full_gguf.json" download>GGUF workflow</a> and install any missing nodes via the Manager
+3. If the error persists, install the FP16 version of the T5 text encoder instead of the FP8 version
 
-2. Download the FP16 version from Model Manager
-
-3. Refresh ComfyUI
-
-4. Select the FP16 version in "DualCLIPLoader" node
+4. Refresh ComfyUI and select the FP16 version in the "DualCLIPLoader" node
 
 <details>
 <summary>Click to see visual guide</summary>
@@ -313,7 +314,8 @@ models/
 ├── checkpoints/
 │   └── ltxv-2b-0.9.6-distilled-04-25.safetensors
 ├── unet/
-│   └── RedCraft_RealReveal5_ULTRA_15Steps_fp8_pruned.safetensors
+│   ├── RedCraft_RealReveal5_ULTRA_15Steps_fp8_pruned.safetensors
+│   └── redcraftCADSUpdatedMay11_reveal5SFWULTRA.gguf
 ├── text_encoders/
 │   └── t5xxl_fp8_e4m3fn.safetensors
 ├── clip/
