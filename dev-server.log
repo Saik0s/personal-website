@@ -1,0 +1,483 @@
+
+> tarasenko-dev@0.0.1 dev
+> astro dev
+
+23:47:17 [types] Generated 0ms
+23:47:18 [content] Syncing content
+23:47:18 [content] Synced content
+
+ astro  v5.11.0 ready in 624 ms
+
+┃ Local    http://localhost:4321/
+┃ Network  use --host to expose
+
+23:47:18 watching for file changes...
+23:47:27 [200] / 130ms
+23:47:32 [200] / 4ms
+23:48:42 [200] HEAD / 5ms
+23:48:47 [200] / 5ms
+23:49:15 [200] / 4ms
+23:49:15 [404] /favicon.svg 1ms
+23:49:15 [200] /newsletter 10ms
+23:49:15 [200] /mentorship 5ms
+23:49:15 [404] /apps/whisperboard 1ms
+23:49:15 [404] /apps/vibeswitch 1ms
+23:49:15 [200] /mentorship 3ms
+23:49:15 [200] /newsletter 3ms
+23:49:15 [200] /about 4ms
+23:49:15 [200] /posts 76ms
+23:49:15 [200] /posts/is-your-repo-ready-for-ai-agents/ 8ms
+23:49:25 [404] /apps/whisperboard 0ms
+23:49:58 [200] / 4ms
+23:49:58 [200] /mentorship 2ms
+23:49:58 [200] /newsletter 2ms
+23:49:58 [404] /apps/whisperboard 0ms
+23:49:58 [200] /posts 4ms
+23:49:58 [200] /about 2ms
+23:49:58 [200] /mentorship 2ms
+23:49:58 [200] /newsletter 2ms
+23:49:58 [404] /apps/vibeswitch 0ms
+23:49:58 [200] /posts/is-your-repo-ready-for-ai-agents/ 3ms
+23:50:08 [200] /about 2ms
+23:50:08 [200] /mentorship 3ms
+23:50:08 [200] /newsletter 2ms
+23:50:08 [200] / 3ms
+23:50:08 [200] /posts 3ms
+23:50:08 [200] /mentorship 2ms
+23:50:08 [200] /newsletter 2ms
+23:50:15 [200] /posts 4ms
+23:50:15 [200] /mentorship 2ms
+23:50:15 [200] /newsletter 2ms
+23:50:15 [200] /about 2ms
+23:50:15 [404] /rss.xml 0ms
+23:50:15 [200] / 3ms
+23:50:15 [200] /mentorship 2ms
+23:50:15 [200] /newsletter 2ms
+23:50:15 [200] /posts/is-your-repo-ready-for-ai-agents/ 3ms
+23:50:15 [200] /posts/ios_codebase_context_sourcery/ 3ms
+23:50:16 [200] /posts/create-ai-videos-comfyui-ltx-video-mac-windows-beginner-guide/ 3ms
+23:50:24 [200] /mentorship 3ms
+23:50:24 [200] /mentorship 3ms
+23:50:24 [200] /newsletter 3ms
+23:50:24 [200] /posts 3ms
+23:50:24 [200] / 3ms
+23:50:24 [200] /about 2ms
+23:50:24 [200] /newsletter 2ms
+23:50:34 [200] /newsletter 2ms
+23:50:34 [200] /newsletter 2ms
+23:50:34 [200] /mentorship 2ms
+23:50:34 [200] / 4ms
+23:50:34 [200] /posts 3ms
+23:50:34 [200] /about 1ms
+23:50:34 [200] /mentorship 1ms
+23:50:49 [WARN] [router] /api/newsletter POST requests are not available in static endpoints. Mark this page as server-rendered (`export const prerender = false;`) or update your config to `output: 'server'` to make all your pages server-rendered by default.
+23:50:49 [400] POST /api/newsletter 1ms
+23:50:53 Configuration file updated. Restarting...
+[config] Astro found issue(s) with your configuration:
+
+! output: Did not match union.
+  > Expected "static" | "server", received "hybrid"
+
+23:50:53 [ERROR] Continuing with previous valid configuration
+
+23:50:54 [200] /newsletter 2ms
+23:50:54 [200] /mentorship 2ms
+23:50:54 [200] /newsletter 2ms
+23:50:54 [200] /mentorship 2ms
+23:50:54 [200] / 3ms
+23:50:54 [200] /about 1ms
+23:50:54 [200] /posts 4ms
+23:51:11 Configuration file updated. Restarting...
+23:51:11 [WARN] [config] This project contains server-rendered routes, but no adapter is installed. This is fine for development, but an adapter will be required to build your site for production.
+23:51:11 [vite] Re-optimizing dependencies because vite config has changed
+23:51:11 [content] Syncing content
+23:51:11 [content] Astro config changed
+23:51:11 [content] Clearing content store
+23:51:11 [content] Synced content
+23:51:11 [types] Generated 418ms
+23:51:11 [vite] Re-optimizing dependencies because vite config has changed
+23:51:12 [200] /newsletter 38ms
+23:51:12 [200] /newsletter 2ms
+23:51:12 [200] /mentorship 4ms
+23:51:13 [200] /mentorship 2ms
+23:51:13 [200] /about 6ms
+23:51:13 [WARN] [router] getStaticPaths() ignored in dynamic page /src/pages/posts/[...slug].astro. Add `export const prerender = true;` to prerender the page as static HTML during the build process.
+23:51:13 [200] / 56ms
+23:51:13 [200] /posts 9ms
+23:51:16 [200] /posts/is-your-repo-ready-for-ai-agents/ 7ms
+23:51:16 [200] /mentorship 2ms
+23:51:16 [200] /newsletter 2ms
+23:51:17 [200] / 4ms
+23:51:17 [200] /posts 3ms
+23:51:17 [200] /about 2ms
+23:51:17 [200] /mentorship 2ms
+23:51:17 [200] /newsletter 2ms
+23:51:19 [watch] src/pages/api/newsletter.ts
+23:51:19 [watch] src/pages/api/newsletter.ts
+23:51:19 [200] /posts/is-your-repo-ready-for-ai-agents/ 27ms
+23:51:19 [200] /mentorship 2ms
+23:51:19 [200] /newsletter 2ms
+23:51:19 [200] / 3ms
+23:51:19 [200] /posts 4ms
+23:51:19 [200] /about 1ms
+23:51:19 [200] /mentorship 1ms
+23:51:19 [200] /newsletter 1ms
+23:51:27 Configuration file updated. Restarting...
+23:51:27 [vite] Re-optimizing dependencies because vite config has changed
+23:51:27 [content] Syncing content
+23:51:27 [content] Synced content
+23:51:27 [types] Generated 227ms
+23:51:27 [vite] Re-optimizing dependencies because lockfile has changed
+23:51:28 [WARN] [router] getStaticPaths() ignored in dynamic page /src/pages/posts/[...slug].astro. Add `export const prerender = true;` to prerender the page as static HTML during the build process.
+23:51:28 [200] /posts/is-your-repo-ready-for-ai-agents/ 45ms
+23:51:28 [200] /newsletter 3ms
+23:51:28 [200] /mentorship 4ms
+23:51:28 [200] /mentorship 3ms
+23:51:28 [200] /newsletter 2ms
+23:51:28 [200] / 3ms
+23:51:28 [200] /posts 11ms
+23:51:28 [200] /about 6ms
+23:51:33 Configuration file updated. Restarting...
+23:51:33 [vite] Re-optimizing dependencies because vite config has changed
+23:51:34 [content] Syncing content
+23:51:34 [content] Synced content
+23:51:34 [types] Generated 168ms
+23:51:34 [vite] Re-optimizing dependencies because vite config has changed
+23:51:34 [WARN] [router] getStaticPaths() ignored in dynamic page /src/pages/posts/[...slug].astro. Add `export const prerender = true;` to prerender the page as static HTML during the build process.
+23:51:35 [200] /posts/is-your-repo-ready-for-ai-agents/ 42ms
+23:51:35 [200] /newsletter 6ms
+23:51:35 [200] /mentorship 3ms
+23:51:35 [200] /mentorship 3ms
+23:51:35 [200] /newsletter 2ms
+23:51:35 [200] / 3ms
+23:51:35 [200] /about 9ms
+23:51:35 [200] /posts 11ms
+23:51:37 Configuration file updated. Restarting...
+23:51:37 [@astrojs/node] Enabling sessions with filesystem storage
+23:51:37 [vite] Re-optimizing dependencies because vite config has changed
+23:51:38 [content] Syncing content
+23:51:38 [content] Astro config changed
+23:51:38 [content] Clearing content store
+23:51:38 [content] Synced content
+23:51:38 [types] Generated 327ms
+23:51:38 [vite] Re-optimizing dependencies because vite config has changed
+23:51:38 [WARN] [router] getStaticPaths() ignored in dynamic page /src/pages/posts/[...slug].astro. Add `export const prerender = true;` to prerender the page as static HTML during the build process.
+23:51:39 [200] /posts/is-your-repo-ready-for-ai-agents/ 43ms
+23:51:39 [200] /newsletter 6ms
+23:51:39 [200] /mentorship 4ms
+23:51:39 [200] /mentorship 3ms
+23:51:39 [200] /newsletter 2ms
+23:51:39 [200] / 4ms
+23:51:39 [200] /about 10ms
+23:51:39 [200] /posts 11ms
+23:51:49 Configuration file updated. Restarting...
+23:51:49 [vite] Re-optimizing dependencies because vite config has changed
+23:51:50 [content] Syncing content
+23:51:50 [content] Astro config changed
+23:51:50 [content] Clearing content store
+23:51:50 [content] Synced content
+23:51:50 [types] Generated 335ms
+23:51:50 [vite] Re-optimizing dependencies because vite config has changed
+23:51:50 [WARN] [router] getStaticPaths() ignored in dynamic page /src/pages/posts/[...slug].astro. Add `export const prerender = true;` to prerender the page as static HTML during the build process.
+23:51:51 [200] /posts/is-your-repo-ready-for-ai-agents/ 43ms
+23:51:51 [200] /newsletter 6ms
+23:51:51 [200] /mentorship 4ms
+23:51:51 [200] /mentorship 2ms
+23:51:51 [200] /newsletter 2ms
+23:51:51 [200] /posts 6ms
+23:51:51 [200] / 3ms
+23:51:51 [200] /about 11ms
+23:51:54 Configuration file updated. Restarting...
+23:51:54 [vite] Re-optimizing dependencies because vite config has changed
+23:51:54 [content] Syncing content
+23:51:54 [content] Astro config changed
+23:51:54 [content] Clearing content store
+23:51:54 [content] Synced content
+23:51:54 [types] Generated 313ms
+23:51:54 [vite] Re-optimizing dependencies because vite config has changed
+23:51:55 [200] /posts/is-your-repo-ready-for-ai-agents/ 27ms
+23:51:55 [200] /newsletter 5ms
+23:51:55 [200] /mentorship 3ms
+23:51:55 [200] / 4ms
+23:51:55 [404] /tags/ai/ 16ms
+23:51:55 [404] /tags/developer-tools/ 17ms
+23:51:55 [404] /tags/best-practices/ 17ms
+23:51:55 [404] /tags/documentation/ 17ms
+23:51:57 [200] /mentorship 2ms
+23:51:57 [200] /newsletter 2ms
+23:51:57 [200] /about 5ms
+23:51:57 [200] /posts 7ms
+23:52:00 [watch] src/pages/api/newsletter.ts
+23:52:00 [watch] src/pages/api/newsletter.ts
+23:52:00 [200] /posts/is-your-repo-ready-for-ai-agents/ 23ms
+23:52:01 [200] /mentorship 3ms
+23:52:01 [200] /newsletter 3ms
+23:52:01 [404] /tags/ai/ 3ms
+23:52:01 [200] /posts 4ms
+23:52:01 [404] /tags/developer-tools/ 2ms
+23:52:01 [200] /about 2ms
+23:52:01 [200] / 5ms
+23:52:01 [200] /mentorship 2ms
+23:52:01 [200] /newsletter 2ms
+23:52:01 [404] /tags/best-practices/ 2ms
+23:52:01 [404] /tags/documentation/ 2ms
+23:52:09 [watch] src/pages/404.astro
+23:52:09 [200] /posts/is-your-repo-ready-for-ai-agents/ 34ms
+23:52:09 [200] /mentorship 4ms
+23:52:09 [200] /newsletter 2ms
+23:52:09 [200] / 4ms
+23:52:09 [200] /posts 4ms
+23:52:09 [200] /about 2ms
+23:52:09 [200] /mentorship 2ms
+23:52:09 [200] /newsletter 2ms
+23:52:09 [404] /tags/ai/ 8ms
+23:52:09 [404] /tags/best-practices/ 8ms
+23:52:09 [404] /tags/documentation/ 8ms
+23:52:09 [404] /tags/developer-tools/ 8ms
+23:52:15 [watch] src/pages/404.astro
+23:52:15 [200] /posts/is-your-repo-ready-for-ai-agents/ 28ms
+23:52:15 [200] /mentorship 3ms
+23:52:15 [200] /newsletter 2ms
+23:52:15 [200] / 4ms
+23:52:15 [200] /posts 3ms
+23:52:15 [200] /about 2ms
+23:52:15 [200] /mentorship 2ms
+23:52:15 [200] /newsletter 2ms
+23:52:15 [404] /tags/ai/ 12ms
+23:52:15 [404] /tags/best-practices/ 12ms
+23:52:15 [404] /tags/documentation/ 12ms
+23:52:15 [404] /tags/developer-tools/ 13ms
+23:52:21 [watch] src/pages/404.astro
+23:52:21 [200] /posts/is-your-repo-ready-for-ai-agents/ 28ms
+23:52:21 [200] /mentorship 2ms
+23:52:21 [200] /newsletter 2ms
+23:52:21 [200] / 7ms
+23:52:21 [200] /posts 6ms
+23:52:21 [200] /about 3ms
+23:52:21 [200] /mentorship 2ms
+23:52:21 [200] /newsletter 2ms
+23:52:21 [404] /tags/ai/ 8ms
+23:52:21 [404] /tags/developer-tools/ 8ms
+23:52:21 [404] /tags/best-practices/ 8ms
+23:52:21 [404] /tags/documentation/ 8ms
+23:52:46 [watch] src/pages/newsletter.astro
+23:52:46 [200] /posts/is-your-repo-ready-for-ai-agents/ 36ms
+23:52:46 [200] /mentorship 5ms
+23:52:46 [200] /newsletter 4ms
+23:52:47 [404] /tags/ai/ 2ms
+23:52:47 [200] / 5ms
+23:52:47 [200] /posts 3ms
+23:52:47 [200] /about 3ms
+23:52:47 [200] /mentorship 2ms
+23:52:47 [200] /newsletter 2ms
+23:52:47 [404] /tags/best-practices/ 2ms
+23:52:47 [404] /tags/documentation/ 2ms
+23:52:47 [404] /tags/developer-tools/ 1ms
+23:52:48 [200] /posts/is-your-repo-ready-for-ai-agents/ 5ms
+23:52:48 [200] /mentorship 3ms
+23:52:48 [200] /newsletter 2ms
+23:52:48 [404] /tags/ai/ 2ms
+23:52:48 [200] / 4ms
+23:52:48 [200] /posts 4ms
+23:52:48 [200] /about 2ms
+23:52:48 [200] /mentorship 2ms
+23:52:48 [200] /newsletter 2ms
+23:52:48 [404] /tags/best-practices/ 2ms
+23:52:48 [404] /tags/documentation/ 2ms
+23:52:48 [404] /tags/developer-tools/ 2ms
+23:52:54 [watch] src/pages/newsletter.astro
+23:52:54 [200] /posts/is-your-repo-ready-for-ai-agents/ 28ms
+23:52:54 [200] /mentorship 2ms
+23:52:54 [200] /newsletter 3ms
+23:52:54 [200] / 4ms
+23:52:54 [200] /posts 3ms
+23:52:54 [200] /about 2ms
+23:52:54 [200] /mentorship 3ms
+23:52:54 [200] /newsletter 2ms
+23:52:54 [404] /tags/ai/ 2ms
+23:52:54 [404] /tags/best-practices/ 1ms
+23:52:54 [404] /tags/documentation/ 2ms
+23:52:54 [404] /tags/developer-tools/ 2ms
+23:52:58 [200] /posts/is-your-repo-ready-for-ai-agents/ 4ms
+23:52:58 Configuration file updated. Restarting...
+23:52:58 [vite] Re-optimizing dependencies because vite config has changed
+23:52:58 [content] Syncing content
+23:52:58 [content] Synced content
+23:52:58 [types] Generated 253ms
+23:52:58 [vite] Re-optimizing dependencies because vite config has changed
+23:52:58 [404] /tags/ai/ 39ms
+23:52:58 [200] /about 44ms
+23:52:58 [200] /newsletter 42ms
+23:52:58 [200] /mentorship 14ms
+23:52:58 [404] /tags/developer-tools/ 2ms
+23:52:58 [404] /tags/best-practices/ 2ms
+23:52:58 [404] /tags/documentation/ 2ms
+23:52:58 [200] / 108ms
+23:52:58 [200] /posts 8ms
+23:52:59 [watch] layouts/index.html
+23:52:59 [watch] layouts/_default/summary.html
+23:52:59 [watch] layouts/partials/summary.html
+23:52:59 [watch] layouts/partials/ck-form.html
+23:52:59 [glob-loader] Reloaded data from create-ai-videos-comfyui-ltx-video-mac-windows-beginner-guide/index.md
+23:52:59 [ERROR] [InvalidContentEntryDataError] blog → create-ai-videos-comfyui-ltx-video-mac-windows-beginner-guide/workflows/flux_ltxvideo_t2v_full_gguf data does not match collection schema.
+
+  title**: **title: Required
+  pubDatetime**: **pubDatetime: Required
+
+  Hint:
+    Browser APIs are not available on the server.
+    
+    If the code is in a framework component, try to access these objects after rendering using lifecycle methods or use a `client:only` directive to make the component exclusively run on the client.
+    
+    See https://docs.astro.build/en/guides/troubleshooting/#document-or-window-is-not-defined for more information.
+    		
+  Error reference:
+    https://docs.astro.build/en/reference/errors/invalid-content-entry-data-error/
+  Stack trace:
+    at /Users/igortarasenko/Projects/personal-website/src/content/blog/create-ai-videos-comfyui-ltx-video-mac-windows-beginner-guide/workflows/flux_ltxvideo_t2v_full_gguf.json
+    [...] See full stack trace in the browser, or rerun with --verbose.
+23:52:59 [ERROR] [InvalidContentEntryDataError] blog → create-ai-videos-comfyui-ltx-video-mac-windows-beginner-guide/workflows/flux_redcraft_t2i data does not match collection schema.
+
+  title**: **title: Required
+  pubDatetime**: **pubDatetime: Required
+
+  Hint:
+    Browser APIs are not available on the server.
+    
+    If the code is in a framework component, try to access these objects after rendering using lifecycle methods or use a `client:only` directive to make the component exclusively run on the client.
+    
+    See https://docs.astro.build/en/guides/troubleshooting/#document-or-window-is-not-defined for more information.
+    		
+  Error reference:
+    https://docs.astro.build/en/reference/errors/invalid-content-entry-data-error/
+  Stack trace:
+    at /Users/igortarasenko/Projects/personal-website/src/content/blog/create-ai-videos-comfyui-ltx-video-mac-windows-beginner-guide/workflows/flux_redcraft_t2i.json
+    [...] See full stack trace in the browser, or rerun with --verbose.
+23:52:59 [ERROR] [InvalidContentEntryDataError] blog → create-ai-videos-comfyui-ltx-video-mac-windows-beginner-guide/workflows/flux_ltxvideo_t2v_full data does not match collection schema.
+
+  title**: **title: Required
+  pubDatetime**: **pubDatetime: Required
+
+  Hint:
+    Browser APIs are not available on the server.
+    
+    If the code is in a framework component, try to access these objects after rendering using lifecycle methods or use a `client:only` directive to make the component exclusively run on the client.
+    
+    See https://docs.astro.build/en/guides/troubleshooting/#document-or-window-is-not-defined for more information.
+    		
+  Error reference:
+    https://docs.astro.build/en/reference/errors/invalid-content-entry-data-error/
+  Stack trace:
+    at getEntryDataAndImages (file:///Users/igortarasenko/Projects/personal-website/node_modules/astro/dist/content/utils.js:157:26)
+    [...] See full stack trace in the browser, or rerun with --verbose.
+23:52:59 [ERROR] [InvalidContentEntryDataError] blog → create-ai-videos-comfyui-ltx-video-mac-windows-beginner-guide/workflows/ltxvideo-i2v-distilled data does not match collection schema.
+
+  title**: **title: Required
+  pubDatetime**: **pubDatetime: Required
+
+  Hint:
+    Browser APIs are not available on the server.
+    
+    If the code is in a framework component, try to access these objects after rendering using lifecycle methods or use a `client:only` directive to make the component exclusively run on the client.
+    
+    See https://docs.astro.build/en/guides/troubleshooting/#document-or-window-is-not-defined for more information.
+    		
+  Error reference:
+    https://docs.astro.build/en/reference/errors/invalid-content-entry-data-error/
+  Stack trace:
+    at /Users/igortarasenko/Projects/personal-website/src/content/blog/create-ai-videos-comfyui-ltx-video-mac-windows-beginner-guide/workflows/ltxvideo-i2v-distilled.json
+    [...] See full stack trace in the browser, or rerun with --verbose.
+23:52:59 [content] Syncing content
+23:52:59 [content] Content config changed
+23:52:59 [content] Clearing content store
+23:52:59 [vite] changed tsconfig file detected: /Users/igortarasenko/Projects/personal-website/tsconfig.json - Clearing cache and forcing full-reload to ensure TypeScript is compiled with updated config values.
+23:52:59 Configuration file updated. Restarting...
+23:52:59 [watch] src/styles/typography.css
+23:52:59 [glob-loader] Reloaded data from is-your-repo-ready-for-ai-agents/index.md
+23:52:59 [glob-loader] Reloaded data from ios_codebase_context_sourcery/index.md
+23:52:59 [ERROR] transport was disconnected, cannot call "fetchModule"
+  Stack trace:
+    at reviveInvokeError (file:///Users/igortarasenko/Projects/personal-website/node_modules/vite/dist/node/module-runner.js:548:17)
+    [...] See full stack trace in the browser, or rerun with --verbose.
+23:52:59 [content] Syncing content
+23:52:59 [content] Synced content
+23:52:59 [types] Generated 106ms
+23:52:59 [vite] Re-optimizing dependencies because vite config has changed
+23:53:00 [content] Synced content
+23:53:01 [200] /posts/is-your-repo-ready-for-ai-agents/ 170ms
+23:53:01 [200] /newsletter 21ms
+23:53:01 [200] /mentorship 17ms
+23:53:01 [200] /mentorship 2ms
+23:53:01 [200] /newsletter 2ms
+23:53:01 [200] /about 35ms
+23:53:01 [200] / 4ms
+23:53:01 [200] /posts 27ms
+23:53:01 [404] /tags/ai/ 21ms
+23:53:01 [404] /tags/developer-tools/ 21ms
+23:53:01 [404] /tags/best-practices/ 21ms
+23:53:01 [404] /tags/documentation/ 21ms
+23:53:08 [200] / 4ms
+23:53:08 [200] /mentorship 2ms
+23:53:08 [200] /newsletter 2ms
+23:53:08 [200] /posts 4ms
+23:53:08 [200] /about 2ms
+23:53:08 [200] /mentorship 2ms
+23:53:08 [200] /newsletter 2ms
+23:53:08 [404] /apps/vibeswitch 2ms
+23:53:08 [200] /apps/whisperboard 3ms
+23:53:17 [watch] src/pages/newsletter.astro
+23:53:17 [200] / 32ms
+23:53:17 [200] /mentorship 3ms
+23:53:17 [200] /newsletter 4ms
+23:53:17 [200] /posts 4ms
+23:53:17 [200] /about 2ms
+23:53:17 [200] /mentorship 2ms
+23:53:17 [200] /newsletter 2ms
+23:53:17 [200] /apps/whisperboard 3ms
+23:53:17 [404] /apps/vibeswitch 2ms
+23:53:24 Configuration file updated. Restarting...
+23:53:24 [vite] Re-optimizing dependencies because vite config has changed
+23:53:24 [content] Syncing content
+23:53:24 [content] Astro config changed
+23:53:24 [content] Clearing content store
+23:53:24 [content] Synced content
+23:53:24 [types] Generated 421ms
+23:53:25 [ERROR] [vite] Error: The following dependencies are imported but could not be resolved:
+
+  @scripts/newsletter-form (imported by /Users/igortarasenko/Projects/personal-website/src/pages/newsletter.astro?id=0)
+
+Are they installed?
+    at file:///Users/igortarasenko/Projects/personal-website/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:14849:15
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async file:///Users/igortarasenko/Projects/personal-website/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:46985:28
+23:53:25 [ERROR] [vite] error while updating dependencies:
+Error: ENOTEMPTY: directory not empty, rename '/Users/igortarasenko/Projects/personal-website/node_modules/.vite/deps_temp_52e9032a' -> '/Users/igortarasenko/Projects/personal-website/node_modules/.vite/deps'
+    at Object.renameSync (node:fs:1021:11)
+    at Object.commit (file:///Users/igortarasenko/Projects/personal-website/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:14956:21)
+    at commitProcessing (file:///Users/igortarasenko/Projects/personal-website/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:47074:32)
+    at runOptimizer (file:///Users/igortarasenko/Projects/personal-website/node_modules/vite/dist/node/chunks/dep-DBxKXgDP.js:47110:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+23:53:25 [200] / 47ms
+23:53:25 [200] /newsletter 7ms
+23:53:25 [200] /mentorship 4ms
+23:53:26 [vite] ✨ new dependencies optimized: web-vitals
+23:53:26 [200] /mentorship 2ms
+23:53:26 [200] /newsletter 3ms
+23:53:26 [200] /about 4ms
+23:53:26 [404] /apps/vibeswitch 5ms
+23:53:26 [200] /apps/whisperboard 5ms
+23:53:26 [200] /posts 5ms
+23:53:27 [200] /about 2ms
+23:53:27 [200] /mentorship 2ms
+23:53:27 [200] /newsletter 2ms
+23:53:27 [200] / 4ms
+23:53:27 [200] /posts 3ms
+23:53:27 [200] /mentorship 3ms
+23:53:27 [200] /newsletter 2ms
+23:53:30 [200] /about 2ms
+23:53:30 [200] /mentorship 3ms
+23:53:30 [200] /newsletter 2ms
+23:53:30 [200] /mentorship 2ms
+23:53:30 [200] /newsletter 2ms
+23:53:30 [200] / 20ms
+23:53:30 [200] /posts 16ms

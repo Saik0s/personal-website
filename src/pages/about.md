@@ -3,35 +3,22 @@ layout: ../layouts/AboutLayout.astro
 title: "About"
 ---
 
-AstroPaper is a minimal, accessible and SEO-friendly blog theme built with [Astro](https://astro.build/) and [Tailwind CSS](https://tailwindcss.com/).
+# About
 
-![Astro Paper](public/astropaper-og.jpg)
+Welcome! I'm Igor Tarasenko, a software engineer passionate about iOS development and AI integration.
 
-AstroPaper provides a solid foundation for blogs, or even portfolios\_ with full markdown support, built-in dark mode, and a clean layout that works out-of-the-box.
+I specialize in:
+- iOS and Swift development
+- AI/ML integration in mobile apps
+- Developer productivity tools
+- Open source contributions
 
-The blog posts in this theme also serve as guides, docs or example articles\_ making AstroPaper a flexible starting point for your next content-driven site.
+Currently exploring the intersection of mobile development and artificial intelligence, building innovative iOS apps that leverage the latest AI technologies.
 
-## Features
+## Connect
 
-AstroPaper comes with a set of useful features that make content publishing easy and effective:
+You can find me on:
+- [GitHub](https://github.com/Saik0s)
+- [X/Twitter](https://x.com/sa1k0s)
 
-- SEO-friendly
-- Fast performance
-- Light & dark mode
-- Highly customizable
-- Organizable blog posts
-- Responsive & accessible
-- Static search with [PageFind](https://pagefind.app/)
-- Automatic social image generation
-
-and so much more.
-
-## Show your support
-
-If you like [AstroPaper](https://github.com/satnaing/astro-paper), consider giving it a star ⭐️.
-
-Found a bug 🐛 or have an improvement ✨ in mind? Feel free to open an [issue](https://github.com/satnaing/astro-paper/issues), submit a [pull request](https://github.com/satnaing/astro-paper/pulls) or start a [discussion](https://github.com/satnaing/astro-paper/discussions).
-
-If you find this theme helpful, you can also [sponsor me on GitHub](https://github.com/sponsors/satnaing) or [buy me a coffee](https://buymeacoffee.com/satnaing) to show your support — every penny counts.
-
-Kyay zuu! 🙏🏼
+Feel free to reach out if you'd like to collaborate or discuss iOS development and AI!
