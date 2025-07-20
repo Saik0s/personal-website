@@ -31,15 +31,26 @@ license: ""
 
 Here's what you can make after following this guide:
 
-**Example Input → Output:**
-
-| Text Prompt                                                                                                                                                                       |               Generated Image                |
-| :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------: |
-| "Vsco, Authentic share, amateur selfie in a car, swedish 19 year old woman, black crop top, curtain bangs hairstyle, no makeup, tiktok, talking, grainy, bad lighting, realistic" | ![Example Portrait](./assets/portrait_1.png) |
-
-| Motion Prompt                                                                                                                                                                                                                                                                                                                                                                     |             Final Video             |
-| :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :---------------------------------: |
-| "Vertical phone selfie. A young woman sits casually in the driver's seat, softly smiling at the camera. She gently tilts her head, briefly looks down with a shy expression, then lifts her eyes back up, her smile widening naturally into a playful, slightly bashful grin. The handheld camera moves lightly, giving a spontaneous and genuine TikTok feel—real-life footage." | [Example Video](assets/ltxv_1.webm) |
+<div style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; margin: 20px 0;">
+  <div style="flex: 1; min-width: 300px; text-align: center;">
+    <h4>Generated Image</h4>
+    <img src="/assets/blog/create-ai-videos-comfyui-ltx-video-mac-windows-beginner-guide/portrait_1.png" alt="Example Portrait" style="max-width: 100%; height: auto; border-radius: 8px;" />
+    <p style="margin-top: 10px; font-size: 14px; color: #666;">
+      <span title="Vsco, Authentic share, amateur selfie in a car, swedish 19 year old woman, black crop top, curtain bangs hairstyle, no makeup, tiktok, talking, grainy, bad lighting, realistic" style="cursor: help; text-decoration: underline;">💭 Image Prompt</span>
+    </p>
+  </div>
+  
+  <div style="flex: 1; min-width: 300px; text-align: center;">
+    <h4>Generated Video</h4>
+    <video controls style="max-width: 100%; height: auto; border-radius: 8px;">
+      <source src="/assets/blog/create-ai-videos-comfyui-ltx-video-mac-windows-beginner-guide/ltxv_1.webm" type="video/webm">
+      Your browser does not support the video tag.
+    </video>
+    <p style="margin-top: 10px; font-size: 14px; color: #666;">
+      <span title="Vertical phone selfie. A young woman sits casually in the driver's seat, softly smiling at the camera. She gently tilts her head, briefly looks down with a shy expression, then lifts her eyes back up, her smile widening naturally into a playful, slightly bashful grin. The handheld camera moves lightly, giving a spontaneous and genuine TikTok feel—real-life footage." style="cursor: help; text-decoration: underline;">🎬 Motion Prompt</span>
+    </p>
+  </div>
+</div>
 
 > **Can your computer run this?**
 >
