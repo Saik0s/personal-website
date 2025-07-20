@@ -12,6 +12,8 @@ import IconRss from "@/assets/icons/IconRss.svg";
 import IconArrowRight from "@/assets/icons/IconArrowRight.svg";
 import { SITE } from "@/config";
 import { SOCIALS } from "@/constants";
+import PickMyBrainButton from "@/components/PickMyBrainButton.astro";
+import BuyMeACoffeeButton from "@/components/BuyMeACoffeeButton.astro";
 
 const posts = await getCollection("blog");
 
@@ -43,14 +45,24 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
       </a>
 
       <p>
-        I'm a software engineer passionate about iOS development, AI, and building 
-        great products. I write about Swift, iOS architecture, AI integration, 
-        and productivity tools.
+        I'm a software engineer passionate about iOS development, AI, and
+        building great products. I write about Swift, iOS architecture, AI
+        integration, and productivity tools.
       </p>
       <p class="mt-2">
-        Currently working on innovative iOS apps and exploring the intersection 
+        Currently working on innovative iOS apps and exploring the intersection
         of mobile development and artificial intelligence.
       </p>
+
+      <div class="mt-6 flex flex-wrap gap-4">
+        <PickMyBrainButton
+          variant="pushable"
+          duration="60min"
+          text="Pick My Brain"
+        />
+        <BuyMeACoffeeButton variant="pushable" text="☕ Buy me a coffee" />
+      </div>
+
       {
         // only display if at least one social link is enabled
         SOCIALS.length > 0 && (

@@ -1,0 +1,62 @@
+---
+// Buy Me a Coffee button component
+export interface Props {
+  variant?: "simple" | "pushable";
+  text?: string;
+}
+
+const { variant = "simple", text = "☕ Buy me a coffee" } = Astro.props;
+
+const coffeeLink = "https://buymeacoffee.com/saik0s";
+---
+
+{
+  variant === "pushable" ? (
+    <button class="pushable">
+      <a
+        href={coffeeLink}
+        target="_blank"
+        style="color: inherit; text-decoration: none;"
+      >
+        <span class="shadow" />
+        <span class="edge coffee-edge" />
+        <span class="front coffee-front">{text}</span>
+      </a>
+    </button>
+  ) : (
+    <a href={coffeeLink} target="_blank" class="about-button coffee-button">
+      {text}
+    </a>
+  )
+}
+
+<style>
+  .coffee-button {
+    background-color: #ff813f;
+    color: #ffffff !important;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+  }
+
+  .coffee-button:hover {
+    background-color: #e66d00;
+    transform: translateY(-2px);
+    box-shadow:
+      0 6px 12px rgba(255, 129, 63, 0.25),
+      0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .coffee-edge {
+    background: linear-gradient(
+      to left,
+      hsl(25deg 100% 35%) 0%,
+      hsl(25deg 100% 55%) 8%,
+      hsl(25deg 100% 55%) 92%,
+      hsl(25deg 100% 35%) 100%
+    );
+  }
+
+  .coffee-front {
+    background: hsl(25deg 100% 62%);
+  }
+</style>
