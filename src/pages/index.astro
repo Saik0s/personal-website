@@ -1,120 +1,103 @@
 ---
-import { getCollection } from "astro:content";
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import Socials from "@/components/Socials.astro";
-import LinkButton from "@/components/LinkButton.astro";
-import Card from "@/components/Card.astro";
 import Hr from "@/components/Hr.astro";
-import getSortedPosts from "@/utils/getSortedPosts";
-import IconRss from "@/assets/icons/IconRss.svg";
-import IconArrowRight from "@/assets/icons/IconArrowRight.svg";
-import { SITE } from "@/config";
-import { SOCIALS } from "@/constants";
 import PickMyBrainButton from "@/components/PickMyBrainButton.astro";
 import BuyMeACoffeeButton from "@/components/BuyMeACoffeeButton.astro";
+import Card from "@/components/Card.astro";
+import { getCollection } from "astro:content";
+import getSortedPosts from "@/utils/getSortedPosts";
 
-const posts = await getCollection("blog");
-
+// Get recent blog posts
+const posts = await getCollection("blog", ({ data }) => !data.draft);
 const sortedPosts = getSortedPosts(posts);
-const featuredPosts = sortedPosts.filter(({ data }) => data.featured);
-const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
+const recentPosts = sortedPosts.slice(0, 5); // Show 5 most recent posts
 ---
 
 <Layout>
   <Header />
-  <main id="main-content" data-layout="index">
-    <section id="hero" class="pt-8 pb-6">
-      <h1 class="my-4 inline-block text-4xl font-bold sm:my-8 sm:text-5xl">
-        Hello, I'm Igor
+  <main id="main-content" class="mx-auto max-w-4xl px-4">
+    <!-- Simple Hero Section -->
+    <section id="hero" class="py-20 text-left">
+      <h1 class="fade-up mb-6 text-5xl font-bold leading-tight">
+        Hey, I'm Igor.<br />
+        I help humans get leverage from AI.
       </h1>
-      <a
-        target="_blank"
-        href="/rss.xml"
-        class="inline-block"
-        aria-label="rss feed"
-        title="RSS Feed"
-      >
-        <IconRss
-          width={20}
-          height={20}
-          class="scale-125 stroke-accent stroke-3 rtl:-rotate-90"
-        />
-        <span class="sr-only">RSS Feed</span>
-      </a>
 
-      <p>
-        I'm a software engineer passionate about iOS development, AI, and
-        building great products. I write about Swift, iOS architecture, AI
-        integration, and productivity tools.
-      </p>
-      <p class="mt-2">
-        Currently working on innovative iOS apps and exploring the intersection
-        of mobile development and artificial intelligence.
+      <p class="fade-up mb-4 text-xl text-foreground/80" style="animation-delay: 0.1s">
+        I write software for human consumption and my own delight. I mentor devs in agentic engineering, help executives navigate the latest AI, and create AI-driven workflows for content creators.
       </p>
 
-      <div class="mt-6 flex flex-wrap gap-4">
+      <p class="fade-up mb-8 text-lg text-foreground/70" style="animation-delay: 0.2s">
+        Need tips on iOS, AI, or automation? Let's chat.
+      </p>
+
+      <div class="fade-up mb-8 flex items-center gap-6" style="animation-delay: 0.3s">
         <PickMyBrainButton
           variant="pushable"
           duration="60min"
           text="Pick My Brain"
         />
-        <BuyMeACoffeeButton variant="pushable" text="☕ Buy me a coffee" />
-      </div>
 
-      {
-        // only display if at least one social link is enabled
-        SOCIALS.length > 0 && (
-          <div class="mt-4 flex flex-col sm:flex-row sm:items-center">
-            <div class="me-2 mb-1 whitespace-nowrap sm:mb-0">Social Links:</div>
-            <Socials />
-          </div>
-        )
-      }
+        <div class="flex items-center gap-3">
+          <Socials />
+          <a
+            href="https://buymeacoffee.com/saik0s"
+            target="_blank"
+            class="p-2 hover:rotate-6 sm:p-1"
+            title="Buy me a coffee"
+          >
+            <svg
+              class="inline-block size-6 scale-125 fill-transparent stroke-current stroke-2 opacity-90 hover:fill-transparent sm:scale-110"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8zM6 1v3M10 1v3M14 1v3" />
+            </svg>
+            <span class="sr-only">Buy me a coffee</span>
+          </a>
+        </div>
+      </div>
     </section>
 
     <Hr />
 
-    {
-      featuredPosts.length > 0 && (
-        <>
-          <section id="featured" class="pt-12 pb-6">
-            <h2 class="text-2xl font-semibold tracking-wide">Featured</h2>
-            <ul>
-              {featuredPosts.map(data => (
-                <Card variant="h3" {...data} />
-              ))}
-            </ul>
-          </section>
-          {recentPosts.length > 0 && <Hr />}
-        </>
-      )
-    }
+    <!-- Blog Posts Section -->
+    <section id="recent-posts" class="py-12">
+      <h2 class="fade-up mb-8 text-2xl font-semibold" style="animation-delay: 0.4s">Recent Posts</h2>
+      <ul class="space-y-6">
+        {recentPosts.map((post, index) => (
+          <li class="fade-up" style={`animation-delay: ${0.5 + index * 0.1}s`}>
+            <Card {...post} />
+          </li>
+        ))}
+      </ul>
 
-    {
-      recentPosts.length > 0 && (
-        <section id="recent-posts" class="pt-12 pb-6">
-          <h2 class="text-2xl font-semibold tracking-wide">Recent Posts</h2>
-          <ul>
-            {recentPosts.map(
-              (data, index) =>
-                index < SITE.postPerIndex && <Card variant="h3" {...data} />
-            )}
-          </ul>
-        </section>
-      )
-    }
-
-    <div class="my-8 text-center">
-      <LinkButton href="/posts/">
-        All Posts
-        <IconArrowRight class="inline-block rtl:-rotate-180" />
-      </LinkButton>
-    </div>
+      {recentPosts.length >= 5 && (
+        <div class="fade-up mt-8 text-center" style="animation-delay: 1s">
+          <a
+            href="/posts"
+            class="inline-flex items-center text-accent hover:underline"
+          >
+            View all posts →
+          </a>
+        </div>
+      )}
+    </section>
   </main>
   <Footer />
 </Layout>
+
+<style>
+  /* Simple, clean styles */
+  @media (max-width: 640px) {
+    h1 {
+      font-size: 2.5rem !important;
+    }
+  }
+</style>
 
 <script>
   document.addEventListener("astro:page-load", () => {
@@ -123,5 +106,20 @@ const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
     if (indexLayout) {
       sessionStorage.setItem("backUrl", "/");
     }
+
+    // Add intersection observer for additional animations
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("animate-in");
+        }
+      });
+    });
+
+    document
+      .querySelectorAll(".project-showcase, .expertise-card")
+      .forEach(el => {
+        observer.observe(el);
+      });
   });
 </script>

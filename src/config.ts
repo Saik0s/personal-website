@@ -2,10 +2,10 @@ export const SITE = {
   website: "https://www.igortarasenko.com/", // replace this with your deployed domain
   author: "Igor Tarasenko",
   profile: "https://github.com/Saik0s",
-  desc: "Technical blog about iOS, Swift, and AI",
+  desc: "Technical blog about iOS development, AI/ML integration, and developer productivity",
   title: "Igor Tarasenko",
   ogImage: "astropaper-og.jpg",
-  lightAndDarkMode: true,
+  lightAndDarkMode: false,
   postPerIndex: 4,
   postPerPage: 4,
   scheduledPostMargin: 15 * 60 * 1000, // 15 minutes

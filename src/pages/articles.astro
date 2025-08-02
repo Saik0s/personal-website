@@ -1,0 +1,86 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import Card from "@/components/Card.astro";
+import Hr from "@/components/Hr.astro";
+import getSortedPosts from "@/utils/getSortedPosts";
+
+// Filter for long-form articles (featured posts or those tagged as articles)
+const posts = await getCollection("blog");
+const sortedPosts = getSortedPosts(posts);
+const articles = sortedPosts.filter(
+  ({ data }) =>
+    data.featured ||
+    data.tags?.includes("article") ||
+    data.tags?.includes("deep-dive")
+);
+---
+
+<Layout
+  title="Technical Articles | Igor Tarasenko"
+  description="Deep-dive technical articles on iOS development, AI integration, and applied machine learning."
+>
+  <Header />
+  <main id="main-content" class="mx-auto max-w-4xl px-4">
+    <section id="articles-header" class="pt-12 pb-8">
+      <div class="text-center">
+        <h1
+          class="mb-4 bg-gradient-to-r from-accent to-foreground bg-clip-text text-5xl font-bold text-transparent"
+        >
+          Technical Articles
+        </h1>
+        <p class="mx-auto max-w-2xl text-xl text-muted">
+          Zero-fluff deep dives into iOS development, AI integration, and the
+          intersection of mobile engineering and machine learning. Data-heavy
+          analysis, code examples, and lessons from building apps that don't
+          suck.
+        </p>
+      </div>
+    </section>
+
+    <Hr />
+
+    <section id="articles-list" class="pb-12">
+      {
+        articles.length > 0 ? (
+          <ul class="space-y-8">
+            {articles.map(article => (
+              <Card {...article} />
+            ))}
+          </ul>
+        ) : (
+          <div class="py-12 text-center">
+            <p class="text-lg text-muted">
+              No articles published yet. Check back soon for technical deep
+              dives.
+            </p>
+          </div>
+        )
+      }
+    </section>
+
+    <section id="newsletter-signup" class="border-t border-border py-8">
+      <div class="text-center">
+        <h3 class="mb-4 text-2xl font-semibold">Stay Updated</h3>
+        <p class="mb-6 text-muted">
+          Get notified when I publish new technical articles. No spam, just
+          technical insights.
+        </p>
+        <!-- Newsletter signup component will go here -->
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  #articles-header {
+    background: linear-gradient(
+      135deg,
+      rgba(var(--accent), 0.05) 0%,
+      transparent 50%
+    );
+  }
+</style>

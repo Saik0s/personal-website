@@ -32,5 +32,11 @@ export function getPath(
     return [basePath, slug].join("/");
   }
 
+  // If the last path segment matches the slug, don't duplicate it
+  const lastSegment = pathSegments[pathSegments.length - 1];
+  if (lastSegment === slug[0]) {
+    return [basePath, ...pathSegments].join("/");
+  }
+
   return [basePath, ...pathSegments, slug].join("/");
 }
