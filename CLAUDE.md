@@ -5,68 +5,69 @@ This file provides guidance to Claude Code (claude.ai/code) when working with Ig
 ## 🚀 Quick Start
 
 ```bash
-# Start development server
-npm run dev              # http://localhost:4321
+# Development
+npm run dev              # Start dev server at http://localhost:4321
+npm run preview          # Preview built site
 
 # Before committing (ALWAYS run these)
-npm run format           # Format code
-npm run lint             # Check for issues
-npm run typecheck        # Verify types
+npm run format           # Format code with Prettier
+npm run lint             # Check for linting issues
 
 # Build & deploy
-npm run build            # Generate static site in /dist
+npm run build            # Astro check + build + Pagefind indexing
 ```
 
-## 📁 Project Overview
+## 📁 Project Structure
 
-**Tech Stack**: Astro + AstroPaper theme + TypeScript + Tailwind CSS  
-**Content**: Technical blog posts about iOS development, AI, and productivity  
+**Tech Stack**: Astro 5.11 + AstroPaper theme + TypeScript + Tailwind CSS 4  
+**Content**: Technical blog posts about iOS development, AI/ML, and productivity  
 **Author**: Igor Tarasenko (GitHub: @Saik0s, X: @sa1k0s)
 
-### Key Files & Locations
+### Key Directories
 
 ```
 src/
-├── data/blog/          # Blog posts (markdown/mdx)
-├── config.ts           # Site configuration
-├── constants.ts        # Social links, constants
+├── data/blog/          # Blog posts with subdirectories per post
+│   └── post-name/      # Each post has its own directory
+│       ├── index.md    # Post content with frontmatter
+│       └── assets/     # Images, videos, ComfyUI workflows
+├── config.ts           # Site configuration (URLs, author, pagination)
+├── constants.ts        # Social links and sharing options
+├── content.config.ts   # Blog content schema validation
 ├── pages/
 │   ├── index.astro     # Homepage
 │   ├── about.md        # About page
-│   └── api/            # API endpoints
+│   └── api/            # API endpoints (newsletter)
 ├── styles/
-│   ├── global.css      # Tailwind config + theme colors
+│   ├── global.css      # CSS variables and dark theme
 │   └── typography.css  # Typography styles
-└── components/         # Reusable components
+└── components/         # Reusable Astro components
 
-public/
-├── toggle-theme.js     # Theme switching logic
-└── assets/             # Static assets
-
-scripts/                # Image generation scripts
+scripts/                # Python image generation tools
+├── image.py            # Basic FAL.ai FLUX image generator
+└── generate-header.py  # Template-based header generator
 ```
 
 ## 📝 Content Management
 
-### Creating Blog Posts
+### Blog Post Structure
 
-1. Create file in `src/data/blog/` (supports subdirectories)
-2. Use this frontmatter template:
+Each blog post lives in its own subdirectory under `src/data/blog/`:
 
 ```yaml
 ---
-title: "Your Title"
+title: "Your Post Title"
 pubDatetime: 2025-01-21T03:46:18+01:00
-modDatetime: 2025-01-21T03:46:18+01:00  # Optional, for updates
-draft: false
-author: Igor
+modDatetime: 2025-01-21T03:46:18+01:00  # Optional
+author: Igor  # Defaults to "Igor Tarasenko"
+description: "SEO description (150-160 chars)"
 tags:
   - ios-development
   - ai
   - productivity
-description: "SEO description (150-160 chars)"
 featured: false
-ogImage: "header_preview.png"  # Optional
+draft: false
+ogImage: "assets/header.png"  # Relative to post directory
 ---
 
 ## Table of contents
@@ -77,127 +78,76 @@ Your content here...
 ### Image Generation
 
 ```bash
-# Generate blog header images (requires FAL_KEY env var)
-scripts/image.py "your prompt" header.png --aspect-ratio 21:9
+# Generate header images (requires FAL_KEY env var)
+scripts/image.py "your prompt" output.png --aspect-ratio 21:9
 
-# Use template-based generator
+# Use template-based generator for consistent style
 scripts/generate-header.py --template ios-ai --title "Your Title" output.png
-# Templates: ios-ai, ios-dev, ai-ml, coreml, productivity, swift, mobile-dev
+# Available templates: ios-ai, ios-dev, ai-ml, coreml, productivity, swift, mobile-dev
 ```
 
 ## ⚙️ Configuration
 
 ### Site Config (`src/config.ts`)
-
-- `SITE.website`: Your deployed URL (required for production)
-- `SITE.title`: Site name
-- `SITE.author`: Default author name
-- `SITE.postPerPage`: Posts per page (pagination)
-- `SITE.lightAndDarkMode`: Enable theme switching
-
-### Social Links (`src/constants.ts`)
-
-- `SOCIALS`: Array of social media links
-- `SHARE_LINKS`: Post sharing options
+- `SITE.website`: "https://www.igortarasenko.com/"
+- `SITE.author`: "Igor Tarasenko"
+- `SITE.postPerPage`: 4 (pagination)
+- `SITE.lightAndDarkMode`: false (single dark theme)
 
 ### Theme Colors (`src/styles/global.css`)
-
 ```css
-/* Light theme */
-:root {
-  --background: #fdfdfd;
-  --foreground: #282728;
-  --accent: #006cac;
-  --muted: #e6e6e6;
-  --border: #ece9e9;
-}
-
-/* Dark theme */
-html[data-theme="dark"] {
-  --background: #212737;
-  --foreground: #eaedf3;
-  --accent: #ff6b01;
-  --muted: #343f60bf;
-  --border: #ab4b08;
-}
+/* Dark theme (default) */
+--background: #212737;
+--foreground: #eaedf3;
+--accent: #ff6b4a;  /* Orange accent */
+--muted: #343f60bf;
+--border: #343f60;
 ```
 
-## 🛠️ Development Commands
+## 🛠️ Available Commands
 
 ```bash
-# Development
-npm run dev              # Start dev server
-npm run preview          # Preview built site
+# Core commands
+npm run dev              # Start development server
+npm run build            # Full build with type checking and Pagefind
+npm run preview          # Preview production build
+npm run sync            # Generate TypeScript types
 
-# Code Quality
-npm run format           # Prettier formatting
-npm run lint             # ESLint checks
-npm run typecheck        # TypeScript validation
-
-# Building
-npm run build            # Build static site
-npm run all              # Format + lint + typecheck + build
-
-# Testing
-npm run test             # Unit tests (Vitest)
-npm run test:e2e         # E2E tests (Playwright)
-
-# Utilities
-npm run clean            # Clean build artifacts
-npm run lighthouse       # Performance audit
-npm run validate:content # Validate content structure
+# Code quality
+npm run format           # Format with Prettier
+npm run format:check     # Check formatting
+npm run lint             # ESLint validation
 ```
-
-## 🔌 Integrations & Features
-
-- **Comments**: Giscus (GitHub discussions-based)
-- **Analytics**: Plausible (privacy-focused)
-- **Search**: Pagefind (static site search)
-- **Newsletter**: Custom API endpoint (`src/pages/api/newsletter.ts`)
-- **Mentorship**: Custom offerings page
-- **Social**: GitHub (@Saik0s), X (@sa1k0s)
-
-## 🚀 Deployment
-
-```bash
-npm run build            # Generates /dist folder
-# Deploy /dist to your hosting provider
-```
-
-Config: `nixpacks.toml` (for deployment configuration)
 
 ## 📦 TypeScript Path Aliases
 
+Use these aliases instead of relative imports:
 ```typescript
-@components  // src/components
-@layouts     // src/layouts
-@pages       // src/pages
-@styles      // src/styles
-@utils       // src/utils
-@content     // src/content
-@config      // src/config
-@types       // src/types
+@components  // ./src/components
+@layouts     // ./src/layouts  
+@pages       // ./src/pages
+@styles      // ./src/styles
+@utils       // ./src/utils
+@content     // ./src/content
 ```
 
-## 🐛 Common Issues
+## 🚀 Deployment
 
-1. **Image generation fails**: Set `FAL_KEY` environment variable
-2. **Build errors**: Run `npm run typecheck` to find type issues
-3. **Theme not switching**: Check `/public/toggle-theme.js`
-4. **Path import errors**: Use @ aliases instead of relative paths
+The site builds to static files in `/dist`:
+```bash
+npm run build            # Creates /dist folder
+# Deploy /dist to any static hosting
+```
 
-## 📚 AstroPaper Documentation
+Deployment configs available:
+- `nixpacks.toml` - Nixpacks configuration
+- `Dockerfile` - Multi-stage Docker build
+- `docker-compose.yml` - Development container
 
-For detailed AstroPaper theme documentation:
-- Configuration: See deleted `how-to-configure-astropaper-theme.md`
-- Styling: See deleted `customizing-astropaper-theme-color-schemes.md`
-- Content: See deleted `adding-new-posts-in-astropaper-theme.md`
-- Features: Check deleted blog posts in `src/data/blog/`
+## 🔌 Key Features
 
-## 🎯 Important Reminders
-
-- Always run format/lint/typecheck before committing
-- Use existing files/components when possible
-- Follow AstroPaper's design patterns
-- Keep content minimal and focused
-- Test dark/light theme compatibility
+- **Search**: Pagefind static site search
+- **Analytics**: Plausible (privacy-focused)
+- **Newsletter**: ConvertKit integration via API endpoint
+- **Social**: GitHub (@Saik0s), X (@sa1k0s), Buy Me a Coffee
+- **Custom Components**: PickMyBrainButton, BuyMeACoffeeButton, ConvertKitForm
