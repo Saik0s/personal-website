@@ -19,8 +19,8 @@ npm run build            # Astro check + build + Pagefind indexing
 
 ## 📁 Project Structure
 
-**Tech Stack**: Astro 5.11 + AstroPaper theme + TypeScript + Tailwind CSS 4  
-**Content**: Technical blog posts about iOS development, AI/ML, and productivity  
+**Tech Stack**: Astro 5.11 + AstroPaper theme + TypeScript + Tailwind CSS 4
+**Content**: Technical blog posts about iOS development, AI/ML, and productivity
 **Author**: Igor Tarasenko (GitHub: @Saik0s, X: @sa1k0s)
 
 ### Key Directories
@@ -89,7 +89,7 @@ scripts/generate-header.py --template ios-ai --title "Your Title" output.png
 ## ⚙️ Configuration
 
 ### Site Config (`src/config.ts`)
-- `SITE.website`: "https://www.igortarasenko.com/"
+- `SITE.website`: "https://www.tarasenko.dev/"
 - `SITE.author`: "Igor Tarasenko"
 - `SITE.postPerPage`: 4 (pagination)
 - `SITE.lightAndDarkMode`: false (single dark theme)
@@ -124,7 +124,7 @@ npm run lint             # ESLint validation
 Use these aliases instead of relative imports:
 ```typescript
 @components  // ./src/components
-@layouts     // ./src/layouts  
+@layouts     // ./src/layouts
 @pages       // ./src/pages
 @styles      // ./src/styles
 @utils       // ./src/utils
