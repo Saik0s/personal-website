@@ -1,0 +1,13 @@
+[phases.setup]
+nixPkgs = ['nodejs_20', 'pnpm-9_x']
+
+[phases.install]
+dependsOn = ['setup']
+cmds = ['pnpm i --frozen-lockfile']
+
+[phases.build]
+dependsOn = ['install']
+cmds = ['pnpm run build']
+
+[start]
+cmd = 'pnpm run preview'
