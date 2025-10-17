@@ -34,6 +34,7 @@ Codex will generate and iterate the plan; you review then tell it to execute.
 Long tasks need continuous feedback; Codex thrives with strong signals.
  • Automated tests: Unit, property, and fuzz tests. Codex runs, fixes, re-runs until green.
  • Visual checks (UI): Snapshot testing so Codex can “see” results and compare against expectations.
+ • Snapshot tool: run `make snapshots` to generate fresh previews from `tests/test_previews.py`.
  • Tight loop: Kick tests often; if red too long, intervene and adjust plan.
 
 - read CLAUDE.md for more details if needed
