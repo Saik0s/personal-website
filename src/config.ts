@@ -2,7 +2,7 @@ export const SITE = {
   website: "https://www.tarasenko.dev/", // replace this with your deployed domain
   author: "Igor Tarasenko",
   profile: "https://github.com/Saik0s",
-  desc: "Technical blog about iOS development, AI/ML integration, and developer productivity",
+  desc: "iOS engineering and agentic automation sessions from Igor Tarasenko.",
   title: "Igor Tarasenko",
   ogImage: "og-image.jpg",
   lightAndDarkMode: false,

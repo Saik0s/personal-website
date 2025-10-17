@@ -13,18 +13,19 @@
 - [x] Finalize messaging updates for hero, CTA, and new “What I Help With” section.
 - [x] Implement services page and wire navigation + footer links.
 - [x] Align About page and any shared components with the new positioning.
-- [ ] Review analytics, SEO metadata, and sitemap for regressions after content changes.
-- [ ] Run verification suite (lint, tests, snapshots) and prepare release notes.
+- [x] Review analytics, SEO metadata, and sitemap for regressions after content changes.
+- [x] Run verification suite (lint, tests, snapshots) and prepare release notes.
 
 ## Progress
-- 75% — Homepage, services, and about pages now aligned around the new positioning (2025-10-17).
+- 100% — Copy, navigation, About, and verification complete on 2025-10-17.
 
 ## Surprises & Discoveries
-- None yet.
+- ESLint surfaced minified Plausible scripts; added ignore for `public/stats*.js` to keep the check actionable.
 
 ## Decision Log
 - Pricing stays visible (€200/hr) to filter prospects before outreach.
 - Sessions remain bookable in 1–10 hour blocks; no retainers to emphasize flexibility.
+- Introduced a lightweight Vitest check for the services page to lock in critical copy.
 
 ## Verification
 - `pnpm lint` and `pnpm test` must pass.
