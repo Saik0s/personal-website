@@ -4,9 +4,7 @@ import ServicesPage from "../src/pages/services.astro";
 
 describe("Services page", () => {
   it("highlights booking details and focus areas", async () => {
-    const container = await experimental_AstroContainer.create({
-      site: new URL("https://www.tarasenko.dev"),
-    });
+    const container = await experimental_AstroContainer.create();
     const result = await container.renderToString(ServicesPage);
 
     expect(result).toContain("Engineering Sessions & Agentic Delivery");
