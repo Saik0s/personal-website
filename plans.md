@@ -12,12 +12,12 @@
 ## Tasks
 - [x] Finalize messaging updates for hero, CTA, and new “What I Help With” section.
 - [x] Implement services page and wire navigation + footer links.
-- [ ] Align About page and any shared components with the new positioning.
+- [x] Align About page and any shared components with the new positioning.
 - [ ] Review analytics, SEO metadata, and sitemap for regressions after content changes.
 - [ ] Run verification suite (lint, tests, snapshots) and prepare release notes.
 
 ## Progress
-- 50% — Homepage hero updated and services page plus navigation wired on 2025-10-17.
+- 75% — Homepage, services, and about pages now aligned around the new positioning (2025-10-17).
 
 ## Surprises & Discoveries
 - None yet.
