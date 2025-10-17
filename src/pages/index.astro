@@ -23,26 +23,71 @@ const recentPosts = sortedPosts.slice(0, 5); // Show 5 most recent posts
     <section id="hero" class="py-20 text-left">
     <h1 class="fade-up mb-6 text-5xl font-bold leading-tight">
       Hey, I'm Igor.<br />
-      I craft AI & software people love.
+      iOS Engineer & Agentic Automation Specialist.
     </h1>
 
     <p class="fade-up mb-4 text-xl text-foreground/80" style="animation-delay: 0.1s">
-      Mentoring devs, advising execs, and building agentic workflows that enhance productivity and creativity.
+      Senior engineer for focused sessions on iOS performance, agentic workflows, developer tooling, and AI-powered automation.
     </p>
 
     <p class="fade-up mb-8 text-lg text-foreground/70" style="animation-delay: 0.2s">
-      Need practical insights on iOS, ComfyUI, LLMs, or automation? Let's talk.
+      €200/hr · Book 1&ndash;10 hour blocks · No retainers, no fluff.
     </p>
 
       <div class="fade-up mb-8 flex items-center gap-6" style="animation-delay: 0.3s">
         <PickMyBrainButton
           variant="pushable"
           duration="60min"
-          text="Pick My Brain"
+          text="Book Engineering Session"
         />
 
         <div class="flex items-center gap-3">
           <Socials />
+        </div>
+      </div>
+    </section>
+
+    <Hr />
+
+    <!-- What I Help With Section -->
+    <section
+      id="services-preview"
+      class="py-12"
+      aria-label="What I help engineering teams with"
+    >
+      <h2 class="fade-up mb-8 text-2xl font-semibold" style="animation-delay: 0.4s">
+        What I Help With
+      </h2>
+
+      <div class="fade-up grid gap-6 md:grid-cols-3" style="animation-delay: 0.5s">
+        <div class="service-card group rounded-lg border border-border bg-background/50 p-6 transition-all hover:border-accent/50 hover:bg-background/80">
+          <h3 class="mb-3 text-lg font-semibold text-accent">iOS Engineering</h3>
+          <ul class="space-y-2 text-sm text-foreground/80 list-disc list-inside">
+            <li>App architecture and modularization</li>
+            <li>Build tooling and CI optimization</li>
+            <li>Swift and SwiftUI best practices</li>
+            <li>Diagnostics, metrics, and debugging</li>
+          </ul>
+        </div>
+
+        <div class="service-card group rounded-lg border border-border bg-background/50 p-6 transition-all hover:border-accent/50 hover:bg-background/80">
+          <h3 class="mb-3 text-lg font-semibold text-accent">Agentic Automation</h3>
+          <ul class="space-y-2 text-sm text-foreground/80 list-disc list-inside">
+            <li>Workflow design for agent-first teams</li>
+            <li>LLM orchestration and tool integration</li>
+            <li>Browser and system automation pipelines</li>
+            <li>Safety, monitoring, and fallback design</li>
+          </ul>
+        </div>
+
+        <div class="service-card group rounded-lg border border-border bg-background/50 p-6 transition-all hover:border-accent/50 hover:bg-background/80">
+          <h3 class="mb-3 text-lg font-semibold text-accent">Developer Tooling</h3>
+          <ul class="space-y-2 text-sm text-foreground/80 list-disc list-inside">
+            <li>Custom IDE and CLI workflows</li>
+            <li>Observability for build and release health</li>
+            <li>Internal platform improvements</li>
+            <li>Enablement playbooks and training</li>
+          </ul>
         </div>
       </div>
     </section>
