@@ -31,3 +31,4 @@
 - `pnpm lint` and `pnpm test` must pass.
 - Run `make snapshots` to regenerate and inspect UI previews.
 - Manual pass through homepage, services, and about pages in local build before release.
+- `pnpm build` before publishing; release notes recorded in `notes/2025-10-17-repositioning.md`.
