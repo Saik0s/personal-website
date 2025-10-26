@@ -136,8 +136,8 @@ Logo | Work | Projects | Blog | About
 ### Meta Strategy
 
 **Homepage**:
-- Title: `Igor Tarasenko - iOS Engineer & Agentic Automation Specialist`
-- Description: `iOS engineer building apps, optimizing architectures, and helping teams adopt AI coding tools. WhisperBoard creator (50k+ downloads). Ex-Uber.`
+- Title: `Igor Tarasenko - iOS Engineer & Agentic Engineer`
+- Description: `16 years building iOS apps. Helping individuals and teams find AI advantages, tackle complex architectures, and improve developer experience. WhisperBoard creator. Ex-Uber.`
 
 **/audit**:
 - Title: `iOS Architecture Audit & Modernization Roadmap - 3 Week Assessment`
@@ -166,66 +166,72 @@ Logo | Work | Projects | Blog | About
 **Hero Section**:
 ```markdown
 # Hey, I'm Igor
-## iOS Engineer & Agentic Automation Specialist
+## iOS Engineer & Agentic Engineer
 
-I build iOS apps, optimize architectures, and help teams adopt AI coding tools without breaking things.
+16 years building iOS apps. I help individuals and teams ship faster by finding AI advantages, tackling complex architectures, and improving developer experience.
 
-Currently: Shipping WhisperBoard (50k+ downloads). Previously: Uber.
+Currently: WhisperBoard (50k+ downloads, 4.8★). Previously: Uber.
 
 [View Recent Work](/projects) [Read Latest Posts](/posts)
 ```
 
 **SEO/GSO Notes**:
-- Personal, not salesy
+- Emphasizes experience (16 years)
+- Broader scope (individuals + teams)
+- Natural keyword inclusion (iOS, AI, architectures, developer experience)
 - Credentials upfront (WhisperBoard, Uber)
-- CTAs are exploratory, not transactional
 
 ---
 
 **What I Work On Section**:
 ```markdown
-## What I'm Working On
+## What I Work On
 
-**WhisperBoard** — On-device transcription for iOS. 50k+ downloads, 4.8★ App Store, 888★ GitHub. Built with SwiftUI, TCA, and on-device Whisper models.
+**Building & Shipping** — Currently shipping WhisperBoard (on-device transcription, 50k+ downloads, 4.8★ App Store). I help teams navigate the full App Store release process, from architecture decisions to submission and iteration.
 
-**Architecture & Modularization** — Helping teams cut build times and onboarding friction. Recently reduced a client's SwiftUI build time by 35% through module boundaries and Tuist setup.
+**Finding AI Advantages** — I work with individuals and teams to identify where AI actually helps vs where it's hype. Recent work: helped a team reduce LLM costs from €2k/month to €40/month while improving quality.
 
-**Agentic Coding Workflows** — Teaching teams to use AI tools (Cursor, Claude Code) effectively. Reduced another client's LLM costs from €2k/month to €40/month.
+**Complex Architectures** — 16 years dealing with messy codebases. I specialize in TCA (The Composable Architecture), modularization, and making large iOS apps maintainable. Recently cut a client's build times by 35%.
+
+**Refactoring & Modernization** — Helping teams migrate UIKit → SwiftUI, MVVM → TCA, or monoliths → modular architectures without breaking production. Strangler-fig patterns, dependency injection, incremental adoption.
+
+**Developer Experience** — Build tooling (Tuist, SPM), CI/CD pipelines, local development speed, onboarding documentation. The stuff that makes teams productive or miserable.
 
 [See all projects →](/projects)
 ```
 
 **SEO/GSO Notes**:
-- Proof-first (real projects, real numbers)
-- Natural keyword inclusion (architecture, modularization, agentic coding)
-- Demonstrates expertise without selling
+- Comprehensive expertise showcase
+- Specific technologies (TCA, SwiftUI, Tuist)
+- Real outcomes (35% build time, 95% cost reduction)
+- Covers full scope: shipping, AI, architecture, refactoring, DevXP
 
 ---
 
 **Availability Section** (subtle services mention):
 ```markdown
-## Available for Consulting (10hr/week)
+## Available for Work (10hr/week)
 
-I work with teams on iOS architecture, AI adoption, and performance optimization. Current availability: 10 hours/week.
+I work with individuals and teams on iOS apps, AI integration, complex architectures, refactoring, and developer experience. Current availability: 10 hours/week.
 
 **Ways to work together**:
 
-**Architecture Audits** — 3-week assessment of your iOS codebase. I analyze build times, coupling, and tech debt, then deliver a phased modernization roadmap. [Details →](/audit)
+**Architecture Audits** — 3-week deep-dive into your iOS codebase. Diagnose tech debt, build bottlenecks, coupling issues. Deliver a phased modernization roadmap with clear priorities. [Details →](/audit)
 
-**4-Week AI Adoption Program** — Help your team standardize Cursor/Claude Code usage with governance frameworks and measurable ROI. [Details →](/program)
+**AI Adoption Program** — 4-week program helping teams find real AI advantages and integrate tools (Cursor, Claude Code) effectively. Governance, metrics, measurable ROI. [Details →](/program)
 
-**TCA & Modularization Mentorship** — Monthly retainer for ongoing architectural guidance, PR reviews, and office hours. [Details →](/mentorship)
+**TCA & Modularization Mentorship** — Ongoing guidance for teams adopting The Composable Architecture or modularizing complex apps. Monthly retainer, PR reviews, office hours. [Details →](/mentorship)
 
-**Engineering Sessions** — Ad-hoc consulting at €200/hr for performance triage, architecture questions, or rapid prototyping. [Book →](/sessions)
+**Engineering Sessions** — Ad-hoc help at €200/hr. Good for: performance triage, architecture questions, refactoring strategy, DevXP improvements, rapid prototyping. [Book →](/sessions)
 
-*Note: 10hr/week constraint means I typically work with 1-2 teams at a time. If you're interested, [get in touch early](mailto:igor@tarasenko.dev).*
+*I typically work with 1-2 clients at a time. If interested, [reach out early](mailto:igor@tarasenko.dev).*
 ```
 
 **SEO/GSO Notes**:
-- Mentions services without hard selling
-- Transparent constraint (10hr/week)
-- Links to detail pages for those interested
-- Email as fallback, not primary CTA
+- Broader framing (individuals + teams, full scope)
+- Emphasizes experience and comprehensive expertise
+- Specific use cases for each offering
+- Links for those interested, not hard CTAs
 
 ---
 
@@ -1113,14 +1119,14 @@ All engagements are remote, scoped in advance, and wrap with documented outcomes
 {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
-  "name": "Igor Tarasenko - iOS Architecture & AI Consulting",
-  "description": "iOS architecture audits, AI adoption training, TCA mentorship. Expert in SwiftUI, modularization, agentic coding. 10hr/week availability.",
+  "name": "Igor Tarasenko - iOS & Agentic Engineering",
+  "description": "16 years iOS experience. Architecture audits, AI integration, complex refactoring, TCA mentorship, developer experience. 10hr/week availability.",
   "url": "https://www.tarasenko.dev",
   "logo": "https://www.tarasenko.dev/og-image.jpg",
   "founder": {
     "@type": "Person",
     "name": "Igor Tarasenko",
-    "jobTitle": "iOS Engineer & AI Automation Specialist",
+    "jobTitle": "iOS Engineer & Agentic Engineer",
     "url": "https://www.tarasenko.dev/about"
   },
   "address": {
