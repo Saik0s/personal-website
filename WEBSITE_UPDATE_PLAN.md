@@ -136,8 +136,8 @@ Logo | Work | Projects | Blog | About
 ### Meta Strategy
 
 **Homepage**:
-- Title: `Igor Tarasenko - iOS Engineer & Agentic Engineer`
-- Description: `16 years building iOS apps. Helping individuals and teams find AI advantages, tackle complex architectures, and improve developer experience. WhisperBoard creator. Ex-Uber.`
+- Title: `Igor Tarasenko - Engineer & Solution Architect`
+- Description: `16 years building complete solutions—iOS apps, backends, ML deployments, web apps. Helping teams find where technology creates leverage. WhisperBoard creator. Ex-Uber.`
 
 **/audit**:
 - Title: `iOS Architecture Audit & Modernization Roadmap - 3 Week Assessment`
@@ -166,9 +166,9 @@ Logo | Work | Projects | Blog | About
 **Hero Section**:
 ```markdown
 # Hey, I'm Igor
-## iOS Engineer & Agentic Engineer
+## Engineer & Solution Architect
 
-16 years building iOS apps. I help individuals and teams ship faster by finding AI advantages, tackling complex architectures, and improving developer experience.
+16 years building software. I help individuals and teams ship complete solutions—iOS apps, backends, ML deployments, web apps. I find where technology creates leverage and make it real.
 
 Currently: WhisperBoard (50k+ downloads, 4.8★). Previously: Uber.
 
@@ -176,10 +176,10 @@ Currently: WhisperBoard (50k+ downloads, 4.8★). Previously: Uber.
 ```
 
 **SEO/GSO Notes**:
-- Emphasizes experience (16 years)
-- Broader scope (individuals + teams)
-- Natural keyword inclusion (iOS, AI, architectures, developer experience)
-- Credentials upfront (WhisperBoard, Uber)
+- Broader positioning (not just iOS)
+- Solution architect framing (end-to-end enabler)
+- Full-stack capability signal (iOS, backend, ML, web)
+- Still maintains iOS credibility (WhisperBoard, Uber)
 
 ---
 
@@ -187,24 +187,27 @@ Currently: WhisperBoard (50k+ downloads, 4.8★). Previously: Uber.
 ```markdown
 ## What I Work On
 
-**Building & Shipping** — Currently shipping WhisperBoard (on-device transcription, 50k+ downloads, 4.8★ App Store). I help teams navigate the full App Store release process, from architecture decisions to submission and iteration.
+**Complete Solutions** — I build end-to-end. iOS apps (WhisperBoard: 50k+ downloads, 4.8★), backends (FastAPI, Node, Rails), ML model deployment (CoreML, ONNX, cloud inference), web apps (React, Astro). Whatever the solution needs.
 
-**Finding AI Advantages** — I work with individuals and teams to identify where AI actually helps vs where it's hype. Recent work: helped a team reduce LLM costs from €2k/month to €40/month while improving quality.
+**Finding Real Leverage** — I help teams identify where technology creates actual advantage vs where it's hype. Recent work: reduced a team's LLM costs from €2k/month to €40/month while improving quality. Cut another team's iOS build times by 35% through architecture changes.
 
-**Complex Architectures** — 16 years dealing with messy codebases. I specialize in TCA (The Composable Architecture), modularization, and making large iOS apps maintainable. Recently cut a client's build times by 35%.
+**AI Integration & Deployment** — Deploying AI that works in production. On-device ML (CoreML, Whisper), LLM orchestration, prompt engineering, model serving, cost optimization. I care about latency, costs, and failure modes, not demos.
 
-**Refactoring & Modernization** — Helping teams migrate UIKit → SwiftUI, MVVM → TCA, or monoliths → modular architectures without breaking production. Strangler-fig patterns, dependency injection, incremental adoption.
+**Complex Architectures** — 16 years dealing with messy systems. iOS (TCA, SwiftUI, modularization), backends (API design, data models, scaling), infrastructure (deployments, monitoring, CI/CD). Making large systems maintainable and teams productive.
 
-**Developer Experience** — Build tooling (Tuist, SPM), CI/CD pipelines, local development speed, onboarding documentation. The stuff that makes teams productive or miserable.
+**Refactoring & Modernization** — Incremental rewrites without breaking production. Mobile (UIKit → SwiftUI, MVVM → TCA), backend (monolith → services), infrastructure (local → cloud). Strangler-fig patterns, dependency injection, metrics-driven migration.
+
+**Developer Experience** — Build tooling (Tuist, Gradle, Webpack), CI/CD pipelines, local development speed, onboarding documentation, debugging workflows. The stuff that makes teams ship faster or grind to a halt.
 
 [See all projects →](/projects)
 ```
 
 **SEO/GSO Notes**:
-- Comprehensive expertise showcase
-- Specific technologies (TCA, SwiftUI, Tuist)
-- Real outcomes (35% build time, 95% cost reduction)
-- Covers full scope: shipping, AI, architecture, refactoring, DevXP
+- Full-stack positioning (iOS, backend, ML, web)
+- End-to-end capability (complete solutions)
+- Technology breadth with depth (specific tools mentioned)
+- Real outcomes maintained (35% build time, 95% cost reduction)
+- "Enabler" framing (helps teams ship complete solutions)
 
 ---
 
@@ -212,26 +215,26 @@ Currently: WhisperBoard (50k+ downloads, 4.8★). Previously: Uber.
 ```markdown
 ## Available for Work (10hr/week)
 
-I work with individuals and teams on iOS apps, AI integration, complex architectures, refactoring, and developer experience. Current availability: 10 hours/week.
+I work with individuals and teams building complete solutions—mobile apps, backends, AI deployments, web apps. I help find where technology creates leverage and execute on it. Current availability: 10 hours/week.
 
 **Ways to work together**:
 
-**Architecture Audits** — 3-week deep-dive into your iOS codebase. Diagnose tech debt, build bottlenecks, coupling issues. Deliver a phased modernization roadmap with clear priorities. [Details →](/audit)
+**Architecture Audits** — 3-week deep-dive into your system (iOS, backend, infrastructure). Diagnose bottlenecks, tech debt, scaling issues. Deliver a phased modernization roadmap with clear priorities. [Details →](/audit)
 
-**AI Adoption Program** — 4-week program helping teams find real AI advantages and integrate tools (Cursor, Claude Code) effectively. Governance, metrics, measurable ROI. [Details →](/program)
+**AI Adoption Program** — 4-week program helping teams find real AI advantages. Where to integrate, how to deploy, cost optimization, governance. Works for mobile, backend, or full-stack teams. [Details →](/program)
 
-**TCA & Modularization Mentorship** — Ongoing guidance for teams adopting The Composable Architecture or modularizing complex apps. Monthly retainer, PR reviews, office hours. [Details →](/mentorship)
+**Technical Mentorship** — Ongoing guidance for complex architectures, refactoring, or new tech adoption (TCA, microservices, ML deployment, whatever). Monthly retainer, PR reviews, office hours. [Details →](/mentorship)
 
-**Engineering Sessions** — Ad-hoc help at €200/hr. Good for: performance triage, architecture questions, refactoring strategy, DevXP improvements, rapid prototyping. [Book →](/sessions)
+**Engineering Sessions** — Ad-hoc help at €200/hr. Good for: solution architecture, performance triage, deployment strategy, refactoring plans, rapid prototyping, unblocking teams. [Book →](/sessions)
 
 *I typically work with 1-2 clients at a time. If interested, [reach out early](mailto:igor@tarasenko.dev).*
 ```
 
 **SEO/GSO Notes**:
-- Broader framing (individuals + teams, full scope)
-- Emphasizes experience and comprehensive expertise
-- Specific use cases for each offering
-- Links for those interested, not hard CTAs
+- Full-stack framing (mobile, backend, AI, web)
+- Solution architect positioning (complete solutions, leverage)
+- Services apply across stack (not just iOS)
+- Broader use cases (solution architecture, deployment strategy)
 
 ---
 
@@ -1119,14 +1122,14 @@ All engagements are remote, scoped in advance, and wrap with documented outcomes
 {
   "@context": "https://schema.org",
   "@type": "ProfessionalService",
-  "name": "Igor Tarasenko - iOS & Agentic Engineering",
-  "description": "16 years iOS experience. Architecture audits, AI integration, complex refactoring, TCA mentorship, developer experience. 10hr/week availability.",
+  "name": "Igor Tarasenko - Solution Architecture & Engineering",
+  "description": "16 years building complete solutions. Full-stack engineering: iOS, backend, ML deployment, web apps. Architecture audits, AI integration, technical mentorship. 10hr/week availability.",
   "url": "https://www.tarasenko.dev",
   "logo": "https://www.tarasenko.dev/og-image.jpg",
   "founder": {
     "@type": "Person",
     "name": "Igor Tarasenko",
-    "jobTitle": "iOS Engineer & Agentic Engineer",
+    "jobTitle": "Engineer & Solution Architect",
     "url": "https://www.tarasenko.dev/about"
   },
   "address": {
