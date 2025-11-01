@@ -1,0 +1,13 @@
+---
+// src/components/Testimonial.astro
+export interface Props {
+  quote: string;
+  author: string;
+}
+
+const { quote, author } = Astro.props;
+---
+<blockquote class="my-12 rounded-lg border-l-4 border-accent bg-background/40 p-6 italic shadow-lg">
+  <p class="text-foreground/90">"{quote}"</p>
+  <cite class="mt-4 block text-right text-sm not-italic text-foreground/70">— {author}</cite>
+</blockquote>

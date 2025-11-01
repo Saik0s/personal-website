@@ -7,6 +7,7 @@ import IconFacebook from "@/assets/icons/IconFacebook.svg";
 import IconTelegram from "@/assets/icons/IconTelegram.svg";
 import IconPinterest from "@/assets/icons/IconPinterest.svg";
 import IconBuyMeCoffee from "@/assets/icons/IconBuyMeCoffee.svg";
+import IconCodementor from "@/assets/icons/IconCodementor.svg";
 import { SITE } from "@/config";
 
 interface Social {
@@ -28,6 +29,12 @@ export const SOCIALS: Social[] = [
     href: "https://x.com/sa1k0s",
     linkTitle: `${SITE.title} on X`,
     icon: IconBrandX,
+  },
+  {
+    name: "Codementor",
+    href: "https://www.codementor.io/@saik0s",
+    linkTitle: `${SITE.title} on Codementor`,
+    icon: IconCodementor,
   },
   {
     name: "Buy Me a Coffee",

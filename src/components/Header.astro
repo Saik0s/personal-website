@@ -20,6 +20,16 @@ const isActive = (path: string) => {
 
   return currentPath === path || currentPathArray[0] === pathArray[0];
 };
+
+const navLinks = [
+  {
+    href: "/posts",
+    label: "Blog",
+    match: ["/posts", "/articles", "/notes"],
+  },
+  { href: "/about", label: "About" },
+  { href: "/consulting", label: "Consulting" },
+];
 ---
 
 <header>
@@ -69,35 +79,21 @@ const isActive = (path: string) => {
             "sm:mt-0 sm:flex sm:flex-row sm:w-auto sm:gap-x-5 sm:gap-y-0",
           ]}
         >
-          <li>
-            <a
-              href="/posts"
-              class:list={{ "active-nav": isActive("/posts") || isActive("/articles") || isActive("/notes") }}
-            >
-              Blog
-            </a>
-          </li>
-          <li>
-            <a
-              href="/services"
-              class:list={{ "active-nav": isActive("/services") }}
-            >
-              Services
-            </a>
-          </li>
-          <li>
-            <a
-              href="/projects"
-              class:list={{ "active-nav": isActive("/projects") }}
-            >
-              Projects
-            </a>
-          </li>
-          <li>
-            <a href="/about" class:list={{ "active-nav": isActive("/about") }}>
-              About
-            </a>
-          </li>
+          {navLinks.map(link => {
+            const matchPaths = link.match ?? [link.href];
+            return (
+              <li>
+                <a
+                  href={link.href}
+                  class:list={{
+                    "active-nav": matchPaths.some(path => isActive(path)),
+                  }}
+                >
+                  {link.label}
+                </a>
+              </li>
+            );
+          })}
           <li class="flex items-center justify-center">
             <LinkButton
               href="/search"

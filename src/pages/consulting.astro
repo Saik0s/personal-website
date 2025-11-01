@@ -1,0 +1,185 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+import Hr from "@/components/Hr.astro";
+import PickMyBrainButton from "@/components/PickMyBrainButton.astro";
+import Testimonial from "@/components/Testimonial.astro";
+
+type Offer = {
+  name: string;
+  slug: "deep-dive" | "advisory" | "sessions";
+  href: string;
+  summary: string;
+  headline: string;
+  idealClients: string[];
+  highlights: string[];
+  ctaText: string;
+};
+
+const offers: Offer[] = [
+  {
+    name: "The Sprint",
+    slug: "deep-dive",
+    href: "/deep-dive",
+    summary: "A 2–4 week, fixed-scope engagement to ship one meaningful outcome.",
+    headline: "Ship a solution, not a slide deck.",
+    idealClients: [
+      "Critical performance or architecture bottleneck that needs a fast resolution.",
+      "AI workflow that is unreliable, expensive, or stuck in prototype mode.",
+      "Leadership alignment required around a technical decision and you need a working proof.",
+    ],
+    highlights: [
+      "Week-by-week plan aligned on the single highest-leverage target.",
+      "Hands-on pairing with your team—code, telemetry, and decision docs included.",
+      "Fixed-fee proposal before kick-off. Most teams invest €10k–€20k.",
+    ],
+    ctaText: "Explore The Sprint",
+  },
+  {
+    name: "The Retainer",
+    slug: "advisory",
+    href: "/advisory",
+    summary: "An async-first advisory partnership for engineering teams.",
+    headline: "A fractional principal who keeps your team unblocked.",
+    idealClients: [
+      "Leads who want senior-level architectural guidance without a full-time hire.",
+      "Teams rolling out TCA, modularization, or AI tooling and need steady feedback.",
+      "Founders who want a trusted second brain on technical decisions.",
+    ],
+    highlights: [
+      "Async PR reviews on the work that matters most.",
+      "Mentorship built in: scheduled solver sessions plus on-demand office hours.",
+      "Priority Slack access with a 30-day risk-free guarantee.",
+    ],
+    ctaText: "Explore The Retainer",
+  },
+  {
+    name: "The Entry Point",
+    slug: "sessions",
+    href: "/sessions",
+    summary: "Ad-hoc engineering sessions for rapid, focused problem solving.",
+    headline: "A fast way to get unstuck or validate an idea.",
+    idealClients: [
+      "Senior ICs who need a second opinion on a design or implementation path.",
+      "Teams facing an urgent production bug or migration snag.",
+      "Leaders testing a new AI or iOS concept and want expert validation before investing more.",
+    ],
+    highlights: [
+      "Book 60-minute blocks as needed—no long-term commitment.",
+      "Use the time for pairing, architecture reviews, or prototyping support.",
+      "Perfect hand-off into a Sprint or Retainer when deeper help is required.",
+    ],
+    ctaText: "Book The Entry Point",
+  },
+];
+
+const menuSchema = {
+  "@context": "https://schema.org",
+  "@type": "OfferCatalog",
+  name: "Consulting Services",
+  provider: {
+    "@type": "Person",
+    name: "Igor Tarasenko",
+  },
+  itemListElement: offers.map(offer => ({
+    "@type": "Offer",
+    itemOffered: {
+      "@type": "Service",
+      name: offer.name,
+      url: offer.href,
+      description: offer.summary,
+    },
+  })),
+};
+---
+
+<Layout
+  title="Consulting – Work With Igor Tarasenko"
+  description="Three ways to partner with Igor Tarasenko: a fixed-scope Sprint, an async Advisory Retainer, or ad-hoc Engineering Sessions."
+  structuredData={[menuSchema]}
+>
+  <Header />
+  <main id="main-content" class="mx-auto max-w-4xl px-4 py-12 space-y-12">
+    <section class="space-y-4">
+      <p class="text-sm uppercase tracking-wide text-accent">Consulting</p>
+      <h1 class="text-3xl font-bold">Three ways to work together</h1>
+      <p class="text-lg text-foreground/80">
+        Every engagement starts by understanding the problem you need to solve. From there we pick the path that removes friction fastest: a focused Sprint, an ongoing Retainer, or a single Entry Point session.
+      </p>
+      <p class="text-sm text-foreground/70">
+        Capacity is limited to maintain deep involvement. New projects typically begin within two weeks of the initial discovery call.
+      </p>
+    </section>
+
+    <Hr />
+
+    <section class="space-y-8">
+      <Testimonial
+        quote="Great and very useful tips Igor provided me to organise my code better."
+        author="Joshua Riley"
+      />
+      <Testimonial
+        quote="He's incredibly patient, very helpful. And clearly knowledgable."
+        author="Basel Farag"
+      />
+    </section>
+
+    <Hr />
+
+    <section class="space-y-12">
+      {offers.map(offer => (
+        <article class="space-y-6 rounded-lg border border-border bg-background/40 p-8 shadow-lg shadow-black/5">
+          <header class="space-y-2">
+            <h2 class="text-2xl font-semibold">{offer.name}</h2>
+            <p class="text-sm uppercase tracking-wide text-foreground/60">{offer.summary}</p>
+            <p class="text-sm text-foreground/80">{offer.headline}</p>
+          </header>
+
+          <div class="grid gap-6 md:grid-cols-2">
+            <div class="space-y-3">
+              <h3 class="text-lg font-semibold text-accent">Best fit when</h3>
+              <ul class="list-disc list-inside space-y-2 text-sm text-foreground/80">
+                {offer.idealClients.map(point => (
+                  <li>{point}</li>
+                ))}
+              </ul>
+            </div>
+            <div class="space-y-3">
+              <h3 class="text-lg font-semibold text-accent">What you can expect</h3>
+              <ul class="list-disc list-inside space-y-2 text-sm text-foreground/80">
+                {offer.highlights.map(item => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+            <a class="text-sm font-semibold text-accent hover:underline" href={offer.href}>
+              {offer.ctaText} →
+            </a>
+            <PickMyBrainButton
+              variant="pushable"
+              duration={offer.slug === "sessions" ? "60min" : "30min"}
+              text={offer.slug === "sessions" ? "Book a 60-min Session" : "Book a Discovery Call"}
+              eventName={`Conversion: Consulting Menu ${offer.name}`}
+              eventCategory="conversion"
+              eventProps={{ service: offer.slug, placement: "consulting-menu" }}
+            />
+          </div>
+        </article>
+      ))}
+    </section>
+
+    <section class="space-y-4 text-sm leading-relaxed text-foreground/80">
+      <p>
+        Not sure which path is right? Book a discovery call and we will map the simplest way to reach your goal. If a Sprint or Retainer is overkill, we start with the Entry Point session.
+      </p>
+      <p>
+        Prefer to start with more context? You can email <a class="text-accent" href="mailto:igor@tarasenko.me">igor@tarasenko.me</a> with your challenge and I will respond within one business day.
+      </p>
+    </section>
+  </main>
+  <Footer />
+</Layout>

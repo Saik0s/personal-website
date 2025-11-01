@@ -2,7 +2,7 @@ export const SITE = {
   website: "https://www.tarasenko.dev/", // replace this with your deployed domain
   author: "Igor Tarasenko",
   profile: "https://github.com/Saik0s",
-  desc: "iOS engineering and agentic automation sessions from Igor Tarasenko.",
+  desc: "Engineer & Solution Architect helping teams solve complex technical problems. I offer high-impact Sprints, an async-first Advisory Retainer, and ad-hoc Engineering Sessions.",
   title: "Igor Tarasenko",
   ogImage: "og-image.jpg",
   lightAndDarkMode: false,
@@ -19,5 +19,5 @@ export const SITE = {
   dynamicOgImage: true,
   dir: "ltr", // "rtl" | "auto"
   lang: "en", // html lang code. Set this empty and default will be "en"
-  timezone: "Europe/Warsaw", // Default global timezone (IANA format) https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  timezone: "Europe/Amsterdam", // Default global timezone (IANA format) https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 } as const;

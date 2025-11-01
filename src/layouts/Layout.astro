@@ -14,6 +14,7 @@ export interface Props {
   pubDatetime?: Date;
   modDatetime?: Date | null;
   scrollSmooth?: boolean;
+  structuredData?: Record<string, unknown> | Record<string, unknown>[];
 }
 
 const {
@@ -26,11 +27,12 @@ const {
   pubDatetime,
   modDatetime,
   scrollSmooth = false,
+  structuredData: structuredDataProp,
 } = Astro.props;
 
 const socialImageURL = new URL(ogImage, Astro.url);
 
-const structuredData = {
+const defaultStructuredData = {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
   headline: `${title}`,
@@ -43,6 +45,40 @@ const structuredData = {
       name: `${author}`,
       ...(profile && { url: profile }),
     },
+  ],
+};
+
+const structuredData = structuredDataProp ?? defaultStructuredData;
+
+const rawSiteUrl = SITE.website || Astro.url.origin;
+const siteUrl = rawSiteUrl.endsWith("/") ? rawSiteUrl.slice(0, -1) : rawSiteUrl;
+const logoPath = SITE.ogImage ? `/${SITE.ogImage}` : "/og.png";
+const logoUrl = SITE.ogImage?.startsWith("http")
+  ? SITE.ogImage
+  : new URL(logoPath, rawSiteUrl).toString();
+
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  name: "Igor Tarasenko - Solution Architecture & Engineering",
+  description:
+    "16 years building complete solutions across iOS, backend, and AI. High-impact sprints, async advisory retainers, and engineering sessions for teams that need a senior solver.",
+  url: siteUrl,
+  logo: logoUrl,
+  founder: {
+    "@type": "Person",
+    name: SITE.author,
+    jobTitle: "Engineer & Solution Architect",
+    url: `${siteUrl}/about`,
+  },
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Amsterdam",
+    addressCountry: "NL",
+  },
+  sameAs: [
+    "https://github.com/Saik0s",
+    "https://x.com/sa1k0s",
   ],
 };
 ---
@@ -103,6 +139,11 @@ const structuredData = {
       type="application/ld+json"
       is:inline
       set:html={JSON.stringify(structuredData)}
+    />
+    <script
+      type="application/ld+json"
+      is:inline
+      set:html={JSON.stringify(organizationSchema)}
     />
 
     <!-- Enable RSS feed auto-discovery  -->

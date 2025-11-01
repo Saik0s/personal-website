@@ -2,153 +2,83 @@
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
-import Socials from "@/components/Socials.astro";
 import Hr from "@/components/Hr.astro";
-import PickMyBrainButton from "@/components/PickMyBrainButton.astro";
 import Card from "@/components/Card.astro";
+import Testimonial from "@/components/Testimonial.astro";
 import { getCollection } from "astro:content";
 import getSortedPosts from "@/utils/getSortedPosts";
 
 // Get recent blog posts
 const posts = await getCollection("blog", ({ data }) => !data.draft);
 const sortedPosts = getSortedPosts(posts);
-const recentPosts = sortedPosts.slice(0, 5); // Show 5 most recent posts
+const recentPosts = sortedPosts.slice(0, 5);
 ---
 
-<Layout>
+<Layout
+  title="Igor Tarasenko - Engineer & Solution Architect"
+  description="16 years building complete solutions—iOS, backend, and AI. I help teams solve their hardest technical problems. WhisperBoard creator. Ex-Uber."
+>
   <Header />
   <main id="main-content" class="mx-auto max-w-4xl px-4">
-    <!-- Simple Hero Section -->
-    <section id="hero" class="py-20 text-left">
-    <h1 class="fade-up mb-6 text-5xl font-bold leading-tight">
-      Hey, I'm Igor.<br />
-      iOS Engineer & Agentic Automation Specialist.
-    </h1>
-
-    <p class="fade-up mb-4 text-xl text-foreground/80" style="animation-delay: 0.1s">
-      Senior engineer for focused sessions on iOS performance, agentic workflows, developer tooling, and AI-powered automation.
-    </p>
-
-    <p class="fade-up mb-8 text-lg text-foreground/70" style="animation-delay: 0.2s">
-      €200/hr · Book 1&ndash;10 hour blocks · No retainers, no fluff.
-    </p>
-
-      <div class="fade-up mb-8 flex items-center gap-6" style="animation-delay: 0.3s">
-        <PickMyBrainButton
-          variant="pushable"
-          duration="60min"
-          text="Book Engineering Session"
-        />
-
-        <div class="flex items-center gap-3">
-          <Socials />
-        </div>
+    <section id="hero" class="py-20 space-y-6">
+      <div class="space-y-2">
+        <h1 class="text-5xl font-bold leading-tight">Hey, I'm Igor</h1>
+        <h2 class="text-2xl text-foreground/80">Engineer &amp; Solution Architect</h2>
+      </div>
+      <p class="text-lg text-foreground/80">
+        16 years building software. I help teams ship complete solutions and solve complex technical problems—from iOS architecture to on-device AI.
+      </p>
+      <p class="text-lg text-foreground/80">
+        I find where technology creates leverage and make it real.
+      </p>
+      <p class="text-sm text-foreground/70">
+        Currently: WhisperBoard (50k+ downloads, 4.8★). Previously: Uber.
+      </p>
+      <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+        <a
+          class="inline-flex items-center justify-center rounded-md bg-accent px-5 py-3 text-sm font-semibold text-background transition hover:opacity-90"
+          href="/consulting"
+        >
+          Book Consultation
+        </a>
+        <a
+          class="inline-flex items-center justify-center rounded-md border border-border px-5 py-3 text-sm font-semibold text-foreground transition hover:border-foreground"
+          href="/about"
+        >
+          More About Me
+        </a>
       </div>
     </section>
 
     <Hr />
 
-    <!-- What I Help With Section -->
-    <section
-      id="services-preview"
-      class="py-12"
-      aria-label="What I help engineering teams with"
-    >
-      <h2 class="fade-up mb-8 text-2xl font-semibold" style="animation-delay: 0.4s">
-        What I Help With
-      </h2>
+    <Testimonial
+      quote="Igor was so great to work with! We were able to figure out the solution to something we've been stuck on for over 2 days in less than an hour!"
+      author="Alina Liu"
+    />
 
-      <div class="fade-up grid gap-6 md:grid-cols-3" style="animation-delay: 0.5s">
-        <div class="service-card group rounded-lg border border-border bg-background/50 p-6 transition-all hover:border-accent/50 hover:bg-background/80">
-          <h3 class="mb-3 text-lg font-semibold text-accent">iOS Engineering</h3>
-          <ul class="space-y-2 text-sm text-foreground/80 list-disc list-inside">
-            <li>App architecture and modularization</li>
-            <li>Build tooling and CI optimization</li>
-            <li>Swift and SwiftUI best practices</li>
-            <li>Diagnostics, metrics, and debugging</li>
-          </ul>
-        </div>
-
-        <div class="service-card group rounded-lg border border-border bg-background/50 p-6 transition-all hover:border-accent/50 hover:bg-background/80">
-          <h3 class="mb-3 text-lg font-semibold text-accent">Agentic Automation</h3>
-          <ul class="space-y-2 text-sm text-foreground/80 list-disc list-inside">
-            <li>Workflow design for agent-first teams</li>
-            <li>LLM orchestration and tool integration</li>
-            <li>Browser and system automation pipelines</li>
-            <li>Safety, monitoring, and fallback design</li>
-          </ul>
-        </div>
-
-        <div class="service-card group rounded-lg border border-border bg-background/50 p-6 transition-all hover:border-accent/50 hover:bg-background/80">
-          <h3 class="mb-3 text-lg font-semibold text-accent">Developer Tooling</h3>
-          <ul class="space-y-2 text-sm text-foreground/80 list-disc list-inside">
-            <li>Custom IDE and CLI workflows</li>
-            <li>Observability for build and release health</li>
-            <li>Internal platform improvements</li>
-            <li>Enablement playbooks and training</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <Hr />
-
-    <!-- Blog Posts Section -->
-    <section id="recent-posts" class="py-12">
-      <h2 class="fade-up mb-8 text-2xl font-semibold" style="animation-delay: 0.4s">Recent Posts</h2>
+    <section id="recent-posts" class="py-12 space-y-6">
+      <h2 class="text-2xl font-semibold">Recent Posts</h2>
+      <p class="text-sm text-foreground/70">
+        Writing about iOS architecture, AI coding workflows, and on-device ML. <a class="text-accent" href="/posts">View all →</a>
+      </p>
       <ul class="space-y-6">
-        {recentPosts.map((post, index) => (
-          <li class="fade-up" style={`animation-delay: ${0.5 + index * 0.1}s`}>
+        {recentPosts.map(post => (
+          <li>
             <Card {...post} />
           </li>
         ))}
       </ul>
+    </section>
 
-      {recentPosts.length >= 5 && (
-        <div class="fade-up mt-8 text-center" style="animation-delay: 1s">
-          <a
-            href="/posts"
-            class="inline-flex items-center text-accent hover:underline"
-          >
-            View all posts →
-          </a>
-        </div>
-      )}
+    <Hr />
+
+    <section class="py-12">
+      <p class="text-sm text-foreground/70">
+        I also offer high-impact, async-first consulting for a small number of clients.{" "}
+        <a class="text-accent" href="/consulting">Learn more →</a>
+      </p>
     </section>
   </main>
   <Footer />
 </Layout>
-
-<style>
-  /* Simple, clean styles */
-  @media (max-width: 640px) {
-    h1 {
-      font-size: 2.5rem !important;
-    }
-  }
-</style>
-
-<script>
-  document.addEventListener("astro:page-load", () => {
-    const indexLayout = (document.querySelector("#main-content") as HTMLElement)
-      ?.dataset?.layout;
-    if (indexLayout) {
-      sessionStorage.setItem("backUrl", "/");
-    }
-
-    // Add intersection observer for additional animations
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("animate-in");
-        }
-      });
-    });
-
-    document
-      .querySelectorAll(".project-showcase, .expertise-card")
-      .forEach(el => {
-        observer.observe(el);
-      });
-  });
-</script>

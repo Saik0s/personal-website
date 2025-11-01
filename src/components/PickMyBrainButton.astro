@@ -4,18 +4,29 @@ export interface Props {
   variant?: "simple" | "pushable";
   duration?: "30min" | "60min";
   text?: string;
+  eventName?: string;
+  eventCategory?: string;
+  eventProps?: Record<string, unknown>;
 }
 
 const {
   variant = "simple",
   duration = "60min",
   text = duration === "30min" ? "Pick My Brain 30 min" : "Pick My Brain 60 min",
+  eventName,
+  eventCategory,
+  eventProps,
 } = Astro.props;
 
 const calLink =
   duration === "30min"
-    ? "https://cal.com/tarasenko/30min"
+    ? "https://cal.com/tarasenko/discovery"
     : "https://cal.com/tarasenko/60min";
+
+const eventPropsString =
+  eventProps && Object.keys(eventProps).length > 0
+    ? JSON.stringify(eventProps)
+    : undefined;
 ---
 
 {
@@ -25,6 +36,9 @@ const calLink =
         href={calLink}
         target="_blank"
         style="color: inherit; text-decoration: none;"
+        data-stats-event={eventName}
+        data-stats-category={eventCategory}
+        data-stats-props={eventPropsString}
       >
         <span class="shadow" />
         <span class="edge" />
@@ -32,7 +46,14 @@ const calLink =
       </a>
     </button>
   ) : (
-    <a href={calLink} target="_blank" class="about-button pick-my-brain-button">
+    <a
+      href={calLink}
+      target="_blank"
+      class="about-button pick-my-brain-button"
+      data-stats-event={eventName}
+      data-stats-category={eventCategory}
+      data-stats-props={eventPropsString}
+    >
       {text}
     </a>
   )

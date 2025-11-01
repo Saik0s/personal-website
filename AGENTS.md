@@ -1,4 +1,8 @@
-# AGENTS.md — Tool Selection
+# ExecPlans
+ 
+When writing complex features or significant refactors, use an ExecPlan (as described in .agent/PLANS.md) from design to implementation.
+
+# Tool Selection
 
 When you need to call tools from the shell, use this rubric:
 
@@ -26,15 +30,5 @@ When executing complex changes:
 - Keep progress, decisions, and discoveries up to date.
 - Do not land code until tests and reviews pass.
 - Prefer small, verifiable increments.
-
-Codex will generate and iterate the plan; you review then tell it to execute.
-
-## Make verification cheap and continuous
-
-Long tasks need continuous feedback; Codex thrives with strong signals.
- • Automated tests: Unit, property, and fuzz tests. Codex runs, fixes, re-runs until green.
- • Visual checks (UI): Snapshot testing so Codex can “see” results and compare against expectations.
- • Snapshot tool: run `make snapshots` to generate fresh previews from `tests/test_previews.py`.
- • Tight loop: Kick tests often; if red too long, intervene and adjust plan.
 
 - read CLAUDE.md for more details if needed

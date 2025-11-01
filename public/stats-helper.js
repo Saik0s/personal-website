@@ -21,6 +21,26 @@
         return targetsCurrentWindow && isRegularClick;
     }
 
+    function getDatasetTracking(link) {
+        if (!link.dataset) { return null; }
+
+        var eventName = link.dataset.statsEvent;
+        if (!eventName) { return null; }
+
+        var category = link.dataset.statsCategory || "custom";
+        var props = {};
+
+        if (link.dataset.statsProps) {
+            try {
+                props = JSON.parse(link.dataset.statsProps);
+            } catch (error) {
+                console.warn("Could not parse data-stats-props JSON", error);
+            }
+        }
+
+        return { eventName: eventName, category: category, props: props };
+    }
+
     function getSpecificButtonTracking(link) {
         var href = link.href;
         var linkText = link.textContent.trim();
@@ -87,6 +107,12 @@
         var hostname = link.hostname;
         var currentHostname = window.location.hostname;
         
+        // Highest priority: explicit data attributes
+        var datasetTracking = getDatasetTracking(link);
+        if (datasetTracking) {
+            return datasetTracking;
+        }
+
         // First check for specific button tracking
         var specificTracking = getSpecificButtonTracking(link);
         if (specificTracking) {
@@ -130,6 +156,7 @@
 
         if (link && shouldTrackLink(link)) {
             var linkInfo = categorizeLink(link);
+            if (!linkInfo) { return; }
             
             var eventProps = { 
                 url: link.href,
@@ -138,6 +165,14 @@
                 path: link.pathname,
                 page: window.location.pathname
             };
+
+            if (linkInfo.props) {
+                for (var key in linkInfo.props) {
+                    if (Object.prototype.hasOwnProperty.call(linkInfo.props, key)) {
+                        eventProps[key] = linkInfo.props[key];
+                    }
+                }
+            }
             
             return sendLinkClickEvent(event, link, linkInfo.eventName, eventProps);
         }
