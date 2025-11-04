@@ -6,17 +6,180 @@ import PickMyBrainButton from "@/components/PickMyBrainButton.astro";
 import Hr from "@/components/Hr.astro";
 import Testimonial from "@/components/Testimonial.astro";
 
+const problems = [
+  {
+    title: "Our TCA reducer is 800 lines and we don't know how to split it",
+    format: "60–90 minutes",
+    steps: [
+      "Review the reducer live, identify seams, and sketch the module structure.",
+      "Pair through one extraction to model the pattern.",
+      "Document the approach so the team can apply it across the codebase.",
+    ],
+    outcome: "Decomposed a monolithic reducer into four child reducers, each under 200 lines, in two sessions.",
+  },
+  {
+    title: "Our AI prompt works in testing but fails in production",
+    format: "90–120 minutes",
+    steps: [
+      "Inspect logs and failure cases to isolate variability.",
+      "Redesign the prompt with examples, constraints, and evaluation hooks.",
+      "Set up a lightweight harness so you can keep it stable post-session.",
+    ],
+    outcome: "Stabilised transcription prompts and avoided €2k of monthly LLM overages by adding validation rules.",
+  },
+  {
+    title: "We're migrating to SwiftUI and need a sanity check",
+    format: "60 minutes",
+    steps: [
+      "Review your architecture diagram and current implementation.",
+      "Call out anti-patterns before they spread.",
+      "Agree on patterns, testing strategy, and rollout order.",
+    ],
+    outcome: "Prevented a team from rebuilding navigation twice by validating the coordinator approach before sprinting.",
+  },
+  {
+    title: "Our build time is 12 minutes and we've tried the obvious fixes",
+    format: "90–120 minutes",
+    steps: [
+      "Inspect build logs and target configuration to spot non-obvious bottlenecks.",
+      "Pair on Xcode build settings, caching, and dependency graph tweaks.",
+      "Outline next experiments and benchmarks to confirm improvements.",
+    ],
+    outcome: "Found a misconfigured module triggering full rebuilds and cut builds from 12 minutes to 5 minutes in one afternoon.",
+  },
+  {
+    title: "We want to prototype an AI feature but don't know where to start",
+    format: "120 minutes",
+    steps: [
+      "Scope the thinnest slice that proves value.",
+      "Build a working prototype together (tooling, prompts, integration glue).",
+      "Document next steps and risks so you can iterate confidently.",
+    ],
+    outcome: "Built an on-device code completion prototype that gave a founder team a clear go/no-go decision.",
+  },
+];
+
+const comparison = {
+  sessions: [
+    "Tactical problem to solve this week.",
+    "Need validation before investing weeks of engineering time.",
+    "Want a second opinion on architecture or migration decisions.",
+    "Urgent unblockers that can't wait for a retainer cadence.",
+  ],
+  sprint: [
+    "Major bottleneck impacting revenue or delivery.",
+    "Team can execute over six weeks with architectural oversight.",
+    "Budget of €12k–€18k for a comprehensive fix.",
+    "Needs sustained design authority rather than a single session.",
+  ],
+  retainer: [
+    "Ongoing need for principal-level guidance each month.",
+    "Steady stream of PRs and decisions that deserve expert review.",
+    "Tech lead wants a consistent sparring partner.",
+    "Comfortable with a three-month commitment at €1,600/month.",
+  ],
+};
+
+const bookingOptions = [
+  {
+    title: "Unblock a TCA or SwiftUI decision",
+    description: "Solve architecture questions before they slow your roadmap.",
+  },
+  {
+    title: "Fix a performance or build issue",
+    description: "Profile together, pinpoint root causes, and leave with a prioritized fix list.",
+  },
+  {
+    title: "Make an AI feature production-ready",
+    description: "Add guardrails, evaluation, and cost control to prototypes before launch.",
+  },
+  {
+    title: "Validate a big architecture bet",
+    description: "Pressure-test design docs and plan the migration path before committing.",
+  },
+  {
+    title: "Prototype quickly",
+    description: "Pair on a thin slice so you can pitch stakeholders with working software.",
+  },
+  {
+    title: "Weekly mentorship",
+    description: "Reserve recurring sessions to level up senior ICs on iOS architecture and AI workflows.",
+  },
+];
+
+const logistics = [
+  {
+    title: "Booking",
+    items: [
+      "Reserve 60–120 minute slots via Cal.com. Most weeks have availability within 2–3 days.",
+      "For urgent same-day help, email igor@tarasenko.dev after booking so I can confirm quickly.",
+    ],
+  },
+  {
+    title: "Preparation",
+    items: [
+      "Share repo access, problem description, and constraints at least 24 hours ahead.",
+      "I review context beforehand so we start the session already in problem-solving mode.",
+    ],
+  },
+  {
+    title: "During the session",
+    items: [
+      "We work over video with screen sharing and live coding or whiteboarding as needed.",
+      "Everything we decide is written down in a shared document so nothing is lost.",
+    ],
+  },
+  {
+    title: "After the session",
+    items: [
+      "You receive a written summary, action items, and any code snippets or diagrams we produced.",
+      "24-hour Slack follow-up is included for clarifications on what we covered.",
+    ],
+  },
+  {
+    title: "Pricing",
+    items: [
+      "€200 per hour, billed in 30-minute increments after the first hour.",
+      "Minimum 60 minutes. Pre-purchase 5 or 10 hour packs for teams who want recurring support.",
+      "If you're not satisfied after the first 30 minutes, I waive the invoice—no one has had to use this yet.",
+    ],
+  },
+];
+
+const faqs = [
+  {
+    question: "How fast can we book a session?",
+    answer:
+      "Most sessions schedule within a couple of days. If you have an emergency, book the earliest slot and email me—retainer clients get priority, but I keep flex time for urgent issues.",
+  },
+  {
+    question: "Do you record the call?",
+    answer:
+      "Yes, unless you prefer otherwise. You'll receive the recording plus written notes and follow-up actions so the team can reference them later.",
+  },
+  {
+    question: "Can a session turn into a sprint or retainer?",
+    answer:
+      "Absolutely. Many teams start with one or two sessions. If we uncover a six-week project, we scope the Sprint. If you need ongoing oversight, you can transition into the €1,600/month retainer.",
+  },
+  {
+    question: "Who should join the call?",
+    answer:
+      "Bring the engineers closest to the problem and the person accountable for the decision. Sessions are hands-on—we solve, prototype, or decide together in real time.",
+  },
+];
+
 const serviceSchema = {
   "@context": "https://schema.org",
   "@type": "Service",
-  serviceType: "iOS Engineering Consulting Sessions",
+  serviceType: "On-Demand iOS & AI Consulting Sessions",
   provider: {
     "@type": "Person",
     name: "Igor Tarasenko",
   },
   areaServed: "Worldwide",
   description:
-    "Hourly iOS mentoring and consulting sessions covering architecture, performance, and generative AI integration.",
+    "On-demand iOS and AI architecture sessions priced at €200/hr. Book 60–120 minute blocks for rapid unblocking, validation, or mentorship.",
   offers: {
     "@type": "Offer",
     priceCurrency: "EUR",
@@ -29,64 +192,28 @@ const serviceSchema = {
     },
   },
 };
-
-const sessionVariants = [
-  {
-    title: "Agentic Engineering Session",
-    description:
-      "Blend AI workflow design with live implementation so your team leaves with prompts, policies, and working automation.",
-    cta: "Book Agentic Session",
-  },
-  {
-    title: "Architecture & Code Quality Session",
-    description:
-      "Pair on SwiftUI/TCA design decisions, unblock migrations, and leave with a documented action plan.",
-    cta: "Book Architecture Session",
-  },
-  {
-    title: "Performance Triage Session",
-    description:
-      "Profile startup time, rendering, or build pipelines to find root causes and ship measurable improvements.",
-    cta: "Book Performance Session",
-  },
-  {
-    title: "AI Feature Kickstart",
-    description:
-      "Scope a thin slice, build a validated prototype, and hand off a playbook for iterating safely.",
-    cta: "Book AI Kickstart",
-  },
-  {
-    title: "Mentoring & Upskilling Track",
-    description:
-      "Pair weekly to level up on generative AI engineering, testing strategies, and modern iOS architecture patterns.",
-    cta: "Start Mentoring Track",
-  },
-];
 ---
 
 <Layout
-  title="iOS Engineering Sessions - Architecture, Performance, AI Integration"
-  description="Ad-hoc or ongoing iOS consulting and mentoring sessions. €200/hr, 1-10hr blocks. SwiftUI architecture, generative AI enablement, performance triage."
-  structuredData={serviceSchema}
+  title="Get Unstuck Fast: €200/hr iOS & AI Sessions"
+  description="On-demand iOS and AI consulting sessions at €200/hour. Book 60–120 minute blocks to unblock architecture decisions, stabilise AI features, or triage performance issues."
+  structuredData={[serviceSchema]}
 >
   <Header />
   <main id="main-content" class="mx-auto max-w-4xl px-4 py-16 space-y-16">
     <section class="space-y-6 text-left">
-      <p class="text-sm uppercase tracking-wide text-accent">Tertiary Offer · Flexible Blocks</p>
-      <h1 class="text-4xl font-bold leading-tight md:text-5xl">Engineering Sessions</h1>
-      <h2 class="text-2xl font-semibold text-foreground">Ongoing Mentoring & Rapid Problem Solving</h2>
-      <p class="text-base text-foreground/70">
-        Book 1&ndash;10 hour blocks at €200/hr for hands-on pairing, performance triage, generative AI enablement, or rapid prototyping.
+      <p class="text-sm uppercase tracking-wide text-accent">On-Demand Support · Book Within Days</p>
+      <h1 class="text-4xl font-bold leading-tight md:text-5xl">Get Unstuck Fast: €200/hr iOS &amp; AI Sessions</h1>
+      <h2 class="text-2xl font-semibold text-foreground/90">Book expert help when you need it, not when HR approves a hire</h2>
+      <p class="text-base text-foreground/80">
+        Your team is blocked on a stubborn reducer, an AI prompt fails in production, or your build pipeline just doubled in time. Sessions give you principal-level help within days so you can get back to shipping.
       </p>
-      <p class="text-sm text-foreground/70">
-        <strong>Best for:</strong> Immediate production fires <em>and</em> long-running mentorship that keeps your leaders current on AI and modern iOS architecture.
-      </p>
-      <p class="text-sm text-foreground/70">
-        <strong>Availability:</strong> Limited slots reserved each month for rapid support alongside ongoing advisory retainers.
-      </p>
-      <p class="text-sm text-foreground/70">
-        Build a continuing cadence or drop in for a single session—the format adapts to whatever upskilling or unblocker your team needs.
-      </p>
+      <div class="grid gap-4 rounded-lg border border-border bg-background/40 p-6 text-sm text-foreground/80 md:grid-cols-2">
+        <p><strong>Rate:</strong> €200/hour (60–120 minute bookings)</p>
+        <p><strong>Availability:</strong> Limited slots held each week for rapid support</p>
+        <p><strong>Best for:</strong> Tactical unblocking, validation, prototypes, and senior mentorship</p>
+        <p><strong>Upgrade path:</strong> Scale into a 6-week Sprint or monthly Retainer if you need deeper help</p>
+      </div>
       <div class="flex flex-col items-start gap-4 sm:flex-row sm:items-center">
         <PickMyBrainButton
           variant="pushable"
@@ -98,7 +225,7 @@ const sessionVariants = [
         />
       </div>
       <p class="text-sm text-foreground/70">
-        <strong>For larger engagements:</strong> <a class="text-accent" href="/advisory">iOS &amp; AI Advisory Retainer</a> · <a class="text-accent" href="/deep-dive#track-ai-team-accelerator">The Sprint &mdash; AI Team Accelerator track</a>
+        Need a larger engagement? Explore the <a class="text-accent" href="/deep-dive">6-week Sprint</a> or the <a class="text-accent" href="/advisory">Design Authority Retainer</a>.
       </p>
     </section>
 
@@ -109,141 +236,75 @@ const sessionVariants = [
 
     <Hr />
 
-    <section class="space-y-6">
-      <h2 class="text-2xl font-semibold">Is This Right for You?</h2>
-      <div class="grid gap-6 md:grid-cols-2">
-        <article class="rounded-lg border border-border bg-background/40 p-6">
-          <h3 class="text-lg font-semibold text-accent">Best fit for:</h3>
-          <ul class="mt-3 list-disc list-inside space-y-2 text-sm text-foreground/80">
-            <li>Urgent, tactical problems (e.g., a production bug).</li>
-            <li>A second opinion on a specific architectural decision.</li>
-            <li>Validating an idea with a rapid PoC.</li>
-          </ul>
-        </article>
-        <article class="rounded-lg border border-border bg-background/40 p-6">
-          <h3 class="text-lg font-semibold text-accent">Not ideal for:</h3>
-          <ul class="mt-3 list-disc list-inside space-y-2 text-sm text-foreground/80">
-            <li>Ongoing, strategic guidance (choose the <a class="text-accent" href="/advisory">Retainer</a>).</li>
-            <li>Team-wide training or process rollouts (choose the <a class="text-accent" href="/deep-dive">Sprint</a>).</li>
-          </ul>
-        </article>
-      </div>
-    </section>
-
-    <Hr />
-
-    <section class="space-y-4">
-      <h2 class="text-2xl font-semibold">Choose Sessions When You Need</h2>
-      <ul class="list-disc space-y-2 text-sm text-foreground/80 list-inside">
-        <li>Immediate help on a targeted problem with senior-level focus.</li>
-        <li>Expert second opinion before committing to a refactor or migration.</li>
-        <li>Fast validation of an AI feature, prototype, or automation agent.</li>
-        <li>Architecture review before scaling hiring or rewriting modules.</li>
-        <li>Performance triage when something is slow and you need root causes fast.</li>
-        <li>Structured mentoring to stay sharp on generative AI engineering and modern iOS patterns without adding headcount.</li>
-      </ul>
-      <p class="text-sm text-foreground/70">For multi-team adoption, the <a class="text-accent" href="/deep-dive#track-ai-team-accelerator">AI Team Accelerator track of The Sprint</a> is usually a better fit.</p>
-    </section>
-
-    <Hr />
-
     <section class="space-y-8">
-      <h2 class="text-2xl font-semibold">What We Cover in Sessions</h2>
-      <div class="grid gap-6 md:grid-cols-2">
-        <article class="rounded-lg border border-border bg-background/60 p-6">
-          <h3 class="text-lg font-semibold text-accent">1. iOS Engineering</h3>
-          <p class="text-sm text-foreground/70">SwiftUI &amp; UIKit architecture, performance, App Store delivery.</p>
-          <ul class="mt-3 list-disc space-y-2 text-sm text-foreground/80 list-inside">
-            <li>Architecture audits for SwiftUI migrations, TCA adoption, modularization.</li>
-            <li>Build time optimization via Tuist, SPM, CI/CD improvements.</li>
-            <li>Performance profiling for startup, rendering, and memory.</li>
-            <li>App Store readiness (privacy manifests, review prep).</li>
-          </ul>
-          <p class="mt-3 text-xs text-foreground/60">Example: cut build times 35% for a scaling SwiftUI codebase.</p>
-        </article>
-        <article class="rounded-lg border border-border bg-background/60 p-6">
-          <h3 class="text-lg font-semibold text-accent">2. Agentic Automation</h3>
-          <p class="text-sm text-foreground/70">LLM integration, prompt design, governance.</p>
-          <ul class="mt-3 list-disc space-y-2 text-sm text-foreground/80 list-inside">
-            <li>Design agent-first workflows with clear guardrails.</li>
-            <li>Orchestrate Claude/GPT/on-device models with evaluation harnesses.</li>
-            <li>Browser/system automation pipelines for production teams.</li>
-            <li>Safety, monitoring, and fallback strategies.</li>
-          </ul>
-          <p class="mt-3 text-xs text-foreground/60">Example: reduced LLM spend from €2k → €40/month via caching + routing.</p>
-        </article>
-        <article class="rounded-lg border border-border bg-background/60 p-6">
-          <h3 class="text-lg font-semibold text-accent">3. Developer Tooling</h3>
-          <p class="text-sm text-foreground/70">Custom CLI, IDE workflows, observability.</p>
-          <ul class="mt-3 list-disc space-y-2 text-sm text-foreground/80 list-inside">
-            <li>Internal tooling tailored to your stack.</li>
-            <li>Build observability dashboards and health signals.</li>
-            <li>Enablement playbooks and training for engineering leads.</li>
-            <li>Pairing sessions to level up senior ICs quickly.</li>
-          </ul>
-          <p class="mt-3 text-xs text-foreground/60">Example: delivered automation agents triaging enterprise support load daily.</p>
-        </article>
-        <article class="rounded-lg border border-border bg-background/60 p-6">
-          <h3 class="text-lg font-semibold text-accent">4. Rapid Validation</h3>
-          <p class="text-sm text-foreground/70">Spike AI features, measure productivity, de-risk decisions.</p>
-          <ul class="mt-3 list-disc space-y-2 text-sm text-foreground/80 list-inside">
-            <li>Prototype AI-assisted features with go/no-go criteria.</li>
-            <li>Design experiments to measure productivity gains.</li>
-            <li>Create technical narratives and demos for leadership.</li>
-            <li>Assess vendors and integration feasibility.</li>
-          </ul>
-          <p class="mt-3 text-xs text-foreground/60">Example: validated an on-device transcription MVP in 3 sessions, shipped in 2 weeks.</p>
-        </article>
+      <h2 class="text-2xl font-semibold">Common Problems Solved in 1–2 Sessions</h2>
+      <div class="space-y-6">
+        {problems.map(problem => (
+          <article class="rounded-lg border border-border bg-background/40 p-6 space-y-3">
+            <header class="space-y-2">
+              <h3 class="text-lg font-semibold text-accent">{problem.title}</h3>
+              <p class="text-sm text-foreground/70"><strong>Typical format:</strong> {problem.format}</p>
+            </header>
+            <div class="space-y-2">
+              <h4 class="text-sm font-semibold uppercase tracking-wide text-foreground/60">What we do</h4>
+              <ul class="list-disc list-inside space-y-2 text-sm text-foreground/80">
+                {problem.steps.map(step => (
+                  <li>{step}</li>
+                ))}
+              </ul>
+            </div>
+            <p class="text-sm text-foreground/70"><strong>Recent outcome:</strong> {problem.outcome}</p>
+          </article>
+        ))}
       </div>
     </section>
 
     <Hr />
 
     <section class="space-y-6">
-      <h2 class="text-2xl font-semibold">Build a Mentoring Cadence</h2>
-      <p class="text-sm text-foreground/70">
-        Use sessions as a lightweight retainer: reserve a weekly or bi-weekly slot to review PRs, pressure-test AI prompts, or co-design architecture upgrades. I document each call with action items so progress compounds between meetings.
-      </p>
-      <p class="text-sm text-foreground/70">
-        Hour packs make it easy to pause and restart as needed—no long-term contract, just focused time with a principal-level partner when you need it.
-      </p>
-    </section>
-
-    <Hr />
-
-    <section class="space-y-6">
-      <h2 class="text-2xl font-semibold">When to Choose Sessions vs Productized Offers</h2>
-      <div class="grid gap-6 md:grid-cols-2">
+      <h2 class="text-2xl font-semibold">Choosing Between Sessions, Sprint, and Retainer</h2>
+      <div class="grid gap-6 md:grid-cols-3">
         <article class="rounded-lg border border-border bg-background/40 p-6">
-          <h3 class="text-lg font-semibold text-accent">Choose Engineering Sessions when:</h3>
+          <h3 class="text-lg font-semibold text-accent">Book Sessions when…</h3>
           <ul class="mt-3 list-disc list-inside space-y-2 text-sm text-foreground/80">
-            <li>You need immediate help on a specific problem (performance bug, architecture question).</li>
-            <li>You want to validate an idea quickly (prototype an AI feature in 2–3 sessions).</li>
-            <li>You need a second opinion before committing to larger work.</li>
-            <li>You prefer flexible, ad-hoc scheduling.</li>
+            {comparison.sessions.map(item => (
+              <li>{item}</li>
+            ))}
           </ul>
         </article>
         <article class="rounded-lg border border-border bg-background/40 p-6">
-          <h3 class="text-lg font-semibold text-accent">Consider productized offers when:</h3>
+          <h3 class="text-lg font-semibold text-accent">Choose the Sprint when…</h3>
           <ul class="mt-3 list-disc list-inside space-y-2 text-sm text-foreground/80">
-            <li>You need an embedded senior solver → <a class="text-accent" href="/advisory">iOS &amp; AI Advisory Retainer</a>.</li>
-            <li>Your team needs AI adoption training → <a class="text-accent" href="/deep-dive#track-ai-team-accelerator">The Sprint (AI Team Accelerator track)</a>.</li>
+            {comparison.sprint.map(item => (
+              <li>{item}</li>
+            ))}
+          </ul>
+        </article>
+        <article class="rounded-lg border border-border bg-background/40 p-6">
+          <h3 class="text-lg font-semibold text-accent">Pick the Retainer when…</h3>
+          <ul class="mt-3 list-disc list-inside space-y-2 text-sm text-foreground/80">
+            {comparison.retainer.map(item => (
+              <li>{item}</li>
+            ))}
           </ul>
         </article>
       </div>
+      <p class="text-sm text-foreground/70">
+        Most teams start with one session to validate fit. If we uncover a six-week initiative, we scope the Sprint. When you want ongoing monthly guidance, the retainer keeps decisions flowing.
+      </p>
     </section>
 
     <Hr />
 
     <section class="space-y-6">
-      <h2 class="text-2xl font-semibold">Session Variants</h2>
+      <h2 class="text-2xl font-semibold">Book by Problem Type</h2>
       <div class="grid gap-6 md:grid-cols-2">
-        {sessionVariants.map(variant => (
-          <article class="rounded-lg border border-border bg-background/40 p-6">
-            <h3 class="text-lg font-semibold text-accent">{variant.title}</h3>
-            <p class="mt-3 text-sm text-foreground/80">{variant.description}</p>
+        {bookingOptions.map(option => (
+          <article class="rounded-lg border border-border bg-background/40 p-6 space-y-2">
+            <h3 class="text-lg font-semibold text-accent">{option.title}</h3>
+            <p class="text-sm text-foreground/80">{option.description}</p>
             <a
-              class="mt-4 inline-flex text-sm text-accent"
+              class="inline-flex text-sm text-accent"
               href="https://cal.com/tarasenko/60min"
               target="_blank"
               rel="noreferrer"
@@ -251,11 +312,11 @@ const sessionVariants = [
               data-stats-category="conversion"
               data-stats-props={JSON.stringify({
                 service: "sessions",
-                placement: "variant-list",
-                variant: variant.title,
+                placement: "problem-type",
+                variant: option.title,
               })}
             >
-              {variant.cta} →
+              Book this session →
             </a>
           </article>
         ))}
@@ -264,9 +325,45 @@ const sessionVariants = [
 
     <Hr />
 
+    <section class="space-y-6">
+      <h2 class="text-2xl font-semibold">How Sessions Work</h2>
+      <div class="space-y-4">
+        {logistics.map(section => (
+          <article class="rounded-lg border border-border bg-background/40 p-6 space-y-2">
+            <h3 class="text-lg font-semibold text-accent">{section.title}</h3>
+            <ul class="list-disc list-inside space-y-2 text-sm text-foreground/80">
+              {section.items.map(item => (
+                <li>{item}</li>
+              ))}
+            </ul>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <Hr />
+
+    <section class="space-y-4" aria-labelledby="sessions-faq">
+      <div>
+        <h2 id="sessions-faq" class="text-2xl font-semibold">Frequently Asked Questions</h2>
+      </div>
+      <div class="space-y-4">
+        {faqs.map(item => (
+          <details class="rounded-lg border border-border bg-background/30 p-4">
+            <summary class="cursor-pointer text-lg font-semibold">{item.question}</summary>
+            <p class="mt-3 text-sm text-foreground/80">{item.answer}</p>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <Hr />
+
     <section class="space-y-4">
-      <h2 class="text-2xl font-semibold">Ready to Book?</h2>
-      <p class="text-sm text-foreground/80">Include repositories, context, and constraints so we can ship outcomes inside the session.</p>
+      <h2 class="text-2xl font-semibold">Ready to Get Unstuck?</h2>
+      <p class="text-sm text-foreground/80">
+        Book a session, include context and repos, and we'll walk out with decisions made, blockers removed, and a short action plan for your team.
+      </p>
       <div class="flex flex-col gap-4 sm:flex-row sm:items-center">
         <PickMyBrainButton
           variant="pushable"
@@ -277,8 +374,9 @@ const sessionVariants = [
           eventProps={{ service: "sessions", placement: "closing-cta", product: "booking" }}
         />
       </div>
-      <p class="text-sm text-foreground/60">Prefer team-wide enablement? <a class="text-accent" href="/deep-dive#track-ai-team-accelerator">Explore The Sprint's AI Team Accelerator track</a>.</p>
-      <p class="text-sm text-foreground/70">Looking for other engagement options? <a class="text-accent" href="/consulting">See the full consulting overview &rarr;</a></p>
+      <p class="text-sm text-foreground/70">
+        Looking for longer-term support? <a class="text-accent" href="/consulting">Compare all consulting options →</a>
+      </p>
     </section>
   </main>
   <Footer />

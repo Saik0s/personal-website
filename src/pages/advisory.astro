@@ -6,22 +6,165 @@ import Hr from "@/components/Hr.astro";
 import PickMyBrainButton from "@/components/PickMyBrainButton.astro";
 import Testimonial from "@/components/Testimonial.astro";
 
+const breakdown = [
+  {
+    title: "4 hours: Weekly Office Hours",
+    description:
+      "Four 60-minute sessions per month for architecture decisions, roadmap reviews, and mentoring senior ICs.",
+    bullets: [
+      "Format: live video call with shared docs or pairing inside your repo.",
+      "Use cases: validating migrations, planning AI adoption, unblocking launch-critical work.",
+      "Cadence: scheduled weekly so decisions never queue for weeks.",
+    ],
+  },
+  {
+    title: "4 hours: Architectural PR Reviews",
+    description:
+      "Up to four critical pull requests reviewed each month with async feedback inside 24 hours (business days).",
+    bullets: [
+      "Reviews cover architecture, performance, and reliability—not just syntax.",
+      "Each review ships with a summary comment and decision log for future reference.",
+      "Overflow PRs can be booked as Sessions at €200/hr when you need more coverage.",
+    ],
+  },
+  {
+    title: "2 hours: Async Slack Guidance",
+    description:
+      "Private Slack channel for clarifying decisions, sharing context, and keeping momentum between sessions.",
+    bullets: [
+      "Expect responses within 24 hours on business days.",
+      "Great for quick questions, design validation, or gut-checking AI prompts.",
+      "Not meant for emergency firefighting—use Sessions for urgent incidents.",
+    ],
+  },
+];
+
+const coversWell = [
+  "Ongoing architecture and platform decisions while your team ships features.",
+  "Critical PRs that must be reviewed by a principal-level engineer before merge.",
+  "Mentorship for tech leads and senior ICs adopting SwiftUI, TCA, or AI workflows.",
+  "Structuring evaluation and governance for LLM-powered features.",
+  "Keeping velocity high when your lead is split between management and delivery.",
+];
+
+const notCovered = [
+  "Hands-on implementation or owning a backlog of tickets.",
+  "More than four deep PR reviews per month without additional Sessions.",
+  "Emergency weekend or overnight support.",
+  "Large-scale audits that require weeks of focused research—use the Sprint instead.",
+];
+
+const fit = [
+  "Tech leads who need a second brain for architectural decisions.",
+  "Teams adopting SwiftUI, TCA, or production AI and want expert oversight.",
+  "Engineering managers balancing leadership work with technical stewardship.",
+  "Founders with technical background who want trusted guidance without hiring full-time.",
+];
+
+const notFit = [
+  "Teams that need a 40-hour-per-week contractor writing code.",
+  "Organizations without engineers available to implement recommendations.",
+  "Companies experiencing a one-off crisis—book Sessions or the Sprint instead.",
+  "Teams looking for a passive advisor who only joins status meetings.",
+];
+
+const rhythm = [
+  {
+    title: "Week 1",
+    items: [
+      "Office hour session to review last month's outcomes and set focus areas.",
+      "Outline the PRs and architectural decisions we'll tackle this month.",
+    ],
+  },
+  {
+    title: "Week 2",
+    items: [
+      "Your team ships PRs following the plan.",
+      "I provide async reviews and Slack guidance within 24 hours.",
+    ],
+  },
+  {
+    title: "Week 3",
+    items: [
+      "Second office hour session for deep dives, pairing, or training.",
+      "We adjust approach based on what we learned from implementation.",
+    ],
+  },
+  {
+    title: "Week 4",
+    items: [
+      "Close out remaining PRs and decisions.",
+      "Deliver written summary of wins, decisions, and next month's priorities.",
+    ],
+  },
+];
+
+const useCases = [
+  {
+    title: "TCA migration support",
+    description:
+      "Weekly sessions review new modules, async PR reviews catch regressions, and the team builds muscle memory in the new architecture.",
+  },
+  {
+    title: "AI feature governance",
+    description:
+      "Design prompts in office hours, install evaluation harnesses via PR reviews, and keep costs sane with ongoing oversight.",
+  },
+  {
+    title: "Performance advisory",
+    description:
+      "Pair on profiling strategies, validate PRs that touch hot paths, and maintain performance budgets month over month.",
+  },
+];
+
+const faqs = [
+  {
+    question: "What happens if we need more than four PRs reviewed?",
+    answer:
+      "You can book additional coverage as €200/hr Sessions. Retainer clients get first-priority scheduling, so overflow never waits long. The four-PR baseline keeps the engagement focused while giving you predictable capacity.",
+  },
+  {
+    question: "Can we bank unused hours?",
+    answer:
+      "Hours reset each month. Maintaining rhythm is what keeps your team moving. If a month runs light, we'll use the time for architectural planning, documentation, or mentoring so value still compounds.",
+  },
+  {
+    question: "What if we have an urgent incident?",
+    answer:
+      "Ping me in Slack and book a Session. Retainer clients always get priority access to my ad-hoc time. The retainer keeps decisions flowing; Sessions cover surprise fires without blowing up the agreement.",
+  },
+  {
+    question: "How do you limit this to two clients?",
+    answer:
+      "I reserve 10 consulting hours per week. Two retainer clients at 10 hours total per month leaves room for Sprints and Sessions. If both slots are full, I maintain a short waitlist and onboard as availability opens.",
+  },
+  {
+    question: "Can we pause after the initial commitment?",
+    answer:
+      "Yes. After the first three months you can continue month-to-month or pause with 30 days notice. When you're ready to resume we'll confirm availability so expectations stay clear.",
+  },
+  {
+    question: "What if we realise this isn't a fit?",
+    answer:
+      "The first 30 days are risk-free. If you don't feel you've already received more value than you paid, I'll refund the first month's fee. I'd rather lose the revenue than keep you in an engagement that isn't working.",
+  },
+];
+
 const serviceSchema = {
   "@context": "https://schema.org",
   "@type": "Service",
-  serviceType: "iOS & AI Advisory Retainer",
+  serviceType: "Design Authority Advisory Retainer",
   provider: { "@type": "Person", name: "Igor Tarasenko" },
   areaServed: "Worldwide",
   description:
-    "A monthly advisory retainer for teams. Includes async PR reviews, 2x monthly solver sessions, and priority Slack. 100% risk-free for 30 days.",
+    "Monthly iOS and AI advisory retainer providing 10 hours of principal-level design authority. Includes weekly office hours, async PR reviews, and Slack access.",
   offers: {
     "@type": "Offer",
     priceCurrency: "EUR",
-    price: "3000-5000",
+    price: "1600",
     priceSpecification: {
       "@type": "PriceSpecification",
-      minPrice: "3000",
-      maxPrice: "5000",
+      price: "1600",
       priceCurrency: "EUR",
       unitText: "month",
     },
@@ -30,29 +173,33 @@ const serviceSchema = {
 ---
 
 <Layout
-  title="iOS & AI Advisory Retainer (Risk-Free)"
-  description="Get a fractional solver embedded in your team. Async PR reviews, 2x monthly solver sessions, priority Slack, and a 30-day risk-free guarantee."
+  title="Get a Principal Engineer in Your Corner (Without the €180k Salary)"
+  description="Monthly iOS & AI advisory retainer: 10 hours of principal-level design authority for €1,600/month. Weekly office hours, async PR reviews, and Slack guidance with a 30-day guarantee."
   structuredData={[serviceSchema]}
 >
   <Header />
-  <main id="main-content" class="mx-auto max-w-4xl px-4 py-12 space-y-12">
-    <section class="space-y-4">
-      <h1 class="text-3xl font-bold">The iOS &amp; AI Advisory Retainer</h1>
-      <p class="text-lg text-foreground/80">
-        Get a senior-level "Solver" embedded in your team—without the cost of a full-time hire.
+  <main id="main-content" class="mx-auto max-w-4xl px-4 py-16 space-y-16">
+    <section class="space-y-6">
+      <p class="text-sm uppercase tracking-wide text-accent">Retainer Offer · Max 2 Clients</p>
+      <h1 class="text-4xl font-bold leading-tight md:text-5xl">Get a Principal Engineer in Your Corner (Without the €180k Salary)</h1>
+      <h2 class="text-2xl font-semibold text-foreground/90">10 hours per month of expert iOS &amp; AI guidance</h2>
+      <p class="text-base text-foreground/80">
+        Your tech lead is stretched thin, your team is adopting SwiftUI or AI, and high-stakes decisions pile up. This retainer keeps a principal-level design authority embedded with your team so decisions stay sharp without hiring full-time.
       </p>
-      <p class="text-lg text-foreground/80">
-        This is not a traditional consultant. It is an async-first partnership where I help you solve your hardest problems, one PR and one brainstorming session at a time.
-      </p>
-      <p class="text-sm text-foreground/70">
-        <strong>Investment:</strong> €3,000 - €5,000 / month · <strong>Format:</strong> Monthly Retainer (async-first) · <strong>Guarantee:</strong> 30-day full refund if you are not 100% satisfied.
-      </p>
+      <div class="grid gap-4 rounded-lg border border-border bg-background/40 p-6 text-sm text-foreground/80 md:grid-cols-2">
+        <p><strong>Investment:</strong> €1,600/month (three-month minimum)</p>
+        <p><strong>Availability:</strong> Limited to two retainer clients at a time</p>
+        <p><strong>Format:</strong> Weekly office hours, async PR reviews, private Slack</p>
+        <p><strong>Guarantee:</strong> 30-day full refund if you are not satisfied</p>
+      </div>
       <div>
         <PickMyBrainButton
           variant="pushable"
           duration="30min"
           text="Book a Discovery Call"
           eventName="Conversion: Advisory Discovery Call"
+          eventCategory="conversion"
+          eventProps={{ service: "design-authority-retainer", placement: "hero" }}
         />
       </div>
     </section>
@@ -64,56 +211,159 @@ const serviceSchema = {
 
     <Hr />
 
-    <section class="space-y-4">
-      <h2 class="text-2xl font-semibold">What This Retainer Includes</h2>
-      <p class="text-sm leading-relaxed text-foreground/80">This is a simple, high-impact package:</p>
-      <ul class="space-y-3 text-sm leading-relaxed text-foreground/80">
-        <li>
-          <strong>Async Architectural PR Reviews:</strong> I join your GitHub repo and review the pull requests that matter most so your architecture stays sharp.
-        </li>
-        <li>
-          <strong>Embedded Mentorship for Leads and Senior ICs:</strong> We keep a standing thread to level up decision-makers, pair through tricky refactors, and grow internal ownership.
-        </li>
-        <li>
-          <strong>Two 90-minute Team Solver Sessions per Month:</strong> Use these to unblock projects, architect new features, or pressure-test plans together.
-        </li>
-        <li>
-          <strong>Priority Slack Channel:</strong> Your team has a direct line for questions, clarifications, and quick feedback without waiting for the next meeting.
-        </li>
-        <li>
-          <strong>Access to My GenAI Prompt Library:</strong> A curated set of production-tested prompts for iOS, backend, and testing workflows.
-        </li>
-      </ul>
+    <section class="space-y-6">
+      <h2 class="text-2xl font-semibold">What You Get Each Month</h2>
+      <p class="text-sm text-foreground/80">We structure the 10 hours so you get proactive guidance, fast feedback, and momentum between sessions.</p>
+      <div class="space-y-6">
+        {breakdown.map(item => (
+          <article class="rounded-lg border border-border bg-background/40 p-6 space-y-3">
+            <h3 class="text-lg font-semibold text-accent">{item.title}</h3>
+            <p class="text-sm text-foreground/80">{item.description}</p>
+            <ul class="list-disc list-inside space-y-2 text-sm text-foreground/80">
+              {item.bullets.map(bullet => (
+                <li>{bullet}</li>
+              ))}
+            </ul>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <Hr />
+
+    <section class="space-y-6">
+      <h2 class="text-2xl font-semibold">Where This Retainer Excels</h2>
+      <div class="grid gap-6 md:grid-cols-2">
+        <article class="rounded-lg border border-border bg-background/40 p-6">
+          <h3 class="text-lg font-semibold text-accent">Consistently delivers</h3>
+          <ul class="mt-3 list-disc list-inside space-y-2 text-sm text-foreground/80">
+            {coversWell.map(item => (
+              <li>{item}</li>
+            ))}
+          </ul>
+        </article>
+        <article class="rounded-lg border border-border bg-background/40 p-6">
+          <h3 class="text-lg font-semibold text-accent">Not included</h3>
+          <ul class="mt-3 list-disc list-inside space-y-2 text-sm text-foreground/80">
+            {notCovered.map(item => (
+              <li>{item}</li>
+            ))}
+          </ul>
+        </article>
+      </div>
+      <p class="text-sm text-foreground/70">
+        Need extra coverage in a busy month? Retainer clients can bolt on additional €200/hr Sessions for deep dives or urgent reviews without waiting in line.
+      </p>
+    </section>
+
+    <Hr />
+
+    <section class="space-y-6">
+      <h2 class="text-2xl font-semibold">Who This Retainer Is For</h2>
+      <div class="grid gap-6 md:grid-cols-2">
+        <article class="rounded-lg border border-border bg-background/40 p-6">
+          <h3 class="text-lg font-semibold text-accent">Great fit</h3>
+          <ul class="mt-3 list-disc list-inside space-y-2 text-sm text-foreground/80">
+            {fit.map(item => (
+              <li>{item}</li>
+            ))}
+          </ul>
+        </article>
+        <article class="rounded-lg border border-border bg-background/40 p-6">
+          <h3 class="text-lg font-semibold text-accent">Not the right option</h3>
+          <ul class="mt-3 list-disc list-inside space-y-2 text-sm text-foreground/80">
+            {notFit.map(item => (
+              <li>{item}</li>
+            ))}
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <Hr />
+
+    <section class="space-y-6">
+      <h2 class="text-2xl font-semibold">Investment</h2>
+      <p class="text-sm text-foreground/80">
+        €1,600 per month for 10 hours of principal-level guidance. That's an effective rate of €160/hour versus €200/hour for ad-hoc Sessions, plus guaranteed availability.
+      </p>
+      <p class="text-sm text-foreground/80">
+        The three-month commitment gives us time to install patterns, see them applied in production, and measure impact. After that you can continue month-to-month or pause with 30 days notice.
+      </p>
+      <p class="text-sm text-foreground/80">
+        If after the first 30 days you don't feel the retainer is paying for itself, I'll refund the first month. No lock-in, no awkward conversations.
+      </p>
+    </section>
+
+    <Hr />
+
+    <section class="space-y-6">
+      <h2 class="text-2xl font-semibold">How a Typical Month Flows</h2>
+      <div class="grid gap-6 md:grid-cols-2">
+        <article class="rounded-lg border border-border bg-background/40 p-6 space-y-3">
+          <h3 class="text-lg font-semibold text-accent">Monthly rhythm</h3>
+          <ul class="list-disc list-inside space-y-2 text-sm text-foreground/80">
+            {rhythm.map(block => (
+              <li>
+                <strong>{block.title}:</strong>
+                <ul class="mt-1 list-disc list-inside space-y-1 pl-4 text-xs text-foreground/70 md:text-sm">
+                  {block.items.map(item => (
+                    <li>{item}</li>
+                  ))}
+                </ul>
+              </li>
+            ))}
+          </ul>
+        </article>
+        <article class="rounded-lg border border-border bg-background/40 p-6 space-y-3">
+          <h3 class="text-lg font-semibold text-accent">Common use cases</h3>
+          <ul class="space-y-3 text-sm text-foreground/80">
+            {useCases.map(useCase => (
+              <li>
+                <strong>{useCase.title}:</strong> {useCase.description}
+              </li>
+            ))}
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <Hr />
+
+    <section class="space-y-4" aria-labelledby="advisory-faq">
+      <div>
+        <h2 id="advisory-faq" class="text-2xl font-semibold">Frequently Asked Questions</h2>
+      </div>
+      <div class="space-y-4">
+        {faqs.map(item => (
+          <details class="rounded-lg border border-border bg-background/30 p-4">
+            <summary class="cursor-pointer text-lg font-semibold">{item.question}</summary>
+            <p class="mt-3 text-sm text-foreground/80">{item.answer}</p>
+          </details>
+        ))}
+      </div>
     </section>
 
     <Hr />
 
     <section class="space-y-4">
-      <h2 class="text-2xl font-semibold">Your Decision is 100% Risk-Free</h2>
-      <p class="text-sm leading-relaxed text-foreground/80">
-        This is my "easy decision" guarantee. Try the retainer for 30 days. Let me join your Slack, review your PRs, and run our first Solver Session.
+      <h2 class="text-2xl font-semibold">Ready to Reserve a Slot?</h2>
+      <p class="text-sm text-foreground/80">
+        Book a discovery call to confirm fit, walk through your goals, and secure one of the two retainer spots. You'll receive a written agreement and start date within 48 hours of the call.
       </p>
-      <p class="text-sm leading-relaxed text-foreground/80">
-        If at the end of those 30 days you don't feel you've already received more value than you paid for, just tell me. I will refund 100% of your first month's fee—no questions asked.
+      <div class="flex flex-col gap-4 sm:flex-row sm:items-center">
+        <PickMyBrainButton
+          variant="pushable"
+          duration="30min"
+          text="Book Discovery Call"
+          eventName="Conversion: Advisory Discovery Call"
+          eventCategory="conversion"
+          eventProps={{ service: "design-authority-retainer", placement: "footer" }}
+        />
+      </div>
+      <p class="text-sm text-foreground/70">
+        Not sure if retainer or sprint is right? <a class="text-accent" href="/consulting">Compare all offers →</a>
       </p>
-      <p class="text-sm leading-relaxed text-foreground/80">This makes your decision to try this easy.</p>
-    </section>
-
-    <Hr />
-
-    <section class="space-y-4">
-      <h2 class="text-2xl font-semibold">This Retainer Is For</h2>
-      <ul class="space-y-2 text-sm leading-relaxed text-foreground/80">
-        <li>✅ Teams that need a senior "Solver" without hiring a €200k/year Principal Engineer.</li>
-        <li>✅ Tech leads who are stretched thin and want a trusted partner to review code and brainstorm with.</li>
-        <li>✅ Teams adopting new tech (like TCA or GenAI) who want to avoid the common pitfalls.</li>
-        <li>✅ Teams that prefer async-first collaboration and dislike unnecessary meetings.</li>
-      </ul>
-      <h3 class="text-xl font-semibold">Not Ideal For</h3>
-      <ul class="space-y-2 text-sm leading-relaxed text-foreground/80">
-        <li>❌ Teams that need a full-time (40h/w) hands-on developer.</li>
-        <li>❌ Companies looking for a one-time, fixed-scope project (choose <a class="text-accent" href="/deep-dive">The Sprint</a> instead).</li>
-      </ul>
     </section>
   </main>
   <Footer />
