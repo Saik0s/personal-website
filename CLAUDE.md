@@ -21,7 +21,7 @@ npm run build            # Astro check + build + Pagefind indexing
 
 **Tech Stack**: Astro 5.11 + AstroPaper theme + TypeScript + Tailwind CSS 4
 **Content**: Technical blog posts about iOS development, AI/ML, and productivity
-**Author**: Igor Tarasenko (GitHub: @Saik0s, X: @sa1k0s)
+**Author**: Igor Tarasenko (GitHub: @Saik0s, X: @saik0s)
 
 ### Key Directories
 
@@ -149,5 +149,5 @@ Deployment configs available:
 - **Search**: Pagefind static site search
 - **Analytics**: Plausible (privacy-focused)
 - **Newsletter**: ConvertKit integration via API endpoint
-- **Social**: GitHub (@Saik0s), X (@sa1k0s), Buy Me a Coffee
+- **Social**: GitHub (@Saik0s), X (@saik0s), Buy Me a Coffee
 - **Custom Components**: PickMyBrainButton, BuyMeACoffeeButton, ConvertKitForm

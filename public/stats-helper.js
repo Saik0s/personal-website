@@ -69,7 +69,7 @@
         if (href.includes('github.com/Saik0s')) {
             return { eventName: 'Social Click: GitHub', category: 'social' };
         }
-        if (href.includes('x.com/sa1k0s') || href.includes('twitter.com/sa1k0s')) {
+        if (href.includes('x.com/saik0s') || href.includes('twitter.com/saik0s')) {
             return { eventName: 'Social Click: X/Twitter', category: 'social' };
         }
         if (href.includes('buymeacoffee.com/saik0s')) {

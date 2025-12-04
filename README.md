@@ -109,7 +109,7 @@ docker run -p 4321:80 personal-website
 ## 🔗 Connect
 
 - **GitHub**: [@Saik0s](https://github.com/Saik0s)
-- **X (Twitter)**: [@sa1k0s](https://x.com/sa1k0s)
+- **X (Twitter)**: [@saik0s](https://x.com/saik0s)
 - **Website**: [tarasenko.dev](https://www.tarasenko.dev)
 
 ## 📄 License
