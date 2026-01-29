@@ -43,7 +43,6 @@
 
     function getSpecificButtonTracking(link) {
         var href = link.href;
-        var linkText = link.textContent.trim();
         var className = link.className || '';
         var parentText = link.parentElement ? link.parentElement.textContent.trim() : '';
         

@@ -4,445 +4,49 @@ import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import Hr from "@/components/Hr.astro";
 import PickMyBrainButton from "@/components/PickMyBrainButton.astro";
-import Testimonial from "@/components/Testimonial.astro";
-
-const bottlenecks = [
-  {
-    title: "Your iOS build takes 10+ minutes and slows down your entire team",
-    problem:
-      "Modules are tangled, no one agrees on split points, and every \"quick fix\" makes builds slower.",
-    steps: [
-      "Week 1-2: Map your dependency graph and identify the seams for modular boundaries.",
-      "Week 3-4: Design the target architecture and review your team's extraction work.",
-      "Week 5-6: Validate build improvements, document module ownership, and lock in guardrails.",
-    ],
-    outcome: "Cut build time from 18 minutes to 7 minutes for a 200k LOC codebase.",
-  },
-  {
-    title: "Your AI feature is unreliable and bleeding money",
-    problem:
-      "The LLM integration works in demos, fails in production, and costs are unpredictable because there's no governance.",
-    steps: [
-      "Week 1-2: Audit the implementation, design a prompt library, caching strategy, and observability plan.",
-      "Week 3-4: Install evaluation harnesses, add guardrails, and train the team on governance.",
-      "Week 5-6: Optimize for quality and cost, document the runbook, and align on future iteration cadence.",
-    ],
-    outcome: "Reduced LLM spend from €2k to €40 per month while increasing reliability.",
-  },
-  {
-    title: "You're migrating to SwiftUI or TCA and can't afford mistakes",
-    problem:
-      "The team is learning while shipping, and leadership fears creating a new pile of technical debt.",
-    steps: [
-      "Week 1-2: Review the current approach and design a migration strategy that fits your release cadence.",
-      "Week 3-4: Pair through critical PRs, establish repeatable patterns, and coach the team on testing.",
-      "Week 5-6: Validate coverage, document architecture decisions, and hand off a sustainable roadmap.",
-    ],
-    outcome: "Migrated an 80k LOC app to TCA without production incidents or missed milestones.",
-  },
-  {
-    title: "Your app is slow and the obvious fixes failed",
-    problem:
-      "Launch time is 4+ seconds, scrolling stutters, and profiling hasn't revealed a silver bullet.",
-    steps: [
-      "Week 1-2: Deep dive profiling to surface non-obvious bottlenecks across client and backend.",
-      "Week 3-4: Design targeted fixes, review implementation, and set performance budgets.",
-      "Week 5-6: Validate improvements in production-like environments and document ongoing guardrails.",
-    ],
-    outcome: "Reduced launch time from 4.2 seconds to 1.8 seconds on iPhone 12 across the critical flows.",
-  },
-];
-
-const weeklyCadence = [
-  {
-    day: "Monday",
-    items: [
-      "Review last week's commits and production telemetry.",
-      "Deliver async PR feedback on architectural decisions.",
-    ],
-  },
-  {
-    day: "Tuesday–Wednesday",
-    items: [
-      "Deep work on the next architecture spike or design doc.",
-      "Document patterns and decision rationale your team can implement immediately.",
-    ],
-  },
-  {
-    day: "Thursday",
-    items: [
-      "90-minute live session to unblock, pair, and answer questions.",
-      "Adjust implementation plans based on what your team learned that week.",
-    ],
-  },
-  {
-    day: "Friday",
-    items: [
-      "Final PR reviews before the weekend.",
-      "Written update covering progress, blockers cleared, and the next week's focus.",
-    ],
-  },
-];
-
-const teamResponsibilities = [
-  "Have 1-2 engineers available to implement the plan during the six weeks.",
-  "Commit code daily so feedback lands while context is fresh.",
-  "Join the weekly live session prepared with questions and decisions that need resolving.",
-  "Own the solution after handoff—my goal is to make your team self-sufficient.",
-];
-
-const myResponsibilities = [
-  "Design the target architecture, migration path, or performance fix.",
-  "Review every critical PR with async feedback inside 24 hours on business days.",
-  "Unblock complex decisions during live sessions and ad-hoc pairing.",
-  "Document architecture decisions, runbooks, and next steps so momentum continues after the sprint.",
-];
-
-const goodFit = [
-  "You have a clearly defined bottleneck that is blocking revenue or delivery.",
-  "Your team has the capacity to execute with guidance and wants to own the code.",
-  "You value architectural clarity over throwing more engineers at the problem.",
-  "You can commit to a six-week window and steady implementation pace.",
-];
-
-const notFit = [
-  "You need a full-time contractor to write all the code for you.",
-  "Your team is already over capacity and cannot implement recommendations.",
-  "You're looking for a broad audit without fixing anything.",
-  "You need a solution in under two weeks—book Sessions instead.",
-];
-
-const pricingFactors = [
-  "Problem scope: tackling one bottleneck versus a system-wide issue.",
-  "Integration surface area: iOS-only or iOS plus backend and infrastructure.",
-  "Team readiness: whether discovery is complete or we must validate root causes first.",
-];
-
-const inclusions = [
-  "60 hours of Design Authority time across six weeks (10 hours per week).",
-  "Daily async PR reviews and Slack guidance during business days.",
-  "Weekly 90-minute live architecture session with your team.",
-  "Architecture decision records, diagrams, benchmarks, and handoff materials.",
-  "30-day follow-up in Slack after handoff for clarifications.",
-];
-
-const exclusions = [
-  "Full-time implementation—your engineers execute the plan.",
-  "Ongoing support beyond the 30-day follow-up (see Retainer).",
-  "Emergency weekend or overnight work (Sessions cover urgent needs).",
-];
-
-const timeline = [
-  "Discovery call this week to confirm fit and goals.",
-  "Fixed proposal and scope within 48 hours of the call.",
-  "Kickoff within two weeks, aligned with your team's release cadence.",
-  "Six weeks of focused work with weekly live touchpoints.",
-  "Handoff and 30-day follow-up support to ensure adoption sticks.",
-];
-
-const faqs = [
-  {
-    question: "Why does this take six weeks if you only work 10 hours per week?",
-    answer:
-      "Your team needs time between touchpoints to ship code while the context is fresh. Six weeks gives us room to design, implement, validate, and document without burning out your engineers. If I joined full-time for two weeks, you'd get code you didn't help build. This model ensures your team owns the solution and keeps momentum after I'm gone.",
-  },
-  {
-    question: "Can't you just work full-time for a shorter period?",
-    answer:
-      "I intentionally keep a full-time role so my advice is grounded in current production realities. My consulting capacity is capped at 10 hours per week, which I reserve for design authority work. If you need full-time implementation, I can introduce trusted contractors while I stay involved for architecture oversight.",
-  },
-  {
-    question: "How much time does this require from my team?",
-    answer:
-      "Plan on one to two engineers dedicating meaningful time each week. They will implement the architecture, attend the 90-minute session, and act on daily review feedback. If your team cannot commit this time, the sprint will stall—consider booking targeted Sessions instead until you free capacity.",
-  },
-  {
-    question: "What if the problem turns out to be bigger than six weeks?",
-    answer:
-      "We focus on the highest-leverage slice. If we uncover more work, we can scope a follow-up sprint, transition to the monthly Retainer, or hand off a roadmap your team executes. Most teams ship the critical fix inside the initial six-week window and continue independently.",
-  },
-  {
-    question: "Do you write code or only review?",
-    answer:
-      "Both. Expect me to draft architecture spikes, example implementations, and pair on tricky parts. Your team still writes most of the production code so they fully understand it. Think 80% design and review, 20% hands-on pairing where it matters most.",
-  },
-  {
-    question: "What if we already ran an audit?",
-    answer:
-      "Great—bring the findings. We'll choose the highest-impact recommendation and execute it together so the audit stops collecting dust. Many teams have outstanding reports with no plan to implement; this sprint converts the plan into shipped improvements.",
-  },
-  {
-    question: "Can we extend beyond six weeks?",
-    answer:
-      "Yes. If you want continued oversight, we can scope another sprint or move into the €1,600/month Retainer. Some teams alternate: sprint to tackle a major blocker, retainer to maintain momentum.",
-  },
-];
 
 const serviceSchema = {
   "@context": "https://schema.org",
   "@type": "Service",
-  serviceType: "6-Week Design Authority Sprint",
+  serviceType: "AI Shipping Consultancy",
   provider: {
     "@type": "Person",
     name: "Igor Tarasenko",
   },
   areaServed: "Worldwide",
   description:
-    "Six-week design authority engagement for iOS and AI teams. Igor provides 10 hours per week of architecture design, reviews, and oversight while your engineers implement.",
-  offers: {
-    "@type": "Offer",
-    priceCurrency: "EUR",
-    price: "12000-18000",
-    priceSpecification: {
-      "@type": "PriceSpecification",
-      minPrice: "12000",
-      maxPrice: "18000",
-      priceCurrency: "EUR",
-    },
-  },
-};
-
-const faqSchema = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: faqs.map(item => ({
-    "@type": "Question",
-    name: item.question,
-    acceptedAnswer: {
-      "@type": "Answer",
-      text: item.answer,
-    },
-  })),
+    "Six-week AI shipping consultancy delivering PRs, evals, guardrails, monitoring, and handover-ready code.",
 };
 ---
 
 <Layout
-  title="Fix Your Biggest iOS or AI Bottleneck in 6 Weeks"
-  description="6-week design authority sprint: 10 hours per week of architecture, reviews, and unblocking so your team ships the right solution without hiring a full-time principal engineer."
-  structuredData={[serviceSchema, faqSchema]}
+  title="AI Shipping Consultancy"
+  description="This offer has been consolidated into the AI Shipping Consultancy."
+  structuredData={[serviceSchema]}
 >
   <Header />
-  <main id="main-content" class="mx-auto max-w-4xl px-4 py-16 space-y-16">
-    <section class="space-y-6">
-      <p class="text-sm uppercase tracking-wide text-accent">Primary Offer · Limited Availability</p>
-      <h1 class="text-4xl font-bold leading-tight md:text-5xl">Fix Your Biggest iOS or AI Bottleneck in 6 Weeks</h1>
-      <h2 class="text-2xl font-semibold text-foreground/90">Without hiring a full-time principal or rewriting everything</h2>
-      <p class="text-base text-foreground/80">
-        Your build takes 15 minutes, your AI feature burns €2,000 per month, or a critical launch is at risk. You do not need another 50-page audit—you need a design authority who helps your team ship the right fix and documents the path forward.
-      </p>
-      <div class="grid gap-4 rounded-lg border border-border bg-background/40 p-6 text-sm text-foreground/80 md:grid-cols-2">
-        <div class="space-y-2">
-          <p><strong>Format:</strong> 6 weeks · 10 hours/week of Design Authority</p>
-          <p><strong>Investment:</strong> €12,000–€18,000 fixed fee</p>
-        </div>
-        <div class="space-y-2">
-          <p><strong>Your team's role:</strong> Execute the solution with expert oversight</p>
-          <p><strong>My role:</strong> Architect, review, unblock, and ensure quality</p>
-        </div>
-      </div>
-      <p class="text-sm text-foreground/70">
-        This model works when you already have capable engineers. I design the fix, keep standards high, and make sure the solution sticks. You keep control of the code and the momentum.
-      </p>
-      <div class="flex flex-col gap-4 sm:flex-row sm:items-center">
-        <PickMyBrainButton
-          variant="pushable"
-          duration="30min"
-          text="Book Discovery Call"
-          eventName="Conversion: Deep Dive Discovery Call"
-          eventCategory="conversion"
-          eventProps={{ service: "design-authority-sprint", placement: "hero" }}
-        />
-      </div>
-    </section>
-
-    <Testimonial
-      quote="Igor is very experienced, knowledgeable and honest. Will be reaching out for my future needs. Thank you!"
-      author="Aline Tomasian"
-    />
-
-    <Hr />
-
-    <section class="space-y-8">
-      <h2 class="text-2xl font-semibold">Common Bottlenecks We Fix in Six Weeks</h2>
-      <div class="space-y-6">
-        {bottlenecks.map(bottleneck => (
-          <article class="rounded-lg border border-border bg-background/40 p-6 space-y-4">
-            <header class="space-y-2">
-              <h3 class="text-lg font-semibold text-accent">{bottleneck.title}</h3>
-              <p class="text-sm text-foreground/80">{bottleneck.problem}</p>
-            </header>
-            <div class="space-y-2">
-              <h4 class="text-sm font-semibold uppercase tracking-wide text-foreground/60">What we do</h4>
-              <ul class="list-disc list-inside space-y-2 text-sm text-foreground/80">
-                {bottleneck.steps.map(step => (
-                  <li>{step}</li>
-                ))}
-              </ul>
-            </div>
-            <p class="text-sm text-foreground/70"><strong>Recent outcome:</strong> {bottleneck.outcome}</p>
-          </article>
-        ))}
-      </div>
-    </section>
-
-    <Hr />
-
-    <section class="space-y-6">
-      <h2 class="text-2xl font-semibold">How This Engagement Works</h2>
-      <p class="text-sm text-foreground/80">
-        I'm not joining as a full-time contractor. I operate as your design authority so your team learns by doing and ships the solution with confidence. Here's the cadence that keeps us aligned without burning through hours.
-      </p>
-      <div class="grid gap-6 md:grid-cols-2">
-        <article class="rounded-lg border border-border bg-background/40 p-6 space-y-3">
-          <h3 class="text-lg font-semibold text-accent">Weekly cadence (10 hours/week)</h3>
-          <ul class="list-disc list-inside space-y-2 text-sm text-foreground/80">
-            {weeklyCadence.map(block => (
-              <li>
-                <strong>{block.day}:</strong>
-                <ul class="mt-1 list-disc list-inside space-y-1 pl-4 text-foreground/70 text-xs md:text-sm">
-                  {block.items.map(item => (
-                    <li>{item}</li>
-                  ))}
-                </ul>
-              </li>
-            ))}
-          </ul>
-        </article>
-        <div class="space-y-6">
-          <article class="rounded-lg border border-border bg-background/40 p-6 space-y-2">
-            <h3 class="text-lg font-semibold text-accent">What your team does</h3>
-            <ul class="list-disc list-inside space-y-2 text-sm text-foreground/80">
-              {teamResponsibilities.map(item => (
-                <li>{item}</li>
-              ))}
-            </ul>
-          </article>
-          <article class="rounded-lg border border-border bg-background/40 p-6 space-y-2">
-            <h3 class="text-lg font-semibold text-accent">What I do</h3>
-            <ul class="list-disc list-inside space-y-2 text-sm text-foreground/80">
-              {myResponsibilities.map(item => (
-                <li>{item}</li>
-              ))}
-            </ul>
-          </article>
-        </div>
-      </div>
-      <p class="text-sm text-foreground/70">
-        This model works because your engineers stay hands-on, absorb the patterns, and own the result. My job is to prevent €50k mistakes, keep decisions on track, and hand back a system your team can extend.
-      </p>
-    </section>
-
-    <Hr />
-
-    <section class="space-y-6">
-      <h2 class="text-2xl font-semibold">Before You Book</h2>
-      <div class="grid gap-6 md:grid-cols-2">
-        <article class="rounded-lg border border-border bg-background/40 p-6">
-          <h3 class="text-lg font-semibold text-accent">You're a great fit if</h3>
-          <ul class="mt-3 list-disc list-inside space-y-2 text-sm text-foreground/80">
-            {goodFit.map(item => (
-              <li>{item}</li>
-            ))}
-          </ul>
-        </article>
-        <article class="rounded-lg border border-border bg-background/40 p-6">
-          <h3 class="text-lg font-semibold text-accent">This won't work if</h3>
-          <ul class="mt-3 list-disc list-inside space-y-2 text-sm text-foreground/80">
-            {notFit.map(item => (
-              <li>{item}</li>
-            ))}
-          </ul>
-        </article>
-      </div>
-    </section>
-
-    <Hr />
-
-    <section class="space-y-6">
-      <h2 class="text-2xl font-semibold">Investment & Timeline</h2>
-      <p class="text-sm text-foreground/80">
-        The sprint is a fixed fee between €12,000 and €18,000. Pricing is locked before kickoff and tied to the scope we agree on together.
-      </p>
-      <div class="grid gap-6 md:grid-cols-2">
-        <article class="rounded-lg border border-border bg-background/40 p-6 space-y-3">
-          <h3 class="text-lg font-semibold text-accent">What influences pricing</h3>
-          <ul class="list-disc list-inside space-y-2 text-sm text-foreground/80">
-            {pricingFactors.map(item => (
-              <li>{item}</li>
-            ))}
-          </ul>
-        </article>
-        <article class="rounded-lg border border-border bg-background/40 p-6 space-y-3">
-          <h3 class="text-lg font-semibold text-accent">Timeline you can expect</h3>
-          <ul class="list-disc list-inside space-y-2 text-sm text-foreground/80">
-            {timeline.map(item => (
-              <li>{item}</li>
-            ))}
-          </ul>
-        </article>
-      </div>
-      <div class="grid gap-6 md:grid-cols-2">
-        <article class="rounded-lg border border-border bg-background/40 p-6 space-y-3">
-          <h3 class="text-lg font-semibold text-accent">What's included</h3>
-          <ul class="list-disc list-inside space-y-2 text-sm text-foreground/80">
-            {inclusions.map(item => (
-              <li>{item}</li>
-            ))}
-          </ul>
-        </article>
-        <article class="rounded-lg border border-border bg-background/40 p-6 space-y-3">
-          <h3 class="text-lg font-semibold text-accent">Not included</h3>
-          <ul class="list-disc list-inside space-y-2 text-sm text-foreground/80">
-            {exclusions.map(item => (
-              <li>{item}</li>
-            ))}
-          </ul>
-        </article>
-      </div>
-    </section>
-
-    <Hr />
-
-    <section class="space-y-4" aria-labelledby="deep-dive-faq">
-      <div>
-        <h2 id="deep-dive-faq" class="text-2xl font-semibold">Frequently Asked Questions</h2>
-      </div>
-      <div class="space-y-4">
-        {faqs.map(item => (
-          <details class="rounded-lg border border-border bg-background/30 p-4">
-            <summary class="cursor-pointer text-lg font-semibold">{item.question}</summary>
-            <p class="mt-3 text-sm text-foreground/80">{item.answer}</p>
-          </details>
-        ))}
-      </div>
-    </section>
-
-    <Hr />
-
+  <main id="main-content" class="mx-auto max-w-3xl px-4 py-16 space-y-8">
     <section class="space-y-4">
-      <h2 class="text-2xl font-semibold">Ready to Fix Your Bottleneck?</h2>
-      <p class="text-sm text-foreground/80">
-        Book a discovery call to outline the problem, confirm the sprint timeline, and receive a fixed proposal within 48 hours.
+      <h1 class="text-3xl font-bold">This offer has moved.</h1>
+      <p class="text-lg text-foreground/80">
+        The Sprint is now a single, focused offer: the AI Shipping Consultancy.
+        It delivers PRs in your repo, evals, guardrails, monitoring, and a runbook your team can own.
       </p>
-      <ol class="list-decimal space-y-2 pl-4 text-sm text-foreground/80">
-        <li>Discovery call to align on the problem, team capacity, and success criteria.</li>
-        <li>Receive a written proposal with scope, fee, and timeline within 48 hours.</li>
-        <li>Kicks off within two weeks with discovery sessions, code access, and clear next steps.</li>
-      </ol>
       <div class="flex flex-col gap-4 sm:flex-row sm:items-center">
         <PickMyBrainButton
           variant="pushable"
           duration="30min"
-          text="Book Discovery Call"
-          eventName="Conversion: Deep Dive Discovery Call"
+          text="Book a Discovery Call"
+          eventName="Conversion: Consultancy Discovery Call"
           eventCategory="conversion"
-          eventProps={{ service: "design-authority-sprint", placement: "footer" }}
+          eventProps={{ service: "ai-shipping-consultancy", placement: "moved" }}
         />
       </div>
       <p class="text-sm text-foreground/70">
-        Exploring other ways to collaborate? <a class="text-accent" href="/consulting">See all consulting services →</a>
+        Or read the full details on <a class="text-accent" href="/#offer">the homepage →</a>
       </p>
     </section>
+    <Hr />
   </main>
   <Footer />
 </Layout>

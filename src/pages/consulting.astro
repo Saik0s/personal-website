@@ -4,182 +4,60 @@ import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import Hr from "@/components/Hr.astro";
 import PickMyBrainButton from "@/components/PickMyBrainButton.astro";
-import Testimonial from "@/components/Testimonial.astro";
 
-type Offer = {
-  name: string;
-  slug: "deep-dive" | "advisory" | "sessions";
-  href: string;
-  summary: string;
-  headline: string;
-  idealClients: string[];
-  highlights: string[];
-  ctaText: string;
-};
-
-const offers: Offer[] = [
-  {
-    name: "Design Authority Sprint",
-    slug: "deep-dive",
-    href: "/deep-dive",
-    summary: "6-week, 10 hour/week engagement to eliminate your biggest iOS or AI bottleneck.",
-    headline: "Fix the problem that's slowing your team without hiring a full-time principal.",
-    idealClients: [
-      "Build times over 10 minutes, critical performance regressions, or risky launches.",
-      "AI features that are unreliable, expensive, or stuck between prototype and production.",
-      "Leadership teams who need a design authority to unblock a high-stakes initiative.",
-    ],
-    highlights: [
-      "Weekly cadence: daily async reviews plus a 90-minute live session.",
-      "Your engineers execute while I design, review, and document the solution.",
-      "Fixed fee €12k–€18k, scoped before kickoff with 30-day follow-up support.",
-    ],
-    ctaText: "Explore the Sprint",
-  },
-  {
-    name: "Design Authority Retainer",
-    slug: "advisory",
-    href: "/advisory",
-    summary: "Monthly principal-level guidance capped at 10 hours for €1,600.",
-    headline: "Keep a principal engineer in your corner without the €180k salary.",
-    idealClients: [
-      "Tech leads who need a second brain for architecture decisions and PRs.",
-      "Teams adopting SwiftUI, TCA, or AI workflows who want steady expert feedback.",
-      "Founders or engineering managers balancing people leadership with technical oversight.",
-    ],
-    highlights: [
-      "Structured as 4 hours of office hours, 4 hours of deep PR reviews, 2 hours of async Slack.",
-      "Priority access to book overflow Sessions at €200/hr when workload spikes.",
-      "30-day risk-free guarantee and limited to two clients to maintain quality.",
-    ],
-    ctaText: "Explore the Retainer",
-  },
-  {
-    name: "On-Demand Sessions",
-    slug: "sessions",
-    href: "/sessions",
-    summary: "€200/hr tactical sessions booked in 60–120 minute blocks within days.",
-    headline: "Get unstuck fast, validate a decision, or prototype with a principal-level partner.",
-    idealClients: [
-      "Teams facing an immediate architecture, AI, or performance blocker.",
-      "Senior ICs who want rapid validation before investing weeks of engineering time.",
-      "Leaders testing new ideas who need a working prototype to make a go/no-go call.",
-    ],
-    highlights: [
-      "Live pairing with recorded sessions, written notes, and 24-hour follow-up support.",
-      "Common outcomes: decomposed TCA reducers, stabilized AI prompts, faster builds.",
-      "Easiest way to start—can upgrade into the Sprint or Retainer once scope expands.",
-    ],
-    ctaText: "Book a Session",
-  },
-];
-
-const menuSchema = {
+const serviceSchema = {
   "@context": "https://schema.org",
-  "@type": "OfferCatalog",
-  name: "Consulting Services",
+  "@type": "Service",
+  serviceType: "AI Shipping Consultancy",
   provider: {
     "@type": "Person",
     name: "Igor Tarasenko",
   },
-  itemListElement: offers.map(offer => ({
+  areaServed: "Worldwide",
+  description:
+    "Six-week AI shipping consultancy delivering PRs, evals, guardrails, monitoring, and handover-ready code.",
+  offers: {
     "@type": "Offer",
-    itemOffered: {
-      "@type": "Service",
-      name: offer.name,
-      url: offer.href,
-      description: offer.summary,
+    priceCurrency: "EUR",
+    price: "12000-18000",
+    priceSpecification: {
+      "@type": "PriceSpecification",
+      minPrice: "12000",
+      maxPrice: "18000",
+      priceCurrency: "EUR",
     },
-  })),
+  },
 };
 ---
 
 <Layout
-  title="Consulting – Capacity-Aware Ways to Work Together"
-  description="Choose a 6-week design authority sprint, a €1.6k/month design authority retainer, or €200/hr sessions—all sized for 10 hours per week of availability."
-  structuredData={[menuSchema]}
+  title="AI Shipping Consultancy"
+  description="The AI Shipping Consultancy lives on the homepage now."
+  structuredData={[serviceSchema]}
 >
   <Header />
-  <main id="main-content" class="mx-auto max-w-4xl px-4 py-12 space-y-12">
+  <main id="main-content" class="mx-auto max-w-3xl px-4 py-16 space-y-8">
     <section class="space-y-4">
-      <p class="text-sm uppercase tracking-wide text-accent">Consulting</p>
-      <h1 class="text-3xl font-bold">Three ways to work together</h1>
+      <p class="text-sm uppercase tracking-wide text-accent">Consultancy · Single Offer</p>
+      <h1 class="text-3xl font-bold">AI Shipping Consultancy</h1>
       <p class="text-lg text-foreground/80">
-        I reserve 10 hours per week for consulting. That means fewer concurrent clients, deeper involvement, and engagements sized to fit: a 6-week Design Authority Sprint, a €1,600/month Design Authority Retainer, or €200/hr On-Demand Sessions.
+        The full offer now lives on the homepage so there’s a single place to decide and book.
       </p>
+      <div class="flex flex-col gap-4 sm:flex-row sm:items-center">
+        <PickMyBrainButton
+          variant="pushable"
+          duration="30min"
+          text="Book a Discovery Call"
+          eventName="Conversion: Consultancy Discovery Call"
+          eventCategory="conversion"
+          eventProps={{ service: "ai-shipping-consultancy", placement: "moved" }}
+        />
+      </div>
       <p class="text-sm text-foreground/70">
-        Every project starts with a discovery call to confirm fit. Most sprints kick off within two weeks; retainer and session slots usually open sooner.
+        Read the full details on <a class="text-accent" href="/#offer">the homepage →</a>
       </p>
     </section>
-
     <Hr />
-
-    <section class="space-y-8">
-      <Testimonial
-        quote="Great and very useful tips Igor provided me to organise my code better."
-        author="Joshua Riley"
-      />
-      <Testimonial
-        quote="He's incredibly patient, very helpful. And clearly knowledgable."
-        author="Basel Farag"
-      />
-    </section>
-
-    <Hr />
-
-    <section class="space-y-12">
-      {offers.map(offer => (
-        <article class="space-y-6 rounded-lg border border-border bg-background/40 p-8 shadow-lg shadow-black/5">
-          <header class="space-y-2">
-            <h2 class="text-2xl font-semibold">{offer.name}</h2>
-            <p class="text-sm uppercase tracking-wide text-foreground/60">{offer.summary}</p>
-            <p class="text-sm text-foreground/80">{offer.headline}</p>
-          </header>
-
-          <div class="grid gap-6 md:grid-cols-2">
-            <div class="space-y-3">
-              <h3 class="text-lg font-semibold text-accent">Best fit when</h3>
-              <ul class="list-disc list-inside space-y-2 text-sm text-foreground/80">
-                {offer.idealClients.map(point => (
-                  <li>{point}</li>
-                ))}
-              </ul>
-            </div>
-            <div class="space-y-3">
-              <h3 class="text-lg font-semibold text-accent">What you can expect</h3>
-              <ul class="list-disc list-inside space-y-2 text-sm text-foreground/80">
-                {offer.highlights.map(item => (
-                  <li>{item}</li>
-                ))}
-              </ul>
-            </div>
-          </div>
-
-          <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-            <a class="text-sm font-semibold text-accent hover:underline" href={offer.href}>
-              {offer.ctaText} →
-            </a>
-            <PickMyBrainButton
-              variant="pushable"
-              duration={offer.slug === "sessions" ? "60min" : "30min"}
-              text={offer.slug === "sessions" ? "Book a 60-min Session" : "Book a Discovery Call"}
-              eventName={`Conversion: Consulting Menu ${offer.name}`}
-              eventCategory="conversion"
-              eventProps={{ service: offer.slug, placement: "consulting-menu" }}
-            />
-          </div>
-        </article>
-      ))}
-    </section>
-
-    <section class="space-y-4 text-sm leading-relaxed text-foreground/80">
-      <p>
-        Not sure which path is right? Book a discovery call and we will map the simplest way to reach your goal. If a Sprint or Retainer is overkill, we start with the Entry Point session.
-      </p>
-      <p>
-        Prefer to start with more context? You can email <a class="text-accent" href="mailto:igor@tarasenko.me">igor@tarasenko.me</a> with your challenge and I will respond within one business day.
-      </p>
-    </section>
   </main>
   <Footer />
 </Layout>

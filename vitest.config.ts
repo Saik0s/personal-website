@@ -1,10 +1,15 @@
 /// <reference types="vitest" />
 import { getViteConfig } from "astro/config";
 
-export default getViteConfig({
-  // @ts-ignore - Vitest extends Astro's config shape with a test block
-  test: {
-    environment: "happy-dom",
-    include: ["tests/**/*.test.ts"],
-  },
-});
+const createViteConfig = getViteConfig({});
+
+export default async (...args: Parameters<typeof createViteConfig>) => {
+  const config = await createViteConfig(...args);
+  return {
+    ...config,
+    test: {
+      environment: "happy-dom",
+      include: ["tests/**/*.test.ts"],
+    },
+  };
+};

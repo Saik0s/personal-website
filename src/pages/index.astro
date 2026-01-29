@@ -3,51 +3,240 @@ import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
 import Hr from "@/components/Hr.astro";
-import Card from "@/components/Card.astro";
 import Testimonial from "@/components/Testimonial.astro";
-import { getCollection } from "astro:content";
-import getSortedPosts from "@/utils/getSortedPosts";
+import PickMyBrainButton from "@/components/PickMyBrainButton.astro";
 
-// Get recent blog posts
-const posts = await getCollection("blog", ({ data }) => !data.draft);
-const sortedPosts = getSortedPosts(posts);
-const recentPosts = sortedPosts.slice(0, 5);
+const alternatives = [
+  {
+    option: "Hire an agency",
+    cost: "€50,000–€150,000",
+    time: "4–8 months",
+    result: "Slide decks, then maybe code",
+  },
+  {
+    option: "Find a technical co-founder",
+    cost: "20–40% equity",
+    time: "3–12 months to find",
+    result: "If you're lucky",
+  },
+  {
+    option: "Hire me",
+    cost: "Fixed price",
+    time: "2–4 weeks",
+    result: "Shipped MVP in your hands",
+  },
+];
+
+const builds = [
+  "iOS apps with AI at the core (not bolted on)",
+  "Agentic systems that actually work in production",
+  "Image generation pipelines (ComfyUI, Stable Diffusion)",
+  "Browser automation and scraping agents",
+  "Full-stack AI products from idea to App Store",
+];
+
+const mvpIncludes = [
+  "Working product, not a prototype",
+  "Deployed and accessible (TestFlight, web, or API)",
+  "Core flow complete, not just mockups",
+  "Clean codebase you can continue building on",
+  "Handoff call so you understand every decision",
+];
+
+const fractionalIncludes = [
+  "Architecture decisions that don't paint you into corners",
+  "Code reviews and PRs—I ship alongside your team",
+  "Hiring guidance when you're ready to build in-house",
+  "Vendor and tool selection (I've tested most of them)",
+  "On-call founder-level technical thinking",
+];
+
+const faqs = [
+  {
+    question: "How do you build so fast?",
+    answer:
+      "I use AI agents for the repetitive parts. You're not paying for my hours—you're paying for my judgment on what to build and my speed shipping it. I've been doing this for 16 years; I know what corners to cut and which ones will kill you.",
+  },
+  {
+    question: "What if I just need advice, not building?",
+    answer:
+      "Book a single session. But honestly, advice without execution is how most AI projects die. I'd rather build you something in 2 weeks than give you a roadmap that sits in a doc.",
+  },
+  {
+    question: "Can you work with my existing team?",
+    answer:
+      "Yes—that's the Fractional CTO path. I plug into your workflow, ship PRs, review code, and level up your engineers. When you're ready to go solo, I hand off cleanly.",
+  },
+  {
+    question: "What tech stack do you use?",
+    answer:
+      "Swift/SwiftUI for iOS, Python for AI/backend, TypeScript when needed. For AI: OpenAI, Anthropic, local models, ComfyUI, LangChain, or raw API calls—whatever fits. I'm not religious about tools.",
+  },
+  {
+    question: "Do you do equity deals?",
+    answer:
+      "Rarely, and only for projects I'm genuinely excited about. Cash is simpler for both of us—you keep your cap table clean, I deliver without ambiguity.",
+  },
+];
+
+const serviceSchema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  serviceType: "AI Product Builder",
+  provider: {
+    "@type": "Person",
+    name: "Igor Tarasenko",
+  },
+  areaServed: "Worldwide",
+  description:
+    "MVP sprints and fractional CTO services for AI-native products. iOS apps, agentic systems, and image generation pipelines.",
+};
 ---
 
 <Layout
-  title="Igor Tarasenko - Engineer & Solution Architect"
-  description="16 years building complete solutions—iOS, backend, and AI. I help teams solve their hardest technical problems. WhisperBoard creator. Ex-Uber."
+  title="Igor Tarasenko - AI Product Builder"
+  description="I build AI products fast. MVP in 2-4 weeks. Fractional CTO if you need me longer. iOS apps, agentic systems, image gen pipelines."
+  structuredData={[serviceSchema]}
 >
   <Header />
   <main id="main-content" class="mx-auto max-w-4xl px-4">
     <section id="hero" class="py-20 space-y-6">
-      <div class="space-y-2">
-        <h1 class="text-5xl font-bold leading-tight">Hey, I'm Igor</h1>
-        <h2 class="text-2xl text-foreground/80">Engineer &amp; Solution Architect</h2>
+      <div class="flex items-center gap-2">
+        <p class="text-sm uppercase tracking-wide text-accent">AI Product Builder</p>
+        <span class="inline-flex items-center rounded-full bg-amber-500/10 px-2 py-0.5 text-xs font-medium text-amber-500 ring-1 ring-inset ring-amber-500/20">
+          1 MVP slot left for February
+        </span>
+      </div>
+      <div class="space-y-3">
+        <h1 class="text-5xl font-bold leading-tight">I build AI products fast.</h1>
+        <p class="text-xl text-foreground/80">
+          MVP in 2–4 weeks. Fractional CTO if you need me longer.
+        </p>
       </div>
       <p class="text-lg text-foreground/80">
-        16 years building software. I help teams ship complete solutions and solve complex technical problems—from iOS architecture to on-device AI.
-      </p>
-      <p class="text-lg text-foreground/80">
-        I find where technology creates leverage and make it real.
+        Not a consultant with slide decks. Not an agency that bills by the hour. I write code, ship products, and hand you something that works.
       </p>
       <p class="text-sm text-foreground/70">
-        Currently: WhisperBoard (50k+ downloads, 4.8★). Previously: Uber.
+        Ex-Uber · Built WhisperBoard (50K+ users, 4.8★) · Created mcp-browser-use (850+ GitHub stars)
       </p>
       <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
-        <a
-          class="inline-flex items-center justify-center rounded-md bg-accent px-5 py-3 text-sm font-semibold text-background transition hover:opacity-90"
-          href="/consulting"
-        >
-          Book Consultation
-        </a>
-        <a
-          class="inline-flex items-center justify-center rounded-md border border-border px-5 py-3 text-sm font-semibold text-foreground transition hover:border-foreground"
-          href="/about"
-        >
-          More About Me
-        </a>
+        <PickMyBrainButton
+          variant="pushable"
+          duration="30min"
+          text="Book a Scoping Call"
+          eventName="Conversion: MVP Scoping Call"
+          eventCategory="conversion"
+          eventProps={{ service: "mvp-builder", placement: "hero" }}
+        />
       </div>
+      <p class="text-xs text-foreground/50 italic">
+        No thanks, I'll keep my idea in a Google Doc.
+      </p>
+    </section>
+
+    <Hr />
+
+    <section id="math" class="py-12 space-y-6">
+      <h2 class="text-2xl font-semibold">Do the math.</h2>
+      <p class="text-lg text-foreground/80">
+        You have three options. Only one of them gets you a shipped product this quarter.
+      </p>
+      <div class="grid gap-4 md:grid-cols-3">
+        {alternatives.map((alt, i) => (
+          <article class={`rounded-lg border p-6 space-y-3 ${i === 2 ? 'border-accent bg-accent/5 ring-1 ring-accent/20' : 'border-border bg-background/40'}`}>
+            <h3 class={`text-lg font-semibold ${i === 2 ? 'text-accent' : ''}`}>{alt.option}</h3>
+            <div class="space-y-1 text-sm text-foreground/80">
+              <p><strong>Cost:</strong> {alt.cost}</p>
+              <p><strong>Time:</strong> {alt.time}</p>
+              <p><strong>Result:</strong> {alt.result}</p>
+            </div>
+            {i === 2 && (
+              <p class="text-xs font-medium text-accent">← This one.</p>
+            )}
+          </article>
+        ))}
+      </div>
+      <p class="text-sm text-foreground/70">
+        Agencies charge €50k+ for discovery phases. Finding a technical co-founder takes months and costs equity you can't get back. I just build the thing.
+      </p>
+    </section>
+
+    <Hr />
+
+    <section id="offer" class="py-12 space-y-8">
+      <h2 class="text-2xl font-semibold">Two ways to work with me</h2>
+
+      <div class="grid gap-6 md:grid-cols-2">
+        <article class="rounded-lg border border-border bg-background/40 p-6 space-y-4">
+          <div>
+            <h3 class="text-xl font-semibold">MVP Sprint</h3>
+            <p class="text-sm text-foreground/60">For founders who need to ship</p>
+          </div>
+          <div class="space-y-1">
+            <p class="text-2xl font-bold">Fixed price, scoped on call</p>
+            <p class="text-sm text-foreground/60">2–4 weeks, one core journey</p>
+          </div>
+          <ul class="space-y-2 text-sm text-foreground/80">
+            {mvpIncludes.map(item => (
+              <li class="flex items-start gap-2">
+                <span class="text-accent">✓</span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+          <p class="text-xs text-foreground/60">
+            Best for: Validating an idea, raising a pre-seed, testing with real users
+          </p>
+        </article>
+
+        <article class="rounded-lg border border-accent bg-accent/5 p-6 space-y-4 ring-1 ring-accent/20">
+          <div class="flex items-center justify-between">
+            <div>
+              <h3 class="text-xl font-semibold text-accent">Fractional CTO</h3>
+              <p class="text-sm text-foreground/60">For teams that need ongoing muscle</p>
+            </div>
+            <span class="inline-flex items-center rounded-full bg-accent/20 px-2 py-0.5 text-xs font-medium text-accent">
+              Recommended
+            </span>
+          </div>
+          <div class="space-y-1">
+            <p class="text-3xl font-bold">€8,000–€12,000<span class="text-lg font-normal text-foreground/60">/month</span></p>
+            <p class="text-sm text-foreground/60">Ongoing, cancel anytime</p>
+          </div>
+          <ul class="space-y-2 text-sm text-foreground/80">
+            {fractionalIncludes.map(item => (
+              <li class="flex items-start gap-2">
+                <span class="text-accent">✓</span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+          <p class="text-xs text-foreground/60">
+            Best for: Post-MVP scaling, teams without senior AI/iOS expertise, founders who need a technical thought partner
+          </p>
+        </article>
+      </div>
+
+      <p class="text-sm text-foreground/70 text-center">
+        Not sure which? Book a scoping call. I'll tell you honestly if you need me or not.
+      </p>
+    </section>
+
+    <Hr />
+
+    <section id="builds" class="py-12 space-y-6">
+      <h2 class="text-2xl font-semibold">What I build</h2>
+      <ul class="grid gap-3 md:grid-cols-2">
+        {builds.map(item => (
+          <li class="flex items-start gap-2 text-foreground/80">
+            <span class="text-accent">→</span>
+            <span>{item}</span>
+          </li>
+        ))}
+      </ul>
+      <p class="text-sm text-foreground/70">
+        I've shipped AI-native iOS apps to 50K+ users, built open source agentic tooling used by hundreds of developers, and spent 16 years shipping software—5 of those at Uber. I know what actually works in production.
+      </p>
     </section>
 
     <Hr />
@@ -56,27 +245,89 @@ const recentPosts = sortedPosts.slice(0, 5);
       quote="Igor was so great to work with! We were able to figure out the solution to something we've been stuck on for over 2 days in less than an hour!"
       author="Alina Liu"
     />
+    <p class="text-sm text-foreground/70">
+      That was a single session. Imagine what 2–4 weeks of building looks like.
+    </p>
 
-    <section id="recent-posts" class="py-12 space-y-6">
-      <h2 class="text-2xl font-semibold">Recent Posts</h2>
-      <p class="text-sm text-foreground/70">
-        Writing about iOS architecture, AI coding workflows, and on-device ML. <a class="text-accent" href="/posts">View all →</a>
-      </p>
-      <ul class="space-y-6">
-        {recentPosts.map(post => (
-          <li>
-            <Card {...post} />
-          </li>
-        ))}
-      </ul>
+    <Hr />
+
+    <section id="why-not" class="py-12 space-y-6">
+      <h2 class="text-2xl font-semibold">Why you might say no</h2>
+      <div class="space-y-4">
+        <article class="rounded-lg border border-border bg-background/40 p-5">
+          <p class="font-medium">"I'll just hire someone cheaper on Upwork."</p>
+          <p class="mt-2 text-sm text-foreground/70">
+            You'll spend 3 months managing someone who doesn't understand AI, then hire me anyway. I've seen it happen dozens of times. Your call.
+          </p>
+        </article>
+        <article class="rounded-lg border border-border bg-background/40 p-5">
+          <p class="font-medium">"I'll find a technical co-founder instead."</p>
+          <p class="mt-2 text-sm text-foreground/70">
+            Great—if you find one. Average time: 6 months. Average equity: 25–40%. Or you could have a shipped MVP in 3 weeks and keep your cap table clean.
+          </p>
+        </article>
+        <article class="rounded-lg border border-border bg-background/40 p-5">
+          <p class="font-medium">"I'll build it myself with ChatGPT."</p>
+          <p class="mt-2 text-sm text-foreground/70">
+            That's actually how I build so fast. The difference is 16 years of knowing which corners to cut and which ones will kill your product. ChatGPT writes code. I make decisions.
+          </p>
+        </article>
+        <article class="rounded-lg border border-border bg-background/40 p-5">
+          <p class="font-medium">"It's too expensive."</p>
+          <p class="mt-2 text-sm text-foreground/70">
+            Compare it to agencies (€50k+), a technical co-founder (25% equity), or 6 months of your time figuring it out. The question isn't cost—it's whether you're serious about launching.
+          </p>
+        </article>
+      </div>
     </section>
 
     <Hr />
 
-    <section class="py-12">
+    <section id="faq" class="space-y-4 py-8" aria-labelledby="faq-heading">
+      <h2 id="faq-heading" class="text-2xl font-semibold">FAQ</h2>
+      <div class="space-y-4">
+        {faqs.map(item => (
+          <details class="rounded-lg border border-border bg-background/30 p-4">
+            <summary class="cursor-pointer text-lg font-semibold">{item.question}</summary>
+            <p class="mt-3 text-sm text-foreground/80">{item.answer}</p>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <Hr />
+
+    <section id="booking" class="space-y-4 py-12">
+      <h2 class="text-2xl font-semibold">Ready to ship?</h2>
+      <p class="text-lg text-foreground/80">
+        Book a 30-minute scoping call. I'll ask about your product, tell you honestly if I can help, and send a fixed-price proposal within 48 hours.
+      </p>
       <p class="text-sm text-foreground/70">
-        I also offer high-impact, async-first consulting for a small number of clients.{" "}
-        <a class="text-accent" href="/consulting">Learn more →</a>
+        I take 2–3 MVP projects per month. Current availability: 1 slot for February, 2 for March.
+      </p>
+      <div class="flex flex-col gap-4 sm:flex-row sm:items-center">
+        <PickMyBrainButton
+          variant="pushable"
+          duration="30min"
+          text="Book a Scoping Call"
+          eventName="Conversion: MVP Scoping Call"
+          eventCategory="conversion"
+          eventProps={{ service: "mvp-builder", placement: "footer" }}
+        />
+      </div>
+      <p class="text-xs text-foreground/50 italic">
+        No thanks, I'll keep researching for another 6 months.
+      </p>
+      <p class="text-sm text-foreground/70">
+        Prefer async? Email <a class="text-accent" href="mailto:igor@tarasenko.dev">igor@tarasenko.dev</a> with what you're building.
+      </p>
+    </section>
+
+    <Hr />
+
+    <section id="writing" class="py-8">
+      <p class="text-sm text-foreground/70">
+        Want to see how I think? <a class="text-accent" href="/posts">Read the writing →</a>
       </p>
     </section>
   </main>

@@ -3,16 +3,13 @@ import { experimental_AstroContainer } from "astro/container";
 import SessionsPage from "../src/pages/sessions.astro";
 
 describe("Sessions page", () => {
-  it("highlights pricing, fit guidance, and focus areas", async () => {
+  it("routes visitors to the single consultancy offer", async () => {
     const container = await experimental_AstroContainer.create();
     const result = await container.renderToString(SessionsPage);
 
-    expect(result).toContain("Engineering Sessions");
-    expect(result).toContain("€200/hr");
-    expect(result).toContain("Is This Right for You?");
-    expect(result).toContain("What We Cover in Sessions");
-    expect(result).toContain("iOS Engineering");
-    expect(result).toContain("Agentic Automation");
-    expect(result).toContain("Rapid Validation");
+    expect(result).toContain("AI Shipping Consultancy");
+    expect(result).toContain("This offer has moved.");
+    expect(result).toContain("Book a Discovery Call");
+    expect(result).toContain("/#offer");
   });
 });
