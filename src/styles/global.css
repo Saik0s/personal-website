@@ -3,39 +3,23 @@
 
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
-/* Fade up animation */
-.fade-up {
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeUp 0.6s ease-out forwards;
-}
-
-@keyframes fadeUp {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 :root,
-html[data-theme="light"] {
-  --background: #2d2d2d;
-  --foreground: #e8e8e8;
-  --accent: #ff6b4a;
-  --muted: #808080;
-  --border: #3d3d3d;
-}
-
+html[data-theme="light"],
 html[data-theme="dark"] {
-  --background: #2d2d2d;
-  --foreground: #e8e8e8;
-  --accent: #ff6b4a;
-  --muted: #808080;
-  --border: #3d3d3d;
+  --background: #0a0a0a;
+  --surface: #101010;
+  --foreground: #e0e0e0;
+  --accent: #22c55e;
+  --muted: #8f8f8f;
+  --border: #242424;
+  --font-mono-stack:
+    "SF Mono", "Fira Code", "Cascadia Code", ui-monospace, SFMono-Regular,
+    Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
 @theme inline {
   --color-background: var(--background);
+  --color-surface: var(--surface);
   --color-foreground: var(--foreground);
   --color-accent: var(--accent);
   --color-muted: var(--muted);
@@ -44,24 +28,51 @@ html[data-theme="dark"] {
 
 @layer base {
   * {
-    @apply border-border outline-accent/75;
-    scrollbar-width: auto;
-    scrollbar-color: var(--color-muted) transparent;
+    @apply border-border outline-accent/80;
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in srgb, var(--accent) 45%, transparent) transparent;
   }
+
   html {
-    @apply overflow-y-scroll scroll-smooth;
+    @apply overflow-y-scroll scroll-smooth bg-background text-foreground;
+    color-scheme: dark;
   }
+
   body {
-    @apply flex min-h-svh flex-col bg-background font-mono text-foreground selection:bg-accent/75 selection:text-background;
+    @apply relative flex min-h-svh flex-col bg-background text-foreground selection:bg-accent/20 selection:text-foreground;
+    font-family: var(--font-mono-stack);
+    letter-spacing: -0.01em;
   }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.05;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.1' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    background-size: 180px 180px;
+    mix-blend-mode: soft-light;
+  }
+
+  header,
+  main,
+  footer {
+    position: relative;
+    z-index: 2;
+  }
+
   a,
   button {
-    @apply outline-offset-1 outline-accent focus-visible:no-underline focus-visible:outline-2 focus-visible:outline-dashed;
+    @apply outline-offset-2 outline-accent focus-visible:no-underline focus-visible:outline-2 focus-visible:outline-dashed;
   }
+
   button:not(:disabled),
   [role="button"]:not(:disabled) {
     cursor: pointer;
   }
+
   section,
   footer {
     @apply mx-auto max-w-app px-4;
@@ -69,139 +80,126 @@ html[data-theme="dark"] {
 }
 
 @utility max-w-app {
-  @apply max-w-3xl;
+  @apply max-w-4xl;
 }
 
-.active-nav {
-  @apply underline decoration-wavy decoration-2 underline-offset-4;
-}
-
-/* Source: https://piccalil.li/blog/a-more-modern-css-reset/ */
-/* Anything that has been anchored to should have extra scroll margin */
 :target {
   scroll-margin-block: 1rem;
 }
 
-/* Custom Button Styles */
-.about-button {
-  background-color: rgba(255, 255, 255, 0.05);
-  color: #e8e8e8 !important;
-  padding: 3px 8px;
-  text-decoration: none;
-  border-radius: 5px;
-  margin-right: 10px;
-  font-size: 14px;
-  transition: all 0.3s ease;
-  display: inline-block;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+.active-nav {
+  @apply text-accent;
 }
 
-.pick-my-brain-button {
-  background-color: rgba(255, 107, 74, 0.1);
-  color: #ff6b4a !important;
-  font-weight: 700;
-  font-size: 1.125rem;
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  text-decoration: none;
-  position: relative;
-  overflow: hidden;
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-  border: 1px solid #ff6b4a;
-  transform: translateY(0);
-  display: inline-block;
-  margin: 0.25rem;
+.terminal-section {
+  @apply max-w-6xl px-4;
 }
 
-.pick-my-brain-button:hover {
-  background-color: rgba(255, 107, 74, 0.2);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(255, 107, 74, 0.25);
+.terminal-bar {
+  @apply flex flex-wrap items-center gap-3 text-[0.7rem] uppercase tracking-[0.3em] text-foreground/54;
 }
 
-/* 3D Pushable Button Styles */
+.terminal-bar__item {
+  @apply inline-flex items-center gap-2 border border-border px-3 py-2;
+}
+
+.terminal-bar__item--strong,
+.terminal-bar__item--status {
+  @apply text-foreground;
+}
+
+.terminal-tag {
+  @apply inline-flex items-center gap-2 border border-border px-3 py-2 text-[0.68rem] uppercase tracking-[0.24em] text-foreground/58;
+}
+
+.terminal-tag--live {
+  @apply border-accent/50 text-accent;
+}
+
+.section-label {
+  @apply flex items-center gap-4 text-[0.72rem] uppercase tracking-[0.28em] text-foreground/52;
+}
+
+.terminal-panel {
+  @apply border border-border bg-surface/80 p-6 md:p-8;
+}
+
+.terminal-panel--accent {
+  @apply border-accent/40;
+}
+
+.terminal-spec-row {
+  @apply flex items-end gap-3;
+}
+
+.dot-leader-fill {
+  flex: 1 1 auto;
+  transform: translateY(-0.2rem);
+  border-bottom: 1px dotted color-mix(in srgb, var(--foreground) 18%, transparent);
+}
+
+.pulse-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 9999px;
+  background-color: var(--accent);
+  box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4);
+  animation: pulseDot 1.8s ease-out infinite;
+}
+
+@keyframes pulseDot {
+  0% {
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.45);
+  }
+
+  70% {
+    box-shadow: 0 0 0 0.6rem rgba(34, 197, 94, 0);
+  }
+
+  100% {
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+  }
+}
+
+.about-button,
 .pushable {
-  position: relative;
-  border: none;
-  background: transparent;
-  padding: 0;
-  cursor: pointer;
-  outline-offset: 4px;
-  transition: filter 250ms;
-  margin-right: 20px;
-  margin-bottom: 20px;
+  @apply inline-flex items-center uppercase no-underline;
+  letter-spacing: 0.22em;
 }
 
-.shadow {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 12px;
-  background: hsl(0deg 0% 0% / 0.25);
-  will-change: transform;
-  transform: translateY(2px);
-  transition: transform 600ms cubic-bezier(0.3, 0.7, 0.4, 1);
+.about-button,
+.pushable .front {
+  @apply border border-accent/55 bg-accent/8 px-5 py-4 text-[0.75rem] text-foreground transition duration-200 ease-out;
 }
 
-.edge {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 12px;
-  background: linear-gradient(
-    to left,
-    hsl(13deg 84% 30%) 0%,
-    hsl(13deg 84% 40%) 8%,
-    hsl(13deg 84% 40%) 92%,
-    hsl(13deg 84% 30%) 100%
-  );
-}
-
-.front {
-  display: block;
-  position: relative;
-  padding: 12px 42px;
-  border-radius: 12px;
-  font-size: 1.25rem;
-  color: white;
-  background: hsl(13deg 84% 55%);
-  will-change: transform;
-  transform: translateY(-4px);
-  transition: transform 600ms cubic-bezier(0.3, 0.7, 0.4, 1);
-}
-
-.pushable:hover {
-  filter: brightness(110%);
-}
-
-.pushable:hover a {
-  filter: none !important;
-}
-
+.pick-my-brain-button:hover,
 .pushable:hover .front {
-  transform: translateY(-6px);
-  transition: transform 250ms cubic-bezier(0.3, 0.7, 0.4, 1.5);
+  @apply border-accent bg-accent/14 text-accent;
+  transform: translateY(-1px);
 }
 
+.pick-my-brain-button:active,
 .pushable:active .front {
-  transform: translateY(-2px);
-  transition: transform 34ms;
+  transform: translateY(0);
 }
 
-.pushable:hover .shadow {
-  transform: translateY(4px);
-  transition: transform 250ms cubic-bezier(0.3, 0.7, 0.4, 1.5);
+.pushable {
+  @apply relative;
 }
 
-.pushable:active .shadow {
-  transform: translateY(1px);
-  transition: transform 34ms;
+.pushable .shadow,
+.pushable .edge {
+  display: none;
 }
 
-.pushable:focus:not(:focus-visible) {
-  outline: none;
+.pushable .front {
+  @apply inline-flex items-center;
+}
+
+.coffee-button {
+  @apply border-border bg-foreground text-background;
+}
+
+.coffee-button:hover {
+  @apply border-foreground text-background;
 }

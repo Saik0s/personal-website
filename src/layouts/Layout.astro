@@ -87,6 +87,7 @@ const organizationSchema = {
 <html
   dir={SITE.dir}
   lang=`${SITE.lang ?? "en"}`
+  data-theme="dark"
   class={`${scrollSmooth && "scroll-smooth"}`}
 >
   <head>
@@ -155,7 +156,7 @@ const organizationSchema = {
       href={Astro.site ? new URL("rss.xml", Astro.site) : "/rss.xml"}
     />
 
-    <meta name="theme-color" content="" />
+    <meta name="theme-color" content="#0a0a0a" />
 
     {
       // If PUBLIC_GOOGLE_SITE_VERIFICATION is set in the environment variable,
