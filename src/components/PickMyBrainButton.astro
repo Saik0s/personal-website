@@ -31,24 +31,25 @@ const eventPropsString =
 
 {
   variant === "pushable" ? (
-    <button class="pushable">
-      <a
-        href={calLink}
-        target="_blank"
-        style="color: inherit; text-decoration: none;"
-        data-stats-event={eventName}
-        data-stats-category={eventCategory}
-        data-stats-props={eventPropsString}
-      >
-        <span class="shadow" />
-        <span class="edge" />
-        <span class="front">{text}</span>
-      </a>
-    </button>
+    <a
+      href={calLink}
+      target="_blank"
+      rel="noreferrer"
+      class="pushable"
+      style="color: inherit; text-decoration: none;"
+      data-stats-event={eventName}
+      data-stats-category={eventCategory}
+      data-stats-props={eventPropsString}
+    >
+      <span class="shadow" />
+      <span class="edge" />
+      <span class="front">{text}</span>
+    </a>
   ) : (
     <a
       href={calLink}
       target="_blank"
+      rel="noreferrer"
       class="about-button pick-my-brain-button"
       data-stats-event={eventName}
       data-stats-category={eventCategory}
