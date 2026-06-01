@@ -2,478 +2,109 @@
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
-import PickMyBrainButton from "@/components/PickMyBrainButton.astro";
 import { getCollection } from "astro:content";
 import { getPath } from "@/utils/getPath";
-import getSortedPosts from "@/utils/getSortedPosts";
 
 const posts = await getCollection("blog");
-const recentPosts = getSortedPosts(posts).slice(0, 5);
 
-const heroTags = [
-  "EST. 2010",
-  "16 YEARS",
-  "EX-UBER",
-];
+const findPath = (slug: string, fallback = "/posts") => {
+  const match = posts.find(p => p.id === slug || p.id.endsWith(`/${slug}`));
+  return match ? getPath(match.id, match.filePath) : fallback;
+};
 
-const operatorProof = [
+const writing = [
   {
-    label: "TENURE",
-    value: "16 years shipping software",
+    label: "Is Your Repo Ready for AI Agents?",
+    href: findPath("is-your-repo-ready-for-ai-agents"),
   },
   {
-    label: "SYSTEMS",
-    value: "5 years inside Uber-scale product teams",
+    label: "If \u201cClear Tickets\u201d Belong to Agents, Where Is Your Edge?",
+    href: findPath("agentic-engineering-solo-cell"),
   },
   {
-    label: "PRODUCT",
-    value: "WhisperBoard, 50k+ users",
-  },
-  {
-    label: "OPEN SOURCE",
-    value: "mcp-browser-use, 850+ GitHub stars",
+    label: "How Sourcery Makes AI 10x More Useful in Large iOS Codebases",
+    href: findPath("ios_codebase_context_sourcery"),
   },
 ];
 
-const capabilities = [
-  {
-    title: "IOS + AI APPS",
-    description:
-      "Native products where the model is inside the core loop, not stapled onto a demo screen.",
-  },
-  {
-    title: "AGENTIC SYSTEMS",
-    description:
-      "Browser automation, internal tools, evals, and the glue code that keeps agents useful in production.",
-  },
-  {
-    title: "FULL-STACK AI PRODUCTS",
-    description:
-      "Frontend, backend, inference, deployment, analytics, and handoff. One operator, end to end.",
-  },
-];
-
-const principles = [
-  "No decks, no workshops, no six-week discovery theater.",
-  "I write code, ship the product, and leave a codebase your team can keep pushing.",
-  "If the fastest move is killing a bad scope early, I say that early.",
-];
-
-const deployIf = [
-  "You need a real MVP in weeks, not another prototype graveyard.",
-  "The workflow is clear enough to scope, even if the implementation is still messy.",
-  "You want one person accountable for product, code, and shipping momentum.",
-];
-
-const abortIf = [
-  "You want strategy decks more than working software.",
-  "The project only makes sense if the model does something magical next quarter.",
-  "You need a large retained team before you have one sharp problem to solve.",
-];
-
-const serviceSchema = {
+const personSchema = {
   "@context": "https://schema.org",
-  "@type": "Service",
-  serviceType: "AI Product Builder",
-  provider: {
-    "@type": "Person",
-    name: "Igor Tarasenko",
+  "@type": "Person",
+  name: "Igor Tarasenko",
+  jobTitle: "iOS and AI engineer",
+  url: "https://tarasenko.dev",
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Amsterdam",
+    addressCountry: "NL",
   },
-  areaServed: "Worldwide",
-  description:
-    "MVP sprints and fractional CTO support for AI-native products, iOS apps, agentic systems, and full-stack AI software.",
+  sameAs: ["https://github.com/Saik0s", "https://x.com/saik0s"],
 };
 ---
 
 <Layout
-  title="Igor Tarasenko | AI Product Builder"
-  description="Terminal-style consulting site for Igor Tarasenko. MVP sprints, fractional CTO support, and shipped AI products without the deck theater."
-  structuredData={[serviceSchema]}
+  title="Igor Tarasenko"
+  description="Igor Tarasenko, iOS and AI engineer based in Amsterdam. Writing about the part of an AI product that lives between a demo and production."
+  structuredData={personSchema}
 >
   <Header />
 
-  <main id="main-content" class="pb-24 md:pb-32">
-    <section class="terminal-section pt-10 md:pt-14">
-      <div class="terminal-bar">
-        <span class="terminal-bar__item terminal-bar__item--strong">
-          IGOR_TARASENKO
-        </span>
-        <span class="terminal-bar__item">AI PRODUCT BUILDER</span>
-        <span class="terminal-bar__item terminal-bar__item--status">
-          <span class="pulse-dot" aria-hidden="true"></span>
-          STATUS: ACTIVE
-        </span>
-      </div>
+  <div class="grid">
+    <main class="content">
+      <section class="hero">
+        <h1>
+          <span class="br">Hi, I&rsquo;m Igor</span>
+          <span class="br">Tarasenko.</span>
+        </h1>
 
-      <div class="mt-10 grid gap-14 border-t border-border pt-10 lg:grid-cols-[minmax(0,1.65fr)_minmax(18rem,0.85fr)] lg:gap-20">
-        <div class="space-y-8">
-          <div class="flex flex-wrap gap-2">
-            {heroTags.map(tag => (
-              <span class="terminal-tag">{tag}</span>
-            ))}
-            <span class="terminal-tag terminal-tag--live">
-              <span class="pulse-dot" aria-hidden="true"></span>
-              ACCEPTING CLIENTS
-            </span>
-          </div>
+        <p>
+          I&rsquo;m an iOS and AI engineer based in Amsterdam. Five years at
+          Uber before that, on server-driven UI and then payments.
+        </p>
 
-          <div class="space-y-6">
-            <h1 class="max-w-4xl text-[clamp(3.25rem,10vw,6.75rem)] leading-none tracking-[-0.08em] text-foreground">
-              I build AI products.
-              <br />
-              You ship faster.
-            </h1>
-            <p class="max-w-2xl text-lg leading-relaxed text-foreground/72 md:text-xl">
-              Founders do not need more AI demos. They need the real workflow,
-              wired into product, data, and shipping cadence.
-            </p>
-          </div>
+        <p>
+          These days I&rsquo;m in-house at a large enterprise SaaS company. iOS,
+          the dev environment, and the agents the team runs in production. On
+          the side:
+          <a href="https://github.com/Saik0s/mcp-browser-use">mcp-browser-use</a>,
+          an open-source MCP server for browser automation;
+          <a href="https://apps.apple.com/app/whisperboard/id1661442906">WhisperBoard</a>,
+          an on-device iOS Whisper app; and coaching senior engineers on
+          <a href="https://www.codementor.io/@saik0s">Codementor</a>.
+        </p>
 
-          <div class="space-y-4">
-            <PickMyBrainButton
-              duration="30min"
-              text="BOOK DISCOVERY CALL"
-              eventName="Conversion: Discovery Call"
-              eventCategory="conversion"
-              eventProps={{ placement: "hero", page: "home" }}
-            />
-            <p class="text-sm uppercase tracking-[0.18em] text-foreground/52">
-              Or email
-              <a class="text-accent" href="mailto:igor@tarasenko.dev">
-                igor@tarasenko.dev
-              </a>
-              if the problem needs context first.
-            </p>
-          </div>
-        </div>
+        <p>
+          I write about the part of an AI product that lives between a demo and
+          production: evals, guardrails, agent loops, repo shape that
+          doesn&rsquo;t fight the agent, dev environments where the agent can
+          check its own work. I burn $10k a month on tokens learning what works
+          and what doesn&rsquo;t.
+        </p>
 
-        <aside class="terminal-panel">
-          <div class="section-label">
-            <span class="text-accent">RUN MODE</span>
-          </div>
-          <div class="mt-6 space-y-4 text-sm uppercase tracking-[0.18em] text-foreground/64">
-            <div class="terminal-spec-row">
-              <span>BASE</span>
-              <span class="dot-leader-fill"></span>
-              <span>AMSTERDAM / WORLDWIDE</span>
-            </div>
-            <div class="terminal-spec-row">
-              <span>WINDOW</span>
-              <span class="dot-leader-fill"></span>
-              <span>2-4 WEEK MVP SPRINTS</span>
-            </div>
-            <div class="terminal-spec-row">
-              <span>FOCUS</span>
-              <span class="dot-leader-fill"></span>
-              <span>IOS, AGENTS, FULL STACK</span>
-            </div>
-            <div class="terminal-spec-row">
-              <span>DEFAULT</span>
-              <span class="dot-leader-fill"></span>
-              <span>CODE FIRST, TALK SECOND</span>
-            </div>
-          </div>
-          <p class="mt-8 max-w-sm text-sm leading-relaxed text-foreground/66">
-            I work like an operator dropped into the product, not a layer added
-            on top of it. Scope the bottleneck, build the thing, hand over clean
-            code.
-          </p>
-        </aside>
-      </div>
-    </section>
+        <div class="timestamp">Last updated: May 2026</div>
+      </section>
 
-    <section id="problem" class="terminal-section mt-20 border-t border-border py-16 md:mt-24 md:py-20">
-      <div class="section-label">
-        <span class="text-accent">01</span>
-        <span>THE PROBLEM</span>
-      </div>
-      <div class="mt-8 grid gap-10 lg:grid-cols-[minmax(0,1.4fr)_minmax(18rem,0.8fr)]">
-        <div class="space-y-5 text-lg leading-relaxed text-foreground/74">
-          <h2 class="max-w-3xl text-3xl leading-tight tracking-[-0.05em] text-foreground md:text-4xl">
-            Founders have seen the AI demo. They still cannot get AI inside the
-            workflow that actually matters.
-          </h2>
-          <p>
-            The model output looks good in a sandbox, then reality shows up.
-            Product edges, latency, weird data, handoffs, and the part where a
-            human still has to trust the result.
-          </p>
-          <p>
-            Most teams stall between prototype and product because nobody owns
-            the full stack. The feature becomes a lab experiment instead of a
-            shipped workflow.
-          </p>
-        </div>
+      <section>
+        <h2 class="label">Selected writing</h2>
+        <ol class="writing">
+          {writing.map(item => (
+            <li><a href={item.href}>{item.label}</a></li>
+          ))}
+        </ol>
+        <p class="all-writing"><a href="/posts">All writing &rarr;</a></p>
+      </section>
 
-        <div class="terminal-panel space-y-4 text-sm leading-relaxed text-foreground/66">
-          <p class="uppercase tracking-[0.18em] text-foreground/48">
-            COMMON FAILURE MODE
-          </p>
-          <p>
-            Nice demo. No instrumentation. No product loop. No real user path.
-            No one accountable for turning it into software people can rely on.
-          </p>
-        </div>
-      </div>
-    </section>
+      <section>
+        <p class="proof">
+          WhisperBoard 4.8&#9733; on the App Store<span class="dot">·</span>mcp-browser-use ~900 stars on GitHub<span class="dot">·</span>Codementor 5.0 across 30 sessions
+        </p>
 
-    <section id="operator" class="terminal-section border-t border-border py-16 md:py-20">
-      <div class="section-label">
-        <span class="text-accent">02</span>
-        <span>THE OPERATOR</span>
-      </div>
-      <div class="mt-8 grid gap-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.95fr)]">
-        <div class="space-y-5 text-lg leading-relaxed text-foreground/74">
-          <h2 class="max-w-3xl text-3xl leading-tight tracking-[-0.05em] text-foreground md:text-4xl">
-            I have spent 16 years shipping software, including five years at
-            Uber, and the last stretch deep in AI product work.
-          </h2>
-          <p>
-            I built WhisperBoard into a product used by more than 50,000 people.
-            I built mcp-browser-use into open source tooling with 850+ GitHub
-            stars. I know how to move from rough scope to working product
-            without dragging a committee into it.
-          </p>
-          <p>
-            When I join, you get one person who can shape the product, write the
-            code, handle the ugly edge cases, and keep momentum high until the
-            thing is live.
-          </p>
-        </div>
+        <p class="closing">
+          <a href="/work">Available for selected engagements <span class="arrow">&rarr;</span></a>
+        </p>
+      </section>
 
-        <div class="terminal-panel">
-          <div class="space-y-4 text-sm uppercase tracking-[0.18em] text-foreground/64">
-            {operatorProof.map(item => (
-              <div class="terminal-spec-row">
-                <span>{item.label}</span>
-                <span class="dot-leader-fill"></span>
-                <span>{item.value}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="engagements" class="terminal-section border-t border-border py-16 md:py-20">
-      <div class="section-label">
-        <span class="text-accent">03</span>
-        <span>ENGAGEMENTS</span>
-      </div>
-      <div class="mt-8 grid gap-6 xl:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)]">
-        <article class="terminal-panel">
-          <p class="text-xs uppercase tracking-[0.2em] text-foreground/48">
-            MVP SPRINT
-          </p>
-          <h2 class="mt-4 text-2xl tracking-[-0.05em] text-foreground md:text-3xl">
-            One focused build. One working product path.
-          </h2>
-          <p class="mt-4 max-w-xl text-base leading-relaxed text-foreground/68">
-            Best when you need the first version in users' hands fast. Tight
-            scope, one core journey, production-ready enough to learn from real
-            behavior.
-          </p>
-          <div class="mt-8 space-y-3 text-sm uppercase tracking-[0.18em] text-foreground/62">
-            <div class="terminal-spec-row">
-              <span>PRICE</span>
-              <span class="dot-leader-fill"></span>
-              <span>SCOPED ON CALL</span>
-            </div>
-            <div class="terminal-spec-row">
-              <span>DURATION</span>
-              <span class="dot-leader-fill"></span>
-              <span>2-4 WEEKS</span>
-            </div>
-            <div class="terminal-spec-row">
-              <span>OUTPUT</span>
-              <span class="dot-leader-fill"></span>
-              <span>WORKING MVP</span>
-            </div>
-          </div>
-        </article>
-
-        <article class="terminal-panel terminal-panel--accent">
-          <p class="text-xs uppercase tracking-[0.2em] text-accent">
-            FRACTIONAL CTO
-          </p>
-          <h2 class="mt-4 text-2xl tracking-[-0.05em] text-foreground md:text-3xl">
-            Senior technical leverage without waiting to hire it.
-          </h2>
-          <p class="mt-4 max-w-xl text-base leading-relaxed text-foreground/68">
-            Best when the product exists, the pace matters, and your team needs
-            a hands-on operator for architecture, code, and shipping discipline.
-          </p>
-          <div class="mt-8 space-y-3 text-sm uppercase tracking-[0.18em] text-foreground/62">
-            <div class="terminal-spec-row">
-              <span>PRICE</span>
-              <span class="dot-leader-fill"></span>
-              <span>€8,000-€12,000 / MONTH</span>
-            </div>
-            <div class="terminal-spec-row">
-              <span>MODEL</span>
-              <span class="dot-leader-fill"></span>
-              <span>ONGOING</span>
-            </div>
-            <div class="terminal-spec-row">
-              <span>OUTPUT</span>
-              <span class="dot-leader-fill"></span>
-              <span>SHIPPED PRODUCT + TEAM LEVERAGE</span>
-            </div>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section id="capabilities" class="terminal-section border-t border-border py-16 md:py-20">
-      <div class="section-label">
-        <span class="text-accent">04</span>
-        <span>CAPABILITIES</span>
-      </div>
-      <div class="mt-8 grid gap-6 md:grid-cols-3">
-        {capabilities.map(capability => (
-          <article class="terminal-panel min-h-full">
-            <p class="text-xs uppercase tracking-[0.2em] text-accent">
-              {capability.title}
-            </p>
-            <p class="mt-4 text-base leading-relaxed text-foreground/68">
-              {capability.description}
-            </p>
-          </article>
-        ))}
-      </div>
-    </section>
-
-    <section id="writing" class="terminal-section border-t border-border py-16 md:py-20">
-      <div class="section-label">
-        <span class="text-accent">05</span>
-        <span>WRITING</span>
-      </div>
-      <div class="mt-8 space-y-0">
-        {recentPosts.map(post => (
-          <a
-            href={getPath(post.id, post.filePath)}
-            class="group block border-b border-border py-5 first:pt-0 last:border-0"
-          >
-            <div class="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-4">
-              <h3 class="text-base text-foreground group-hover:text-accent transition-colors sm:text-lg">
-                {post.data.title}
-              </h3>
-              <time
-                class="shrink-0 text-xs uppercase tracking-[0.18em] text-foreground/40"
-                datetime={post.data.pubDatetime.toISOString()}
-              >
-                {post.data.pubDatetime.toLocaleDateString("en-US", { year: "numeric", month: "short" })}
-              </time>
-            </div>
-            {post.data.description && (
-              <p class="mt-2 max-w-2xl text-sm leading-relaxed text-foreground/52">
-                {post.data.description}
-              </p>
-            )}
-          </a>
-        ))}
-      </div>
-      <div class="mt-8">
-        <a href="/posts" class="text-sm uppercase tracking-[0.18em] text-accent hover:text-foreground transition-colors">
-          ALL POSTS →
-        </a>
-      </div>
-    </section>
-
-    <section id="principles" class="terminal-section border-t border-border py-16 md:py-20">
-      <div class="section-label">
-        <span class="text-accent">06</span>
-        <span>OPERATING PRINCIPLES</span>
-      </div>
-      <div class="mt-8 grid gap-10 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)]">
-        <div class="space-y-5 text-lg leading-relaxed text-foreground/74">
-          <h2 class="max-w-3xl text-3xl leading-tight tracking-[-0.05em] text-foreground md:text-4xl">
-            This is not consulting.
-          </h2>
-          <p>
-            I am not here to narrate obvious problems back to you in a deck. I
-            am here to make the product real, shorten the distance to shipping,
-            and remove technical drag while we do it.
-          </p>
-        </div>
-
-        <div class="terminal-panel">
-          <ul class="space-y-4 text-base leading-relaxed text-foreground/68">
-            {principles.map(item => (
-              <li class="border-b border-border pb-4 last:border-0 last:pb-0">
-                {item}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <section id="fit-check" class="terminal-section border-t border-border py-16 md:py-20">
-      <div class="section-label">
-        <span class="text-accent">07</span>
-        <span>FIT CHECK</span>
-      </div>
-      <div class="mt-8 grid gap-6 md:grid-cols-2">
-        <article class="terminal-panel">
-          <p class="text-xs uppercase tracking-[0.2em] text-accent">DEPLOY IF</p>
-          <ul class="mt-5 space-y-4 text-base leading-relaxed text-foreground/68">
-            {deployIf.map(item => (
-              <li class="border-b border-border pb-4 last:border-0 last:pb-0">
-                {item}
-              </li>
-            ))}
-          </ul>
-        </article>
-
-        <article class="terminal-panel">
-          <p class="text-xs uppercase tracking-[0.2em] text-foreground/48">ABORT IF</p>
-          <ul class="mt-5 space-y-4 text-base leading-relaxed text-foreground/68">
-            {abortIf.map(item => (
-              <li class="border-b border-border pb-4 last:border-0 last:pb-0">
-                {item}
-              </li>
-            ))}
-          </ul>
-        </article>
-      </div>
-    </section>
-
-    <section class="terminal-section border-t border-border py-16 md:py-20">
-      <div class="terminal-panel terminal-panel--accent">
-        <div class="section-label">
-          <span class="text-accent">NEXT STEP</span>
-        </div>
-        <div class="mt-6 grid gap-8 lg:grid-cols-[minmax(0,1.25fr)_auto] lg:items-end">
-          <div class="space-y-4">
-            <h2 class="max-w-3xl text-3xl leading-tight tracking-[-0.05em] text-foreground md:text-4xl">
-              If you need an operator instead of more AI theater, book the call.
-            </h2>
-            <p class="max-w-2xl text-base leading-relaxed text-foreground/68">
-              We will figure out whether the bottleneck is scope, stack, product
-              shape, or execution. If it is a fit, I will tell you the fastest
-              version worth shipping.
-            </p>
-            <p class="text-sm uppercase tracking-[0.18em] text-foreground/52">
-              Prefer async? Email
-              <a class="text-accent" href="mailto:igor@tarasenko.dev">
-                igor@tarasenko.dev
-              </a>
-              with what you are building.
-            </p>
-          </div>
-
-          <PickMyBrainButton
-            duration="30min"
-            text="BOOK DISCOVERY CALL"
-            eventName="Conversion: Discovery Call"
-            eventCategory="conversion"
-            eventProps={{ placement: "cta", page: "home" }}
-          />
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <Footer />
+      <Footer />
+    </main>
+  </div>
 </Layout>

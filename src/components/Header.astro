@@ -1,61 +1,28 @@
 ---
-import Hr from "./Hr.astro";
-
 const { pathname } = Astro.url;
+const cur = pathname.endsWith("/") && pathname !== "/" ? pathname.slice(0, -1) : pathname;
 
-const currentPath =
-  pathname.endsWith("/") && pathname !== "/" ? pathname.slice(0, -1) : pathname;
-
-const isActive = (path: string) => {
-  if (path === "/") return currentPath === "/";
-
-  const currentSegments = currentPath.split("/").filter(Boolean);
-  const targetSegments = path.split("/").filter(Boolean);
-
-  return currentSegments[0] === targetSegments[0];
+const isActive = (href: string) => {
+  if (href === "/") return cur === "/";
+  return cur === href || cur.startsWith(href + "/");
 };
 
-const navLinks = [
-  { href: "/", label: "Home" },
-  { href: "/posts", label: "Blog" },
+const links: { href: string; label: string }[] = [
+  { href: "/posts", label: "Writing" },
+  { href: "/work", label: "Work" },
   { href: "/about", label: "About" },
 ];
 ---
 
-<header>
-  <a
-    id="skip-to-content"
-    href="#main-content"
-    class="absolute left-4 top-3 -translate-y-20 border border-accent/60 bg-background px-3 py-2 text-[0.72rem] uppercase tracking-[0.22em] text-accent transition-transform focus:translate-y-0"
-  >
-    Skip to content
-  </a>
-
-  <div class="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-6 md:flex-row md:items-center md:justify-between md:py-8">
-    <a
-      href="/"
-      class="text-sm uppercase tracking-[0.32em] text-foreground transition-colors hover:text-accent"
-    >
-      IGOR_TARASENKO
-    </a>
-
-    <nav aria-label="Primary">
-      <ul class="flex flex-wrap items-center gap-5 text-[0.72rem] uppercase tracking-[0.24em] text-foreground/60 md:justify-end">
-        {navLinks.map(link => (
-          <li>
-            <a
-              href={link.href}
-              class:list={{
-                "active-nav": isActive(link.href),
-              }}
-            >
-              {link.label}
-            </a>
-          </li>
-        ))}
-      </ul>
-    </nav>
+<nav class="nav">
+  <div class="brand">
+    <a href="/">Igor Tarasenko</a>
   </div>
-
-  <Hr />
-</header>
+  <div class="links">
+    {links.map(l => (
+      <a href={l.href} aria-current={isActive(l.href) ? "page" : undefined}>{l.label}</a>
+    ))}
+    <a href="/rss.xml">RSS</a>
+    <button type="button" class="theme-toggle" data-theme-toggle aria-label="Toggle color theme">Theme</button>
+  </div>
+</nav>

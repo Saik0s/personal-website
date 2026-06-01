@@ -1,14 +1,13 @@
 ---
 import { getCollection } from "astro:content";
-import Main from "@/layouts/Main.astro";
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/Header.astro";
 import Footer from "@/components/Footer.astro";
+import Main from "@/layouts/Main.astro";
 import Card from "@/components/Card.astro";
 import getPostsByGroupCondition from "@/utils/getPostsByGroupCondition";
 import { SITE } from "@/config";
 
-// Redirect to 404 page if `showArchives` config is false
 if (!SITE.showArchives) {
   return Astro.redirect("/404");
 }
@@ -16,68 +15,37 @@ if (!SITE.showArchives) {
 const posts = await getCollection("blog", ({ data }) => !data.draft);
 
 const months = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
+  "January","February","March","April","May","June",
+  "July","August","September","October","November","December",
 ];
 ---
 
 <Layout title={`Archives | ${SITE.title}`}>
   <Header />
-  <Main pageTitle="Archives" pageDesc="All the articles I've archived.">
-    {
-      Object.entries(
-        getPostsByGroupCondition(posts, post =>
-          post.data.pubDatetime.getFullYear()
-        )
-      )
-        .sort(([yearA], [yearB]) => Number(yearB) - Number(yearA))
-        .map(([year, yearGroup]) => (
-          <div>
-            <span class="text-2xl font-bold">{year}</span>
-            <sup class="text-sm">{yearGroup.length}</sup>
-            {Object.entries(
-              getPostsByGroupCondition(
-                yearGroup,
-                post => post.data.pubDatetime.getMonth() + 1
-              )
-            )
-              .sort(([monthA], [monthB]) => Number(monthB) - Number(monthA))
-              .map(([month, monthGroup]) => (
-                <div class="flex flex-col sm:flex-row">
-                  <div class="mt-6 min-w-36 text-lg sm:my-6">
-                    <span class="font-bold">{months[Number(month) - 1]}</span>
-                    <sup class="text-xs">{monthGroup.length}</sup>
-                  </div>
-                  <ul>
-                    {monthGroup
-                      .sort(
-                        (a, b) =>
-                          Math.floor(
-                            new Date(b.data.pubDatetime).getTime() / 1000
-                          ) -
-                          Math.floor(
-                            new Date(a.data.pubDatetime).getTime() / 1000
-                          )
-                      )
-                      .map(data => (
-                        <Card {...data} />
-                      ))}
-                  </ul>
-                </div>
-              ))}
-          </div>
-        ))
-    }
+  <Main pageTitle="Archives" pageDesc="Every post by year and month.">
+    {Object.entries(getPostsByGroupCondition(posts, p => p.data.pubDatetime.getFullYear()))
+      .sort(([a], [b]) => Number(b) - Number(a))
+      .map(([year, yearGroup]) => (
+        <section style="margin-bottom:64px;">
+          <h2 style="font-size:28px;letter-spacing:-0.02em;margin:0 0 24px;">
+            {year} <span style="color:var(--muted);font-weight:400;font-size:16px;">({yearGroup.length})</span>
+          </h2>
+          {Object.entries(getPostsByGroupCondition(yearGroup, p => p.data.pubDatetime.getMonth() + 1))
+            .sort(([a], [b]) => Number(b) - Number(a))
+            .map(([month, group]) => (
+              <div style="margin-bottom:32px;">
+                <h3 style="font-size:14px;text-transform:uppercase;letter-spacing:0.18em;color:var(--muted);font-weight:500;margin:0 0 16px;">
+                  {months[Number(month) - 1]}
+                </h3>
+                <ul style="list-style:none;padding:0;margin:0;">
+                  {group
+                    .sort((a, b) => +new Date(b.data.pubDatetime) - +new Date(a.data.pubDatetime))
+                    .map(data => <Card {...data} />)}
+                </ul>
+              </div>
+            ))}
+        </section>
+      ))}
+    <Footer />
   </Main>
-  <Footer />
 </Layout>

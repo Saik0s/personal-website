@@ -2,7 +2,7 @@ export const SITE = {
   website: "https://www.tarasenko.dev/", // replace this with your deployed domain
   author: "Igor Tarasenko",
   profile: "https://github.com/Saik0s",
-  desc: "AI Shipping Partner. I ship AI features to production with evals, guardrails, monitoring, and handover-ready code.",
+  desc: "Igor Tarasenko, iOS and AI engineer based in Amsterdam. Writing about the part of an AI product that lives between a demo and production.",
   title: "Igor Tarasenko",
   ogImage: "og-image.jpg",
   lightAndDarkMode: false,

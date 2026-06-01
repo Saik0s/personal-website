@@ -1,32 +1,16 @@
 ---
-import Hr from "./Hr.astro";
-import { SOCIALS } from "@/constants";
-
-const currentYear = new Date().getFullYear();
-
-export interface Props {
-  noMarginTop?: boolean;
-}
-
-const { noMarginTop = false } = Astro.props;
-
-const footerLinks = SOCIALS.filter(
-  social => social.name === "GitHub" || social.name === "X" || social.name === "Codementor"
-);
+const year = new Date().getFullYear();
 ---
 
-<footer class:list={["w-full", { "mt-auto": !noMarginTop }]}>
-  <Hr noPadding />
-
-  <div class="mx-auto flex max-w-6xl flex-col gap-4 px-4 py-8 text-[0.72rem] uppercase tracking-[0.22em] text-foreground/58 md:flex-row md:items-center md:justify-between">
-    <div class="flex flex-wrap gap-4">
-      {footerLinks.map(link => (
-        <a href={link.href} class="transition-colors hover:text-accent">
-          {link.name}
-        </a>
-      ))}
-    </div>
-
-    <p>Copyright {currentYear} Igor Tarasenko</p>
-  </div>
+<footer class="site-footer">
+  <span>&copy; {year} Igor Tarasenko</span>
+  <span>
+    <a href="https://github.com/Saik0s">GitHub</a>
+    &nbsp;·&nbsp;
+    <a href="https://x.com/saik0s">X</a>
+    &nbsp;·&nbsp;
+    <a href="https://www.codementor.io/@saik0s">Codementor</a>
+    &nbsp;·&nbsp;
+    <a href="/rss.xml">RSS</a>
+  </span>
 </footer>
