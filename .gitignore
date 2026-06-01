@@ -28,3 +28,12 @@ pnpm-debug.log*
 public/pagefind
 *.log
 .screenshots/
+
+# python
+__pycache__/
+*.pyc
+
+# local design exploration (not for public repo)
+sketches/
+DESIGN.md
+public/DESIGN.md
