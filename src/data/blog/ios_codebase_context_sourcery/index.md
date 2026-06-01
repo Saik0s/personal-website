@@ -1,11 +1,11 @@
 ---
-title: "How Sourcery Makes AI 10x More Useful in Large iOS Codebases"
-subtitle: "Stop letting AI write unusable code – give it the context it craves."
+title: "Large iOS Codebases Need Explicit AI Context"
+subtitle: "Sourcery can give coding agents the type map they keep pretending they already have."
 pubDatetime: 2025-01-21T03:46:18+01:00
-modDatetime: 2025-01-21T03:46:18+01:00
+modDatetime: 2026-04-28T23:45:00+02:00
 draft: false
 authors: ["Igor"]
-description: "Learn how to use Sourcery to generate comprehensive code indexes for AI tools, dramatically improving AI-assisted coding in large iOS projects."
+description: "A concrete iOS context-engineering pattern: use Sourcery to generate code maps so AI tools stop inventing components your codebase already has."
 tags: ["iOS", "AI", "Sourcery", "Swift", "Developer Tools"]
 categories: ["Development", "iOS"]
 series: ""

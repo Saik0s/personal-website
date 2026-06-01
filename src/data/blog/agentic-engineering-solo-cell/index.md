@@ -1,9 +1,9 @@
 ---
-title: 'If “Clear Tickets” Belong to Agents, Where Is Your Edge?'
+title: 'When Agents Can Take the Tickets, Your Edge Moves Upstream'
 pubDatetime: 2025-01-24T10:00:00+01:00
-modDatetime: 2025-09-06T04:40:00+01:00
+modDatetime: 2026-04-28T23:45:00+02:00
 author: Igor
-description: "Agentic engineering for builders: a Solo Cell blueprint, context engineering, eval gating, and a 30-day plan to ship safely with repo-aware agents."
+description: "Agentic engineering for senior builders: clearer specs, repo context, eval gates, permission boundaries, and automation loops that let agents do useful work safely."
 tags:
   - ai
   - agentic-engineering

@@ -1,11 +1,11 @@
 ---
-title: "Is Your Repo Ready for AI Agents?"
-subtitle: "Transform your codebase from AI-resistant to AI-friendly with these essential practices"
+title: "Your Repo Is Either Agent-Ready or Agent-Hostile"
+subtitle: "The practical checklist for making coding agents useful without turning your codebase into a slot machine."
 pubDatetime: 2025-06-17T04:30:00+01:00
-modDatetime: 2025-06-17T04:30:00+01:00
+modDatetime: 2026-04-28T23:45:00+02:00
 draft: false
 authors: ["Igor"]
-description: "Learn how to prepare your repository for AI agents to understand, navigate, and contribute effectively to your codebase."
+description: "A practical checklist for making coding agents useful: clear repo structure, machine-readable rules, one-command workflows, logs, contracts, tests, and safety boundaries."
 tags: ["AI", "Developer Tools", "Best Practices", "Documentation"]
 categories: ["Development", "AI"]
 series: ""
