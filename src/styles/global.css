@@ -160,9 +160,16 @@ html[data-theme="dark"] {
   font: inherit;
   color: var(--muted);
   cursor: pointer;
-  padding: 0;
+  padding: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
 }
 .theme-toggle:hover { color: var(--ink); }
+.theme-toggle svg { display: block; }
+html[data-theme="light"] .theme-toggle .t-sun { display: none; }
+html[data-theme="dark"] .theme-toggle .t-moon { display: none; }
 
 /* ---------- Editorial grid ---------- */
 

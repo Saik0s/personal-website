@@ -103,13 +103,17 @@ const structured = Array.isArray(structuredData)
 
     <script is:inline>
       (function () {
-        try {
-          var stored = localStorage.getItem("theme");
-          var pref = stored || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-          document.documentElement.setAttribute("data-theme", pref);
-        } catch (e) {
-          document.documentElement.setAttribute("data-theme", "light");
+        function apply() {
+          try {
+            var stored = localStorage.getItem("theme");
+            var pref = stored || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+            document.documentElement.setAttribute("data-theme", pref);
+          } catch (e) {
+            document.documentElement.setAttribute("data-theme", "light");
+          }
         }
+        apply();
+        document.addEventListener("astro:after-swap", apply);
       })();
     </script>
   </head>
