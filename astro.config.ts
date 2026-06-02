@@ -48,16 +48,4 @@ export default defineConfig({
     responsiveStyles: true,
     layout: "constrained",
   },
-  env: {
-    schema: {
-      PUBLIC_GOOGLE_SITE_VERIFICATION: envField.string({
-        access: "public",
-        context: "client",
-        optional: true,
-      }),
-    },
-  },
-  experimental: {
-    preserveScriptOrder: true,
-  },
 });
