@@ -22,15 +22,11 @@ const {
   timezone: postTimezone,
 } = Astro.props;
 
-const isModified = modDatetime && modDatetime > pubDatetime;
-const datetime = dayjs(isModified ? modDatetime : pubDatetime).tz(
-  postTimezone || SITE.timezone
-);
+const datetime = dayjs(pubDatetime).tz(postTimezone || SITE.timezone);
 const date = datetime.format("D MMM, YYYY");
 ---
 
 <span class={`datetime ${className}`}>
-  {isModified && <span class="lbl">Updated&nbsp;</span>}
   <time datetime={datetime.toISOString()}>{date}</time>
 </span>
 
