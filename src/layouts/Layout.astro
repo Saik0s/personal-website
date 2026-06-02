@@ -88,6 +88,15 @@ const structured = Array.isArray(structuredData)
 
     <ClientRouter />
 
+    <script
+      is:inline
+      defer
+      data-domain="tarasenko.dev"
+      data-api="https://my.z3n.sh/api/event"
+      src="/stats.js"
+    ></script>
+    <script is:inline defer src="/stats-helper.js"></script>
+
     {structured.map(item => (
       <script type="application/ld+json" set:html={JSON.stringify(item)} />
     ))}
