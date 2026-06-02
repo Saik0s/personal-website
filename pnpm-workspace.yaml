@@ -1,0 +1,9 @@
+minimumReleaseAge: 10080
+minimumReleaseAgeStrict: false
+minimumReleaseAgeExclude:
+  - '@astrojs/internal-helpers@0.10.0'
+  - '@astrojs/markdown-remark@7.2.0'
+  - astro@6.4.2
+allowBuilds:
+  esbuild: true
+  sharp: true
