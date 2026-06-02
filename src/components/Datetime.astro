@@ -17,7 +17,6 @@ export interface Props {
 
 const {
   pubDatetime,
-  modDatetime,
   class: className = "",
   timezone: postTimezone,
 } = Astro.props;
@@ -36,5 +35,7 @@ const date = datetime.format("D MMM, YYYY");
     color: var(--muted);
     letter-spacing: 0;
   }
-  .datetime .lbl { color: var(--muted); }
+  .datetime .lbl {
+    color: var(--muted);
+  }
 </style>

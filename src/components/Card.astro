@@ -27,16 +27,21 @@ const href = getPath(id, filePath);
     padding: 32px 0;
     border-bottom: 1px solid var(--rule);
   }
-  .post-card:first-child { border-top: 1px solid var(--rule); }
-  .post-card h2, .post-card h3 {
+  .post-card:first-child {
+    border-top: 1px solid var(--rule);
+  }
+  .post-card h2,
+  .post-card h3 {
     font-size: clamp(22px, 2.2vw, 28px);
     line-height: 1.25;
-    letter-spacing: -0.015em;
+    letter-spacing: 0;
     margin: 0 0 10px;
     font-weight: 600;
   }
   .post-card a:hover h2,
-  .post-card a:hover h3 { color: var(--accent); }
+  .post-card a:hover h3 {
+    color: var(--accent);
+  }
   .post-card .desc {
     margin: 12px 0 0;
     color: var(--muted);

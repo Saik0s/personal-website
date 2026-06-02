@@ -1,20 +1,32 @@
 ---
-interface StringTitle { pageTitle: string; pageDesc?: string; }
-interface ArrayTitle  { pageTitle: [string, string]; titleTransition: string; pageDesc?: string; }
+interface StringTitle {
+  pageTitle: string;
+  pageDesc?: string;
+}
+interface ArrayTitle {
+  pageTitle: [string, string];
+  titleTransition: string;
+  pageDesc?: string;
+}
 export type Props = StringTitle | ArrayTitle;
 const { props } = Astro;
+const pageTitleText =
+  "titleTransition" in props
+    ? `${props.pageTitle[0]} ${props.pageTitle[1]}`
+    : props.pageTitle;
 ---
 
 <div class="grid">
   <main id="main-content" class="content">
-    {"titleTransition" in props ? (
-      <h1 class="page-h1">
-        {props.pageTitle[0]}{" "}
-        <span transition:name={props.titleTransition}>{props.pageTitle[1]}</span>
-      </h1>
-    ) : (
-      <h1 class="page-h1">{props.pageTitle}</h1>
-    )}
+    {
+      "titleTransition" in props ? (
+        <h1 class="page-h1" transition:name={props.titleTransition}>
+          {pageTitleText}
+        </h1>
+      ) : (
+        <h1 class="page-h1">{pageTitleText}</h1>
+      )
+    }
     {props.pageDesc && <p class="page-lede">{props.pageDesc}</p>}
     <slot />
   </main>

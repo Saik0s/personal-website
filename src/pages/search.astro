@@ -20,9 +20,14 @@ import { SITE } from "@/config";
     const el = document.querySelector<HTMLElement>("#pagefind-search");
     if (!el) return;
     const params = new URLSearchParams(window.location.search);
-    const onIdle = window.requestIdleCallback || (cb => setTimeout(cb, 1));
+    const onIdle =
+      window.requestIdleCallback?.bind(window) ??
+      ((callback: IdleRequestCallback) =>
+        window.setTimeout(
+          () => callback({ didTimeout: false, timeRemaining: () => 0 }),
+          1
+        ));
     onIdle(async () => {
-      // @ts-expect-error - no types for @pagefind/default-ui
       const { PagefindUI } = await import("@pagefind/default-ui");
       if (import.meta.env.DEV) {
         el.innerHTML = `<p style="color:var(--muted);font-size:14px;">DEV mode: run <code>pnpm build</code> once to populate Pagefind index.</p>`;
@@ -72,6 +77,10 @@ import { SITE } from "@/config";
     border-color: var(--accent);
     outline: 0;
   }
-  #pagefind-search .pagefind-ui__result-title a { color: var(--ink); }
-  #pagefind-search .pagefind-ui__result-title a:hover { color: var(--accent); }
+  #pagefind-search .pagefind-ui__result-title a {
+    color: var(--ink);
+  }
+  #pagefind-search .pagefind-ui__result-title a:hover {
+    color: var(--accent);
+  }
 </style>

@@ -37,3 +37,6 @@ __pycache__/
 sketches/
 DESIGN.md
 public/DESIGN.md
+
+# local agent state
+.codex/

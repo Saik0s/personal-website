@@ -17,9 +17,16 @@ export interface Props {
 const { post, posts } = Astro.props;
 
 const {
-  title, author, description,
-  ogImage: initOgImage, canonicalURL,
-  pubDatetime, modDatetime, timezone, tags, faq = [],
+  title,
+  author,
+  description,
+  ogImage: initOgImage,
+  canonicalURL,
+  pubDatetime,
+  modDatetime,
+  timezone,
+  tags,
+  faq = [],
 } = post.data;
 
 const { Content } = await render(post);
@@ -27,24 +34,43 @@ const { Content } = await render(post);
 let ogImageUrl: string | undefined;
 if (typeof initOgImage === "string") ogImageUrl = initOgImage;
 else if (initOgImage?.src) ogImageUrl = initOgImage.src;
-if (!ogImageUrl && SITE.dynamicOgImage) ogImageUrl = `${getPath(post.id, post.filePath)}/index.png`;
-const ogImage = ogImageUrl ? new URL(ogImageUrl, Astro.url.origin).href : undefined;
+if (!ogImageUrl && SITE.dynamicOgImage)
+  ogImageUrl = `${getPath(post.id, post.filePath)}/index.png`;
+const ogImage = ogImageUrl
+  ? new URL(ogImageUrl, Astro.url.origin).href
+  : undefined;
 
 const layoutProps = {
   title: `${title} | ${SITE.title}`,
-  author, description, pubDatetime, modDatetime, canonicalURL, ogImage,
+  author,
+  description,
+  pubDatetime,
+  modDatetime,
+  canonicalURL,
+  ogImage,
   scrollSmooth: true,
 };
 
-const allPosts = posts.map(({ data: { title }, id, filePath }) => ({ id, title, filePath }));
+const allPosts = posts.map(({ data: { title }, id, filePath }) => ({
+  id,
+  title,
+  filePath,
+}));
 const idx = allPosts.findIndex(a => a.id === post.id);
 const prevPost = idx > 0 ? allPosts[idx - 1] : null;
-const nextPost = idx >= 0 && idx < allPosts.length - 1 ? allPosts[idx + 1] : null;
+const nextPost =
+  idx >= 0 && idx < allPosts.length - 1 ? allPosts[idx + 1] : null;
 
 const faqSchema = faq.length
-  ? { "@context": "https://schema.org", "@type": "FAQPage",
-      mainEntity: faq.map(item => ({ "@type": "Question", name: item.question,
-        acceptedAnswer: { "@type": "Answer", text: item.answer } })) }
+  ? {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: faq.map(item => ({
+        "@type": "Question",
+        name: item.question,
+        acceptedAnswer: { "@type": "Answer", text: item.answer },
+      })),
+    }
   : null;
 ---
 
@@ -55,10 +81,7 @@ const faqSchema = faq.length
     <main id="main-content" class="content" data-pagefind-body>
       <a href="/posts" class="back-link">← All writing</a>
 
-      <h1
-        transition:name={slugifyStr(title)}
-        class="post-title"
-      >{title}</h1>
+      <h1 transition:name={slugifyStr(title)} class="post-title">{title}</h1>
 
       <div class="post-meta">
         <Datetime {pubDatetime} {modDatetime} {timezone} size="lg" />
@@ -68,31 +91,55 @@ const faqSchema = faq.length
         <Content />
       </article>
 
-      {faqSchema && (
-        <script type="application/ld+json" is:inline set:html={JSON.stringify(faqSchema)} />
-      )}
+      {
+        faqSchema && (
+          <script
+            type="application/ld+json"
+            is:inline
+            set:html={JSON.stringify(faqSchema)}
+          />
+        )
+      }
 
       <hr />
 
-      {tags && tags.length > 0 && (
-        <ul class="tag-list">
-          {tags.map(tag => <Tag tag={slugifyStr(tag)} tagName={tag} />)}
-        </ul>
-      )}
+      {
+        tags && tags.length > 0 && (
+          <ul class="tag-list">
+            {tags.map(tag => (
+              <Tag tag={slugifyStr(tag)} tagName={tag} />
+            ))}
+          </ul>
+        )
+      }
 
       <nav class="prev-next" aria-label="Previous and next post">
-        {prevPost ? (
-          <a href={getPath(prevPost.id, prevPost.filePath)} class="prev-next__item">
-            <span class="lbl">← Previous</span>
-            <span class="ttl">{prevPost.title}</span>
-          </a>
-        ) : <span />}
-        {nextPost ? (
-          <a href={getPath(nextPost.id, nextPost.filePath)} class="prev-next__item prev-next__item--right">
-            <span class="lbl">Next →</span>
-            <span class="ttl">{nextPost.title}</span>
-          </a>
-        ) : <span />}
+        {
+          prevPost ? (
+            <a
+              href={getPath(prevPost.id, prevPost.filePath)}
+              class="prev-next__item"
+            >
+              <span class="lbl">← Previous</span>
+              <span class="ttl">{prevPost.title}</span>
+            </a>
+          ) : (
+            <span />
+          )
+        }
+        {
+          nextPost ? (
+            <a
+              href={getPath(nextPost.id, nextPost.filePath)}
+              class="prev-next__item prev-next__item--right"
+            >
+              <span class="lbl">Next →</span>
+              <span class="ttl">{nextPost.title}</span>
+            </a>
+          ) : (
+            <span />
+          )
+        }
       </nav>
 
       <Footer />
@@ -107,12 +154,14 @@ const faqSchema = faq.length
     color: var(--muted);
     margin-bottom: 64px;
   }
-  .back-link:hover { color: var(--accent); }
+  .back-link:hover {
+    color: var(--accent);
+  }
 
   .post-title {
     font-size: clamp(36px, 5vw, 56px);
     line-height: 1.05;
-    letter-spacing: -0.025em;
+    letter-spacing: 0;
     margin-bottom: 12px;
     max-width: 24ch;
   }
@@ -149,19 +198,31 @@ const faqSchema = faq.length
     color: var(--ink);
     line-height: 1.3;
   }
-  .prev-next__item:hover .ttl { color: var(--accent); }
+  .prev-next__item:hover .ttl {
+    color: var(--accent);
+  }
 
   @media (max-width: 720px) {
-    .prev-next { grid-template-columns: 1fr; }
-    .prev-next__item--right { text-align: left; align-items: flex-start; }
+    .prev-next {
+      grid-template-columns: 1fr;
+    }
+    .prev-next__item--right {
+      text-align: left;
+      align-items: flex-start;
+    }
   }
 </style>
 
 <script is:inline data-astro-rerun>
   function addHeadingLinks() {
-    const hs = Array.from(document.querySelectorAll("article#article h2, article#article h3, article#article h4"));
+    const hs = Array.from(
+      document.querySelectorAll(
+        "article#article h2, article#article h3, article#article h4"
+      )
+    );
     for (const h of hs) {
       if (!h.id) continue;
+      if (h.querySelector(".heading-link")) continue;
       h.classList.add("group");
       const a = document.createElement("a");
       a.href = "#" + h.id;
@@ -176,14 +237,20 @@ const faqSchema = faq.length
   function attachCopyButtons() {
     const blocks = Array.from(document.querySelectorAll("article#article pre"));
     for (const b of blocks) {
+      if (b.querySelector(".copy-code")) continue;
       const btn = document.createElement("button");
       btn.innerText = "Copy";
       btn.className = "copy-code";
+      btn.type = "button";
       b.appendChild(btn);
       btn.addEventListener("click", async () => {
         const code = b.querySelector("code");
-        await navigator.clipboard.writeText(code?.innerText ?? "");
-        btn.innerText = "Copied";
+        try {
+          await navigator.clipboard.writeText(code?.innerText ?? "");
+          btn.innerText = "Copied";
+        } catch {
+          btn.innerText = "Copy failed";
+        }
         setTimeout(() => (btn.innerText = "Copy"), 800);
       });
     }
@@ -205,7 +272,9 @@ const faqSchema = faq.length
   }
   .prose h2:hover .heading-link,
   .prose h3:hover .heading-link,
-  .prose h4:hover .heading-link { opacity: 1; }
+  .prose h4:hover .heading-link {
+    opacity: 1;
+  }
   .prose pre {
     position: relative;
   }
@@ -222,5 +291,8 @@ const faqSchema = faq.length
     cursor: pointer;
     font-family: var(--font-stack);
   }
-  .prose pre .copy-code:hover { color: var(--ink); border-color: var(--ink); }
+  .prose pre .copy-code:hover {
+    color: var(--ink);
+    border-color: var(--ink);
+  }
 </style>

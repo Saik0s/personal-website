@@ -15,37 +15,65 @@ if (!SITE.showArchives) {
 const posts = await getCollection("blog", ({ data }) => !data.draft);
 
 const months = [
-  "January","February","March","April","May","June",
-  "July","August","September","October","November","December",
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
 ];
 ---
 
 <Layout title={`Archives | ${SITE.title}`}>
   <Header />
   <Main pageTitle="Archives" pageDesc="Every post by year and month.">
-    {Object.entries(getPostsByGroupCondition(posts, p => p.data.pubDatetime.getFullYear()))
-      .sort(([a], [b]) => Number(b) - Number(a))
-      .map(([year, yearGroup]) => (
-        <section style="margin-bottom:64px;">
-          <h2 style="font-size:28px;letter-spacing:-0.02em;margin:0 0 24px;">
-            {year} <span style="color:var(--muted);font-weight:400;font-size:16px;">({yearGroup.length})</span>
-          </h2>
-          {Object.entries(getPostsByGroupCondition(yearGroup, p => p.data.pubDatetime.getMonth() + 1))
-            .sort(([a], [b]) => Number(b) - Number(a))
-            .map(([month, group]) => (
-              <div style="margin-bottom:32px;">
-                <h3 style="font-size:14px;text-transform:uppercase;letter-spacing:0.18em;color:var(--muted);font-weight:500;margin:0 0 16px;">
-                  {months[Number(month) - 1]}
-                </h3>
-                <ul style="list-style:none;padding:0;margin:0;">
-                  {group
-                    .sort((a, b) => +new Date(b.data.pubDatetime) - +new Date(a.data.pubDatetime))
-                    .map(data => <Card {...data} />)}
-                </ul>
-              </div>
-            ))}
-        </section>
-      ))}
+    {
+      Object.entries(
+        getPostsByGroupCondition(posts, p => p.data.pubDatetime.getFullYear())
+      )
+        .sort(([a], [b]) => Number(b) - Number(a))
+        .map(([year, yearGroup]) => (
+          <section style="margin-bottom:64px;">
+            <h2 style="font-size:28px;letter-spacing:0;margin:0 0 24px;">
+              {year}{" "}
+              <span style="color:var(--muted);font-weight:400;font-size:16px;">
+                ({yearGroup.length})
+              </span>
+            </h2>
+            {Object.entries(
+              getPostsByGroupCondition(
+                yearGroup,
+                p => p.data.pubDatetime.getMonth() + 1
+              )
+            )
+              .sort(([a], [b]) => Number(b) - Number(a))
+              .map(([month, group]) => (
+                <div style="margin-bottom:32px;">
+                  <h3 style="font-size:14px;text-transform:uppercase;letter-spacing:0.18em;color:var(--muted);font-weight:500;margin:0 0 16px;">
+                    {months[Number(month) - 1]}
+                  </h3>
+                  <ul style="list-style:none;padding:0;margin:0;">
+                    {group
+                      .sort(
+                        (a, b) =>
+                          +new Date(b.data.pubDatetime) -
+                          +new Date(a.data.pubDatetime)
+                      )
+                      .map(data => (
+                        <Card {...data} />
+                      ))}
+                  </ul>
+                </div>
+              ))}
+          </section>
+        ))
+    }
     <Footer />
   </Main>
 </Layout>
