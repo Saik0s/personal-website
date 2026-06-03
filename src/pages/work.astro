@@ -6,7 +6,7 @@ import Footer from "@/components/Footer.astro";
 
 <Layout
   title="Work with me | Igor Tarasenko"
-  description="Short engagements for AI features stuck between a demo and production. Hourly help via Codementor, or a direct call."
+  description="Book a 30-minute call to debug your AI feature, agent loop, or iOS architecture problem. $100 paid sessions, or a free discovery call."
 >
   <Header />
   <div class="grid">
@@ -14,28 +14,27 @@ import Footer from "@/components/Footer.astro";
       <h1 class="page-h1">Work with me</h1>
 
       <p class="page-lede">
-        Short engagements for AI features stuck between a demo and production.
+        Got an AI feature stuck between a demo and production? Book a call.
+        You bring the problem, I bring 30 minutes of focused attention.
       </p>
 
-      <h2>Two ways to work together</h2>
+      <div class="cta-stack">
+        <a class="cta cta-primary" href="https://cal.com/tarasenko/30min">
+          Book a 30-minute call, $100 &rarr;
+        </a>
+        <p class="cta-note">
+          Paid sessions get you the full focus and a written follow-up. Most
+          problems get unstuck in one call.
+        </p>
 
-      <p>
-        <strong>An hour or two.</strong> Bring a repo, a failing agent loop,
-        a vague Upwork scope, or a decision you keep circling. I look at the
-        real failure mode, not the symptom. You leave with code, notes, or
-        a clear next move.
-        <br />
-        <a href="https://www.codementor.io/@saik0s">Book on Codementor &rarr;</a>
-      </p>
-
-      <p>
-        <strong>Two to six weeks.</strong> Same starting point, but I stay
-        in the repo. Ship the PRs. Wire the evals. Set up the guardrails.
-        Write the runbook your team can own once I leave. Fixed-fee,
-        scope-locked. No retainer creep.
-        <br />
-        <a href="mailto:igor@tarasenko.dev?subject=Engagement">Email me &rarr;</a>
-      </p>
+        <a class="cta cta-secondary" href="https://cal.com/tarasenko/discovery">
+          Not sure yet? Book a free discovery call &rarr;
+        </a>
+        <p class="cta-note">
+          15 minutes, no pitch. We figure out if I&rsquo;m the right person
+          for your problem.
+        </p>
+      </div>
 
       <h2>What I&rsquo;m useful for</h2>
 
@@ -68,11 +67,61 @@ import Footer from "@/components/Footer.astro";
         guardrails around it.
       </p>
 
+      <h2>Other ways in</h2>
+
       <p>
-        Email: <a href="mailto:igor@tarasenko.dev">igor@tarasenko.dev</a>
+        Prefer Codementor? <a href="https://www.codementor.io/@saik0s">Book there instead</a>.
+        Need something longer than a call? A few weeks in the repo, fixed-fee
+        and scope-locked.
+        <a href="mailto:igor@tarasenko.dev?subject=Engagement">Email me</a>
+        with what&rsquo;s broken and we&rsquo;ll see if it fits.
       </p>
 
       <Footer />
     </main>
   </div>
 </Layout>
+
+<style>
+  .cta-stack {
+    margin: 32px 0 48px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .cta {
+    display: inline-block;
+    padding: 16px 24px;
+    font-weight: 600;
+    font-size: 17px;
+    border: 1px solid var(--rule);
+    text-decoration: none;
+    line-height: 1.3;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+  }
+  .cta-primary {
+    background: var(--ink);
+    color: var(--bg);
+    border-color: var(--ink);
+  }
+  .cta-primary:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--bg);
+  }
+  .cta-secondary {
+    background: transparent;
+    color: var(--ink);
+    margin-top: 16px;
+  }
+  .cta-secondary:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .cta-note {
+    margin: 4px 0 16px;
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+</style>
