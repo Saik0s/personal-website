@@ -6,133 +6,134 @@ import Footer from "@/components/Footer.astro";
 const productSchema = {
   "@context": "https://schema.org",
   "@type": "Service",
-  name: "Agentic iOS Lab",
+  name: "Agentic iOS Consultation",
   provider: {
     "@type": "Person",
     name: "Igor Tarasenko",
     url: "https://tarasenko.dev",
   },
   description:
-    "A two-week implementation sprint for senior iOS developers who want Claude Code, Cursor, and Xcode agents to work on real Swift apps.",
+    "Private consultation and repo teardown for iOS developers and mobile teams adopting Claude Code, Cursor, Xcode agents, and practical AI development workflows.",
   areaServed: "Worldwide",
 };
 ---
 
 <Layout
-  title="Agentic iOS Lab | Igor Tarasenko"
-  description="A 2-week implementation sprint for senior iOS developers who want Claude Code, Cursor, and Xcode agents to safely modify, test, preview, and ship real Swift code."
+  title="Agentic iOS Consultation | Igor Tarasenko"
+  description="Private consultation and repo teardown for senior iOS developers and mobile teams adopting Claude Code, Cursor, Xcode agents, and practical AI development workflows."
   structuredData={productSchema}
 >
   <Header />
   <div class="grid">
     <main id="main-content" class="content prose lab-page">
-      <p class="eyebrow">Founding offer · 8 seats</p>
-      <h1 class="page-h1">Make your iOS repo agent-ready.</h1>
+      <p class="eyebrow">Private consultation · iOS × AI agents</p>
+      <h1 class="page-h1">Make your iOS repo usable by agents.</h1>
 
       <p class="page-lede">
-        Claude Code, Cursor, and Xcode agents are finally good enough to matter.
-        Most Swift codebases are not ready for them.
+        If Claude Code, Cursor, or Xcode agents feel impressive in demos but
+        clumsy inside your real Swift codebase, the problem is rarely just the
+        model.
       </p>
 
       <p>
-        Agents get lost in unclear architecture, slow builds, missing scripts,
-        fragile project files, and undocumented conventions. Then people blame
-        the model. Usually the model is only half the problem. The feedback loop
-        is the other half.
+        Agents need a repo they can understand, commands they can run, feedback
+        they can see, and a review loop that catches the dumb stuff before it
+        reaches main. Most iOS projects were not built with that loop in mind.
       </p>
 
       <section class="offer-card">
-        <h2>Agentic iOS Lab</h2>
+        <h2>Agentic iOS consultation</h2>
         <p>
-          A 2-week implementation sprint for senior iOS developers who want
-          agents to safely modify, test, preview, and ship real Swift code.
+          A private working session for senior iOS developers, indie app
+          builders, and mobile teams who want practical help making AI coding
+          agents useful on a real Swift project.
         </p>
         <div class="facts">
-          <span>2 weeks</span>
-          <span>8 seats</span>
-          <span>$399 founding price</span>
-          <span>Senior iOS only</span>
+          <span>Private session</span>
+          <span>Repo teardown</span>
+          <span>Swift / SwiftUI / TCA</span>
+          <span>Claude Code / Cursor / Xcode agents</span>
         </div>
         <a
           class="cta cta-primary"
-          href="mailto:igor@tarasenko.dev?subject=Agentic%20iOS%20Lab"
+          href="mailto:igor@tarasenko.dev?subject=Agentic%20iOS%20Consultation"
         >
-          Apply for the founding cohort &rarr;
+          Send me the problem &rarr;
         </a>
         <a
           class="cta cta-secondary"
           href="mailto:igor@tarasenko.dev?subject=Agentic%20iOS%20Team%20Audit"
         >
-          Want this for your team? Book a $500 audit &rarr;
+          Ask about a team audit &rarr;
         </a>
       </section>
 
-      <h2>You will leave with</h2>
+      <h2>Useful if you are trying to</h2>
       <ul class="check-list">
-        <li>An agent-ready repo structure and workflow.</li>
-        <li>A working <code>CLAUDE.md</code> / <code>AGENTS.md</code> setup.</li>
-        <li>Build, test, and preview commands agents can actually run.</li>
-        <li>A review loop that catches bad AI changes before they hit main.</li>
-        <li>One real feature shipped with an agent, not a toy demo.</li>
-        <li>A reusable checklist for future Swift projects.</li>
+        <li>Set up Claude Code, Cursor, or Xcode agents on a real iOS repo.</li>
+        <li>Write project instructions agents will actually follow.</li>
+        <li>Make build, test, simulator, and preview commands agent-runnable.</li>
+        <li>Find why agents keep making wrong changes in your Swift codebase.</li>
+        <li>Design a safer human review loop for AI-generated changes.</li>
+        <li>Figure out whether your repo is agent-ready or agent-hostile.</li>
       </ul>
 
-      <h2>Who this is for</h2>
-      <ul>
-        <li>Senior iOS developers already testing Claude Code, Cursor, or Xcode agents.</li>
-        <li>Indie app builders with real SwiftUI projects.</li>
-        <li>Mobile leads at small teams who need a working pattern before rolling it out.</li>
-      </ul>
-
-      <p>
-        Not for beginners. Not for vibe-coded toy apps. Not for people who want
-        a prompt pack and a dopamine sticker.
-      </p>
-
-      <h2>The Agentic iOS Loop</h2>
+      <h2>What I can look at</h2>
       <div class="loop-grid">
         <article>
-          <strong>1. Structure</strong>
-          <p>Repo boundaries agents can understand: modules, TCA, scripts, explicit conventions.</p>
+          <strong>Repo structure</strong>
+          <p>Module boundaries, TCA seams, dependency shape, naming, and how much context an agent has to infer.</p>
         </article>
         <article>
-          <strong>2. Context</strong>
-          <p>Project instructions, examples, failure rules, and architecture constraints.</p>
+          <strong>Agent context</strong>
+          <p><code>CLAUDE.md</code>, <code>AGENTS.md</code>, examples, conventions, constraints, and failure rules.</p>
         </article>
         <article>
-          <strong>3. Feedback</strong>
-          <p>Fast build, test, simulator, and preview loops. The agent needs eyes and a stopwatch.</p>
+          <strong>Feedback loop</strong>
+          <p>Build, test, simulator, SwiftUI previews, screenshots, and how quickly bad work becomes visible.</p>
         </article>
         <article>
-          <strong>4. Verification</strong>
+          <strong>Verification</strong>
           <p>Tests, snapshots, deterministic checks, review prompts, and rollback paths.</p>
         </article>
         <article>
-          <strong>5. Shipping</strong>
-          <p>Human review, App Store constraints, release notes, and production hygiene.</p>
+          <strong>Shipping workflow</strong>
+          <p>How an AI-assisted change moves from idea to branch to review to App Store-safe release.</p>
         </article>
       </div>
 
-      <h2>Schedule</h2>
+      <h2>Possible session shapes</h2>
       <div class="schedule">
         <div>
-          <h3>Week 1 — make the repo legible</h3>
+          <h3>One-off consultation</h3>
           <ul>
-            <li>Readiness score.</li>
-            <li>Agent context files.</li>
-            <li>Build/test/preview loop.</li>
-            <li>First contained agent task.</li>
-            <li>Failure review.</li>
+            <li>You send the repo or describe the failure mode.</li>
+            <li>We identify the bottleneck.</li>
+            <li>You leave with a concrete next move, not a lecture.</li>
           </ul>
         </div>
         <div>
-          <h3>Week 2 — ship through the loop</h3>
+          <h3>Repo teardown</h3>
           <ul>
-            <li>Pick one real feature or refactor.</li>
-            <li>Agent plans and executes.</li>
-            <li>Human review and tests.</li>
-            <li>Preview / simulator verification.</li>
-            <li>Final workflow notes.</li>
+            <li>I review the agent-readiness of the codebase.</li>
+            <li>You get findings, risks, and suggested changes.</li>
+            <li>Good fit before a team rollout or deeper sprint.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Team audit</h3>
+          <ul>
+            <li>For mobile teams testing agentic development.</li>
+            <li>Focus on workflow, safety, code review, and adoption.</li>
+            <li>Useful before standardizing tools across a team.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Small lab, if there is demand</h3>
+          <ul>
+            <li>If several senior iOS devs want the same help.</li>
+            <li>Small group, hands-on, no course platform cosplay.</li>
+            <li>Built from real problems people bring in.</li>
           </ul>
         </div>
       </div>
@@ -146,21 +147,23 @@ const productSchema = {
       </p>
       <p>
         I built preview tooling because the feedback loop was the bottleneck.
-        That is the point of this lab: make agents useful by giving them a repo
-        they can understand, commands they can run, and evidence they can check.
+        That is the point here: make agents useful by giving them a repo they
+        can understand, commands they can run, and evidence they can check.
       </p>
 
       <section class="offer-card compact">
-        <h2>Founding cohort</h2>
+        <h2>Send me the messy version</h2>
         <p>
-          8 seats. 2 weeks. $399. If you are a team lead and want this applied
-          to your codebase, start with the $500 audit instead.
+          You do not need a polished brief. Send the repo shape, the tool you are
+          trying, what keeps failing, and what you want the agent to handle.
+          I&rsquo;ll tell you whether I can help and what the smallest useful session
+          should be.
         </p>
         <a
           class="cta cta-primary"
-          href="mailto:igor@tarasenko.dev?subject=Agentic%20iOS%20Lab"
+          href="mailto:igor@tarasenko.dev?subject=Agentic%20iOS%20Consultation"
         >
-          Apply by email &rarr;
+          Email Igor &rarr;
         </a>
       </section>
 
