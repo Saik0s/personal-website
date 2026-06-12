@@ -1,0 +1,112 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/Header.astro";
+import Footer from "@/components/Footer.astro";
+---
+
+<Layout
+  title="CV | Igor Tarasenko"
+  description="AI Architect and agentic engineering CV for Igor Tarasenko: ex-Uber, lead iOS engineer, WhisperBoard, MCP tooling, production AI systems."
+>
+  <Header />
+  <div class="grid">
+    <main id="main-content" class="content prose cv-page">
+      <p class="eyebrow">AI Architect CV</p>
+      <h1 class="page-h1">Igor Tarasenko</h1>
+
+      <p class="page-lede">
+        AI architect and senior software engineer in Amsterdam. Ex-Uber.
+        Lead iOS engineer. Practical AI systems, agentic workflows, and
+        production mobile AI.
+      </p>
+
+      <p class="download-row">
+        <a class="cta cta-primary" href="/downloads/igor-tarasenko-ai-architect-cv.pdf" download>
+          Download PDF &rarr;
+        </a>
+        <a class="cta" href="/downloads/igor-tarasenko-ai-architect-cv.md" download>
+          Download Markdown
+        </a>
+      </p>
+
+      <h2>Summary</h2>
+      <p>
+        16 years building production software across mobile, platform,
+        payments, developer tooling, and applied AI. I design AI systems that
+        can survive real codebases: evals, guardrails, MCP tools, on-device
+        inference, cost/latency budgets, and team adoption workflows.
+      </p>
+
+      <h2>Current focus</h2>
+      <ul>
+        <li>Agentic engineering workflows for iOS and product teams.</li>
+        <li>LLM features that move from prototype to production.</li>
+        <li>On-device AI and privacy-first mobile architecture.</li>
+        <li>AI developer tooling: MCP, Claude Code, Cursor, repo conventions.</li>
+      </ul>
+
+      <h2>Experience</h2>
+      <h3>DNA.inc — Lead iOS Engineer & Internal AI Enablement</h3>
+      <p>
+        Lead iOS engineering while also acting as the practical AI adoption lead
+        for engineering workflows: internal AI sessions, agentic coding patterns,
+        context files, review loops, and guardrails.
+      </p>
+
+      <h3>Uber — Senior Software Engineer</h3>
+      <p>
+        Worked on platform and payments systems at Uber scale: server-driven UI,
+        internal developer infrastructure, payment reliability, and multi-team
+        architecture work where small error rates became real incidents.
+      </p>
+
+      <h3>Independent / Open Source</h3>
+      <p>
+        Built WhisperBoard, mcp-browser-use, VibeSwitch, and local ComfyUI / Stable
+        Diffusion-family pipelines. Mentor engineers through Codementor on iOS,
+        AI integration, debugging, and architecture.
+      </p>
+
+      <h2>Selected proof</h2>
+      <ul>
+        <li><strong>WhisperBoard:</strong> 50k+ downloads, 4.8 App Store rating, 1,035 GitHub stars.</li>
+        <li><strong>mcp-browser-use:</strong> MCP server for browser automation by AI agents, 938 GitHub stars.</li>
+        <li><strong>Agentic iOS:</strong> built preview-feedback tooling before Apple shipped native agent support.</li>
+        <li><strong>Codementor:</strong> practical mentoring on iOS, AI integration, and debugging.</li>
+      </ul>
+
+      <h2>Stack</h2>
+      <p>
+        Swift, SwiftUI, UIKit, TCA, Python, TypeScript, Anthropic/OpenAI APIs,
+        Claude Code, Cursor, MCP, ComfyUI, Stable Diffusion-family workflows,
+        Postgres/Supabase, FastAPI, Hetzner, Coolify, Vercel.
+      </p>
+
+      <p>
+        For the longer narrative version, see <a href="/experience">experience</a>.
+      </p>
+
+      <Footer />
+    </main>
+  </div>
+</Layout>
+
+<style>
+  .cv-page { max-width: 820px; }
+  .eyebrow {
+    color: var(--accent);
+    font-family: var(--font-mono-stack);
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .download-row { display: flex; flex-wrap: wrap; gap: 10px; margin: 32px 0; }
+  .cta {
+    display: inline-block;
+    padding: 12px 16px;
+    border: 1px solid var(--rule);
+    font-weight: 650;
+  }
+  .cta-primary { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  .cta-primary:hover { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+</style>
